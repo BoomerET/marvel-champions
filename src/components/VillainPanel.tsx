@@ -16,9 +16,9 @@ export function VillainPanel() {
             />
 
             <div>HP: {villain.hitPoints}</div>
+            <div>Main Scheme Threat: {villain.threat}</div>
             <button onClick={() => damageVillain(1)}>Damage 1</button>
             <button onClick={() => damageVillain(3)}>Damage 3</button>
-            <div>Main Scheme Threat: {villain.threat}</div>
         </section>
     );
 }

@@ -343,3 +343,9 @@ body.shift-down .card:hover .card-image {
   background: #222;
   color: white;
 }
+
+.game-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}

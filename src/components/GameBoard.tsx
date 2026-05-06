@@ -6,13 +6,11 @@ import { GameLog } from "./GameLog";
 import { VillainPanel } from "./VillainPanel";
 import { DeckPanel } from "./DeckPanel";
 import { DiscardPanel } from "./DiscardPanel";
+import { GameControls } from "./GameControls";
 
 export function GameBoard() {
   const phase = useGameStore((s) => s.phase);
   const round = useGameStore((s) => s.round);
-  const drawCards = useGameStore((s) => s.drawCards);
-  const endTurn = useGameStore((s) => s.endTurn);
-  const readyAllHeroCards = useGameStore((s) => s.readyAllHeroCards);
 
   return (
     <main>
@@ -23,20 +21,21 @@ export function GameBoard() {
         <div>Phase: {phase}</div>
       </section>
 
-      <section>
-        <button onClick={() => drawCards(1)}>Draw 1</button>
-        <button onClick={() => drawCards(5)}>Draw 5</button>
-        <button onClick={endTurn}>End Turn</button>
-        <button onClick={readyAllHeroCards}>Ready All</button>
-      </section>
-      <HeroPanel /><VillainPanel />
+      <GameControls />
+
       <div className="table-top">
+        <VillainPanel />
+        <HeroPanel />
+      </div>
+      <div className="table-zones">
         <DeckPanel />
         <DiscardPanel />
       </div>
 
       <PlayArea />
+
       <PlayerHand />
+
       <GameLog />
     </main>
   );

@@ -11,21 +11,21 @@ export const spiderManCards: Card[] = [
   },
 
   {
-    code: "01006",
+    code: "01005",
     name: "Swinging Web Kick",
     type: "event",
-    image: "01006",
+    image: "01005",
     cost: 3,
     text: ["Hero Action: Deal 8 damage."],
   },
 
   {
-    code: "01007",
+    code: "01003",
     name: "Backflip",
     type: "event",
-    image: "01007",
+    image: "01003",
     cost: 0,
-    text: ["Prevent all damage from an attack."],
+    text: ["Interrupt (defense): When you would take any amount of damage from an attack, prevent all of that damage."],
   },
 
   {
@@ -38,45 +38,45 @@ export const spiderManCards: Card[] = [
   },
 
   {
-    code: "01009",
+    code: "01002",
     name: "Black Cat",
     type: "ally",
-    image: "01009",
+    image: "01002",
     cost: 2,
     hp: 2,
-    text: ["Does not take consequential damage."],
+    text: ["Forced Response: After you play Black Cat, discard the top 2 cards of your deck."],
   },
 
   {
-    code: "01010",
+    code: "01006",
     name: "Aunt May",
     type: "support",
-    image: "01010",
+    image: "01006",
     cost: 1,
     text: ["Heal 4 damage."],
   },
 
   {
-    code: "01011",
+    code: "01088",
     name: "Energy",
     type: "resource",
-    image: "01011",
-    text: ["Double resource."],
+    image: "01088",
+    text: ["Max 1 per deck."],
   },
 
   {
-    code: "01012",
+    code: "01087",
     name: "Genius",
     type: "resource",
-    image: "01012",
-    text: ["Double resource."],
+    image: "01087",
+    text: ["Max 1 per deck."],
   },
 
   {
-    code: "01013",
+    code: "01090",
     name: "Strength",
     type: "resource",
-    image: "01013",
-    text: ["Double resource."],
+    image: "01090",
+    text: ["Max 1 per deck."],
   },
 ];

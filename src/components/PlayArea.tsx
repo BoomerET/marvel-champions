@@ -11,15 +11,13 @@ export function PlayArea() {
 
       <div className="play-area">
         {playArea.map((card) => (
-          <CardView key={card.instanceId} card={card} />
+          <CardView
+            key={card.instanceId}
+            card={card}
+            onClick={() => toggleExhausted(card.instanceId)}
+          />
         ))}
       </div>
-      <CardView
-        key={card.instanceId}
-        card={card}
-        onClick={() => toggleExhausted(card.instanceId)}
-      />
     </section>
   );
 }
-

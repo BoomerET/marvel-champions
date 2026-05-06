@@ -8,16 +8,19 @@ export interface Card {
   code: string;
   name: string;
   type: string;
-  
+
   image?: string;
 
   text?: string[];
   cost?: number;
+
+  hp?: number;
 }
 
 export interface CardInstance extends Card {
   instanceId: string;
   exhausted?: boolean;
+  damage?: number;
 }
 
 export interface HeroState {

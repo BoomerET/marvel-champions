@@ -2,10 +2,10 @@ import { create } from "zustand";
 import type { GameState } from "../game/types";
 import { createNewGame } from "../game/createGame";
 
-interface GameStore extends GameState {
-  nextPhase: () => void;
-  pushLog: (message: string) => void;
-}
+//interface GameStore extends GameState {
+//  nextPhase: () => void;
+//  pushLog: (message: string) => void;
+//}
 
 interface GameStore extends GameState {
   drawCards: (count: number) => void;

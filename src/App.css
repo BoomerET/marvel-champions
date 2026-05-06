@@ -229,3 +229,13 @@ button {
   display: block;
 }
 
+.play-area {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-height: 260px;
+  padding: 12px;
+  border: 1px dashed #aaa;
+  margin-bottom: 24px;
+}
+

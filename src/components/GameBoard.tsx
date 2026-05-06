@@ -1,5 +1,6 @@
 import { useGameStore } from "../store/gameStore";
 import { PlayerHand } from "./PlayerHand";
+import { PlayArea } from "./PlayArea";
 
 export function GameBoard() {
   const phase = useGameStore((s) => s.phase);
@@ -21,7 +22,7 @@ export function GameBoard() {
         <button onClick={() => drawCards(5)}>Draw 5</button>
         <button onClick={endTurn}>End Turn</button>
       </section>
-
+      <PlayArea />
       <PlayerHand />
     </main>
   );

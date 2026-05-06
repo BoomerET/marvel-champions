@@ -7,7 +7,7 @@ export const spiderManCards: Card[] = [
     type: "hero",
     text: ["Enhanced Spider-Sense."],
     hp: 10,
-    image: "01001.webp",
+    image: "01001",
   },
   {
     code: "01005",
@@ -15,7 +15,7 @@ export const spiderManCards: Card[] = [
     type: "event",
     cost: 3,
     text: ["Hero Action: Deal 8 damage."],
-    image: "01005.webp",
+    image: "01005",
   },
 ];
 

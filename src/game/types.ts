@@ -34,6 +34,7 @@ export interface GameState {
   phase: Phase;
   round: number;
   hero: HeroState;
+  villain: VillainState;
   log: string[];
 }
 
@@ -49,4 +50,10 @@ export interface HeroState {
   playArea: CardInstance[];
 
   hitPoints: number;
+}
+
+export interface VillainState {
+  identity: CardInstance;
+  hitPoints: number;
+  threat: number;
 }

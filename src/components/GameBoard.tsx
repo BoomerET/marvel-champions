@@ -4,6 +4,8 @@ import { PlayArea } from "./PlayArea";
 import { HeroPanel } from "./HeroPanel";
 import { GameLog } from "./GameLog";
 import { VillainPanel } from "./VillainPanel";
+import { DeckPanel } from "./DeckPanel";
+import { DiscardPanel } from "./DiscardPanel";
 
 export function GameBoard() {
   const phase = useGameStore((s) => s.phase);
@@ -27,10 +29,12 @@ export function GameBoard() {
         <button onClick={endTurn}>End Turn</button>
         <button onClick={readyAllHeroCards}>Ready All</button>
       </section>
+      <HeroPanel /><VillainPanel />
       <div className="table-top">
-        <HeroPanel />
-        <VillainPanel />
+        <DeckPanel />
+        <DiscardPanel />
       </div>
+
       <PlayArea />
       <PlayerHand />
       <GameLog />

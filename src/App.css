@@ -311,3 +311,35 @@ body.shift-down .card:hover .card-image {
   font-style: italic;
   padding: 12px;
 }
+
+.table-zones {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}
+
+.zone-panel {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  min-width: 200px;
+}
+
+.deck-pile {
+  margin-bottom: 12px;
+}
+
+.deck-card-back {
+  width: 120px;
+  height: 168px;
+  border-radius: 12px;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+  background: #222;
+  color: white;
+}

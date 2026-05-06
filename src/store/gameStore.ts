@@ -10,6 +10,9 @@ interface GameStore extends GameState {
   endTurn: () => void;
   pushLog: (message: string) => void;
   flipIdentity: () => void;
+  damageHero: (amount: number) => void;
+  damageVillain: (amount: number) => void;
+  healHero: (amount: number) => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -93,6 +96,32 @@ export const useGameStore = create<GameStore>((set) => ({
           : "Hero"
         }.`,
       ],
+    })),
+  damageHero: (amount) =>
+    set((state) => ({
+      hero: {
+        ...state.hero,
+        hitPoints: Math.max(0, state.hero.hitPoints - amount),
+      },
+      log: [...state.log, `Hero took ${amount} damage.`],
+    })),
+
+  healHero: (amount) =>
+    set((state) => ({
+      hero: {
+        ...state.hero,
+        hitPoints: state.hero.hitPoints + amount,
+      },
+      log: [...state.log, `Hero healed ${amount} damage.`],
+    })),
+
+  damageVillain: (amount) =>
+    set((state) => ({
+      villain: {
+        ...state.villain,
+        hitPoints: Math.max(0, state.villain.hitPoints - amount),
+      },
+      log: [...state.log, `Villain took ${amount} damage.`],
     })),
 }));
 

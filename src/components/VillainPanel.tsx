@@ -3,6 +3,7 @@ import { CardView } from "./CardView";
 
 export function VillainPanel() {
     const villain = useGameStore((s) => s.villain);
+    const damageVillain = useGameStore((s) => s.damageVillain);
 
     return (
         <section>
@@ -15,6 +16,8 @@ export function VillainPanel() {
             />
 
             <div>HP: {villain.hitPoints}</div>
+            <button onClick={() => damageVillain(1)}>Damage 1</button>
+            <button onClick={() => damageVillain(3)}>Damage 3</button>
             <div>Main Scheme Threat: {villain.threat}</div>
         </section>
     );

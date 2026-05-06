@@ -4,6 +4,8 @@ import { CardView } from "./CardView";
 export function HeroPanel() {
     const hero = useGameStore((s) => s.hero);
     const flipIdentity = useGameStore((s) => s.flipIdentity);
+    const damageHero = useGameStore((s) => s.damageHero);
+    const healHero = useGameStore((s) => s.healHero);
 
     return (
         <section>
@@ -21,7 +23,8 @@ export function HeroPanel() {
 
             <div>Form: {hero.form}</div>
             <div>HP: {hero.hitPoints}</div>
-
+            <button onClick={() => damageHero(1)}>Damage 1</button>
+            <button onClick={() => healHero(1)}>Heal 1</button>
             <button onClick={flipIdentity}>
                 Flip Identity
             </button>

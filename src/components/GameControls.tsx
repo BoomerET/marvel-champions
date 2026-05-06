@@ -9,14 +9,6 @@ export function GameControls() {
 
     return (
         <section className="game-controls">
-            <button onClick={() => drawCards(1)}>
-                Draw 1
-            </button>
-
-            <button onClick={() => drawCards(5)}>
-                Draw 5
-            </button>
-
             <button onClick={endTurn}>
                 End Turn
             </button>

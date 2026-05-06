@@ -15,6 +15,8 @@ interface GameStore extends GameState {
   healHero: (amount: number) => void;
   addThreat: (amount: number) => void;
   removeThreat: (amount: number) => void;
+  toggleExhausted: (instanceId: string) => void;
+  readyAllHeroCards: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -141,6 +143,39 @@ export const useGameStore = create<GameStore>((set) => ({
         threat: Math.max(0, state.villain.threat - amount),
       },
       log: [...state.log, `Removed ${amount} threat.`],
+    })), toggleExhausted: (instanceId) =>
+      set((state) => ({
+        hero: {
+          ...state.hero,
+          playArea: state.hero.playArea.map((card) =>
+            card.instanceId === instanceId
+              ? { ...card, exhausted: !card.exhausted }
+              : card
+          ),
+          identity:
+            state.hero.identity.instanceId === instanceId
+              ? {
+                ...state.hero.identity,
+                exhausted: !state.hero.identity.exhausted,
+              }
+              : state.hero.identity,
+        },
+      })),
+
+  readyAllHeroCards: () =>
+    set((state) => ({
+      hero: {
+        ...state.hero,
+        identity: {
+          ...state.hero.identity,
+          exhausted: false,
+        },
+        playArea: state.hero.playArea.map((card) => ({
+          ...card,
+          exhausted: false,
+        })),
+      },
+      log: [...state.log, "Readied all hero cards."],
     })),
 }));
 

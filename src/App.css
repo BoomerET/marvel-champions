@@ -297,3 +297,7 @@ body.shift-down .card:hover .card-image {
   transform: scale(1.9);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
+.card--exhausted {
+  transform: rotate(90deg);
+  margin: 48px;
+}

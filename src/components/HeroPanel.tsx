@@ -6,6 +6,7 @@ export function HeroPanel() {
     const flipIdentity = useGameStore((s) => s.flipIdentity);
     const damageHero = useGameStore((s) => s.damageHero);
     const healHero = useGameStore((s) => s.healHero);
+    const toggleExhausted = useGameStore((s) => s.toggleExhausted);
 
     return (
         <section>
@@ -27,6 +28,9 @@ export function HeroPanel() {
             <button onClick={() => healHero(1)}>Heal 1</button>
             <button onClick={flipIdentity}>
                 Flip Identity
+            </button>
+            <button onClick={() => toggleExhausted(hero.identity.instanceId)}>
+                Exhaust / Ready
             </button>
         </section>
     );

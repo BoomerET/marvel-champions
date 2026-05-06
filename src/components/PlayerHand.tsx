@@ -7,16 +7,20 @@ export function PlayerHand() {
 
   return (
     <section>
-      <h2>Hand ({hand.length})</h2>
+      <h2>Player Hand ({hand.length})</h2>
 
       <div className="player-hand">
-        {hand.map((card) => (
-          <CardView
-            key={card.instanceId}
-            card={card}
-            onClick={() => playCard(card.instanceId)}
-          />
-        ))}
+        {hand.length === 0 ? (
+          <div className="empty-zone">No cards in hand. Draw some cards.</div>
+        ) : (
+          hand.map((card) => (
+            <CardView
+              key={card.instanceId}
+              card={card}
+              onClick={() => playCard(card.instanceId)}
+            />
+          ))
+        )}
       </div>
     </section>
   );

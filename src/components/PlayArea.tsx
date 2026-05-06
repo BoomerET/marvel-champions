@@ -7,16 +7,20 @@ export function PlayArea() {
 
   return (
     <section>
-      <h2>Play Area ({playArea.length})</h2>
+      <h2>Player Play Area ({playArea.length})</h2>
 
       <div className="play-area">
-        {playArea.map((card) => (
-          <CardView
-            key={card.instanceId}
-            card={card}
-            onClick={() => toggleExhausted(card.instanceId)}
-          />
-        ))}
+        {playArea.length === 0 ? (
+          <div className="empty-zone">No cards in play.</div>
+        ) : (
+          playArea.map((card) => (
+            <CardView
+              key={card.instanceId}
+              card={card}
+              onClick={() => toggleExhausted(card.instanceId)}
+            />
+          ))
+        )}
       </div>
     </section>
   );

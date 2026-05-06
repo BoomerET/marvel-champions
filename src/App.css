@@ -301,3 +301,9 @@ body.shift-down .card:hover .card-image {
   transform: rotate(90deg);
   margin: 48px;
 }
+
+.empty-zone {
+  color: #777;
+  font-style: italic;
+  padding: 12px;
+}

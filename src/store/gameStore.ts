@@ -40,13 +40,30 @@ export const useGameStore = create<GameStore>((set) => ({
         return state;
       }
 
+      const newHand = state.hero.hand.filter(
+        (c) => c.instanceId !== instanceId
+      );
+
+      const goesToDiscard =
+        card.type === "event" || card.type === "resource";
+
       return {
         hero: {
           ...state.hero,
-          hand: state.hero.hand.filter((c) => c.instanceId !== instanceId),
-          playArea: [...state.hero.playArea, card],
+          hand: newHand,
+          discard: goesToDiscard
+            ? [...state.hero.discard, card]
+            : state.hero.discard,
+          playArea: goesToDiscard
+            ? state.hero.playArea
+            : [...state.hero.playArea, card],
         },
-        log: [...state.log, `Played ${card.name}.`],
+        log: [
+          ...state.log,
+          goesToDiscard
+            ? `Played ${card.name} and discarded it.`
+            : `Played ${card.name}.`,
+        ],
       };
     }),
 

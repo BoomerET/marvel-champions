@@ -5,10 +5,19 @@ interface Props {
   card: CardInstance;
   onClick?: () => void;
   size?: "normal" | "small";
+  face?: "a" | "b";
 }
 
-export function CardView({ card, onClick, size = "normal" }: Props) {
-  const imageSrc = getCardImage(card.image);
+export function CardView({
+  card,
+  onClick,
+  size = "normal",
+  face,
+}: Props) {
+  const imageSrc = getCardImage(
+    card.image,
+    { face }
+  );
 
   return (
     <div

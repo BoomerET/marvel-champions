@@ -9,7 +9,15 @@ export function HeroPanel() {
         <section>
             <h2>Hero</h2>
 
-            <CardView card={hero.identity} size="small" />
+            <CardView
+                card={hero.identity}
+                size="small"
+                face={
+                    hero.form === "hero"
+                        ? "a"
+                        : "b"
+                }
+            />
 
             <div>Form: {hero.form}</div>
             <div>HP: {hero.hitPoints}</div>

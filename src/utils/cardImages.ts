@@ -6,13 +6,28 @@ export const cardImages = import.meta.glob(
   }
 ) as Record<string, string>;
 
-export function getCardImage(filename?: string): string | undefined {
-  if (!filename) {
+interface ImageOptions {
+  face?: "a" | "b";
+}
+
+export function getCardImage(
+  image?: string,
+  options?: ImageOptions
+): string | undefined {
+  if (!image) {
     return undefined;
   }
 
-  const path = `../assets/images/${filename}`;
+  const faceSuffix = options?.face ?? "";
 
-  return cardImages[path];
+  const doubleSidedPath =
+    `../assets/images/${image}${faceSuffix}.webp`;
+
+  const singleSidedPath =
+    `../assets/images/${image}.webp`;
+
+  return (
+    cardImages[doubleSidedPath] ??
+    cardImages[singleSidedPath]
+  );
 }
-

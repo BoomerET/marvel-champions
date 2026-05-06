@@ -2,14 +2,20 @@ import { useGameStore } from "../store/gameStore";
 import { CardView } from "./CardView";
 
 export function VillainPanel() {
+    const villain = useGameStore((s) => s.villain);
+
     return (
         <section>
             <h2>Villain</h2>
-            <div>Rhino</div>
-            <div>HP: 14</div>
-            <div>Main Scheme Threat: 0</div>
-            {/* <CardView card={villain.villain} size="small" /> */}
-        </section>
 
+            <CardView
+                card={villain.identity}
+                size="small"
+                face="a"
+            />
+
+            <div>HP: {villain.hitPoints}</div>
+            <div>Main Scheme Threat: {villain.threat}</div>
+        </section>
     );
 }

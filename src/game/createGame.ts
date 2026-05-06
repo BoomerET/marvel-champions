@@ -2,10 +2,9 @@ import type { GameState } from "./types";
 import { spiderManCards } from "../data/heroes/spiderMan";
 import { rhinoCards } from "../data/villains/rhino";
 import { createCardInstance } from "../utils/createCardInstance";
+import { shuffle } from "../utils/shuffle";
 
 export function createNewGame(): GameState {
-
-
   return {
     phase: "player",
     round: 1,
@@ -14,9 +13,11 @@ export function createNewGame(): GameState {
       identity: createCardInstance(spiderManCards[0]),
       form: "hero",
 
-      deck: spiderManCards
-        .slice(1)
-        .map(createCardInstance),
+      deck: shuffle(
+        spiderManCards
+          .slice(1)
+          .map(createCardInstance)
+      ),
 
       hand: [],
       discard: [],
@@ -24,6 +25,7 @@ export function createNewGame(): GameState {
 
       hitPoints: 10,
     },
+
     villain: {
       identity: createCardInstance(rhinoCards[0]),
       hitPoints: 14,
@@ -33,3 +35,4 @@ export function createNewGame(): GameState {
     log: [],
   };
 }
+

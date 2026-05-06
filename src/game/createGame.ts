@@ -1,20 +1,27 @@
 import type { GameState } from "./types";
+import { spiderManCards } from "../data/heroes/spiderMan";
+import { createCardInstance } from "../utils/createCardInstance";
 
 export function createNewGame(): GameState {
   return {
-    phase: "setup",
+    phase: "player",
     round: 1,
+
     hero: {
-      identity: {
-        code: "spider-man",
-        name: "Spider-Man",
-        type: "hero",
-        instanceId: crypto.randomUUID(),
-      },
+      identity: createCardInstance(spiderManCards[0]),
+      form: "hero",
+
+      deck: spiderManCards
+        .slice(1)
+        .map(createCardInstance),
+
       hand: [],
-      deck: [],
       discard: [],
+      playArea: [],
+
+      hitPoints: 10,
     },
+
     log: [],
   };
 }

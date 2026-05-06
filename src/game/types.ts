@@ -8,7 +8,11 @@ export interface Card {
   code: string;
   name: string;
   type: string;
+  
+  image?: string;
+
   text?: string[];
+  cost?: number;
 }
 
 export interface CardInstance extends Card {
@@ -28,5 +32,19 @@ export interface GameState {
   round: number;
   hero: HeroState;
   log: string[];
+}
+
+export type IdentityForm = "hero" | "alterEgo";
+
+export interface HeroState {
+  identity: CardInstance;
+  form: IdentityForm;
+
+  hand: CardInstance[];
+  deck: CardInstance[];
+  discard: CardInstance[];
+  playArea: CardInstance[];
+
+  hitPoints: number;
 }
 

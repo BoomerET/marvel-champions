@@ -50,4 +50,3 @@ export interface HeroState {
 
   hitPoints: number;
 }
-

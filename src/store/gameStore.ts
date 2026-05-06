@@ -1,17 +1,15 @@
+// Track builds: 0001
+
 import { create } from "zustand";
 import type { GameState } from "../game/types";
 import { createNewGame } from "../game/createGame";
-
-//interface GameStore extends GameState {
-//  nextPhase: () => void;
-//  pushLog: (message: string) => void;
-//}
 
 interface GameStore extends GameState {
   drawCards: (count: number) => void;
   playCard: (instanceId: string) => void;
   endTurn: () => void;
   pushLog: (message: string) => void;
+  flipIdentity: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -77,6 +75,24 @@ export const useGameStore = create<GameStore>((set) => ({
   pushLog: (message) =>
     set((state) => ({
       log: [...state.log, message],
+    })),
+
+  flipIdentity: () =>
+    set((state) => ({
+      hero: {
+        ...state.hero,
+        form:
+          state.hero.form === "hero"
+            ? "alterEgo"
+            : "hero",
+      },
+      log: [
+        ...state.log,
+        `Flipped to ${state.hero.form === "hero"
+          ? "Alter-Ego"
+          : "Hero"
+        }.`,
+      ],
     })),
 }));
 

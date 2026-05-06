@@ -239,3 +239,14 @@ button {
   margin-bottom: 24px;
 }
 
+.table-top {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.table-top section {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+}

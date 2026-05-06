@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import type { GameState } from "../game/types";
 import { createNewGame } from "../game/createGame";
+import { shuffle } from "../utils/shuffle";
 
 interface GameStore extends GameState {
   drawCards: (count: number) => void;
@@ -21,19 +22,38 @@ interface GameStore extends GameState {
 
 export const useGameStore = create<GameStore>((set) => ({
   ...createNewGame(),
-
   drawCards: (count) =>
     set((state) => {
-      const drawnCards = state.hero.deck.slice(0, count);
-      const remainingDeck = state.hero.deck.slice(count);
+      let deck = [...state.hero.deck];
+      let discard = [...state.hero.discard];
+      const hand = [...state.hero.hand];
+      const log = [...state.log];
+
+      for (let i = 0; i < count; i += 1) {
+        if (deck.length === 0 && discard.length > 0) {
+          deck = shuffle(discard);
+          discard = [];
+          log.push("Shuffled discard pile into deck.");
+        }
+
+        const drawnCard = deck.shift();
+
+        if (!drawnCard) {
+          log.push("Tried to draw, but deck and discard were empty.");
+          break;
+        }
+
+        hand.push(drawnCard);
+      }
 
       return {
         hero: {
           ...state.hero,
-          deck: remainingDeck,
-          hand: [...state.hero.hand, ...drawnCards],
+          deck,
+          discard,
+          hand,
         },
-        log: [...state.log, `Drew ${drawnCards.length} card(s).`],
+        log,
       };
     }),
 

@@ -15,11 +15,16 @@ export function CardView({
   size = "normal",
   face,
 }: Props) {
-  const [previewFace, setPreviewFace] = useState<"a" | "b" | undefined>(face);
+  const [flippedPreview, setFlippedPreview] = useState(false);
 
-  useEffect(() => {
-    setPreviewFace(face);
-  }, [face]);
+  const previewFace =
+    face === undefined
+      ? undefined
+      : flippedPreview
+        ? face === "a"
+          ? "b"
+          : "a"
+        : face;
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -27,9 +32,7 @@ export function CardView({
         return;
       }
 
-      setPreviewFace((currentFace) =>
-        currentFace === "a" ? "b" : "a"
-      );
+      setFlippedPreview((current) => !current);
     };
 
     window.addEventListener("keydown", handleKeyDown);

@@ -13,6 +13,8 @@ interface GameStore extends GameState {
   damageHero: (amount: number) => void;
   damageVillain: (amount: number) => void;
   healHero: (amount: number) => void;
+  addThreat: (amount: number) => void;
+  removeThreat: (amount: number) => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -122,6 +124,23 @@ export const useGameStore = create<GameStore>((set) => ({
         hitPoints: Math.max(0, state.villain.hitPoints - amount),
       },
       log: [...state.log, `Villain took ${amount} damage.`],
+    })),
+  addThreat: (amount) =>
+    set((state) => ({
+      villain: {
+        ...state.villain,
+        threat: state.villain.threat + amount,
+      },
+      log: [...state.log, `Added ${amount} threat.`],
+    })),
+
+  removeThreat: (amount) =>
+    set((state) => ({
+      villain: {
+        ...state.villain,
+        threat: Math.max(0, state.villain.threat - amount),
+      },
+      log: [...state.log, `Removed ${amount} threat.`],
     })),
 }));
 

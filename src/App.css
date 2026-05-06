@@ -250,3 +250,50 @@ button {
   border-radius: 8px;
   padding: 12px;
 }
+
+.card {
+  width: 250px;
+  cursor: pointer;
+  position: relative;
+}
+
+.card--small {
+  width: 180px;
+}
+
+.card-image {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
+}
+
+.card:has(.card-image):hover {
+  z-index: 10;
+}
+
+body:has(:focus-visible) .card {
+  outline: none;
+}
+
+/* Hold Shift while hovering */
+.card:hover .card-image {
+  transition: transform 120ms ease;
+}
+
+body:has(.card:hover) {
+  overflow-x: hidden;
+}
+
+.card:hover .card-image {
+  transform-origin: top left;
+}
+
+.card:hover:has(.card-image) .card-image {
+  /* normal hover does nothing visually */
+}
+
+/* This part requires a tiny React helper below for Shift detection */
+body.shift-down .card:hover .card-image {
+  transform: scale(1.9);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}

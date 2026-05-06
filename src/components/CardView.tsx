@@ -4,15 +4,17 @@ import { getCardImage } from "../utils/cardImages";
 interface Props {
   card: CardInstance;
   onClick?: () => void;
+  size?: "normal" | "small";
 }
 
-export function CardView({ card, onClick }: Props) {
+export function CardView({ card, onClick, size = "normal" }: Props) {
   const imageSrc = getCardImage(card.image);
 
   return (
     <div
-      className="card"
+      className={`card card--${size}`}
       onClick={onClick}
+      title="Hold Shift and hover to zoom"
     >
       {imageSrc ? (
         <img
@@ -29,4 +31,3 @@ export function CardView({ card, onClick }: Props) {
     </div>
   );
 }
-

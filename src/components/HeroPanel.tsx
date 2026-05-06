@@ -1,4 +1,5 @@
 import { useGameStore } from "../store/gameStore";
+import { CardView } from "./CardView";
 
 export function HeroPanel() {
     const hero = useGameStore((s) => s.hero);
@@ -6,13 +7,12 @@ export function HeroPanel() {
 
     return (
         <section>
-            <h2>{hero.identity.name}</h2>
+            <h2>Hero</h2>
+
+            <CardView card={hero.identity} size="small" />
 
             <div>Form: {hero.form}</div>
-
-            <div>
-                HP: {hero.hitPoints}
-            </div>
+            <div>HP: {hero.hitPoints}</div>
 
             <button onClick={flipIdentity}>
                 Flip Identity

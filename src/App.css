@@ -255,6 +255,10 @@ button {
   width: 250px;
   cursor: pointer;
   position: relative;
+  background: transparent;
+  border: none;
+  padding: 0;
+  min-height: unset;
 }
 
 .card--small {

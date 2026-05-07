@@ -189,7 +189,7 @@ export const useGameStore = create<GameStore>((set) => ({
 
   endTurn: () =>
     set((state) => {
-      let nextPhase = state.phase;
+      let nextPhase: typeof state.phase;
       let nextRound = state.round;
 
       let nextHero = state.hero;

@@ -204,10 +204,6 @@ button {
   flex-wrap: wrap;
 }
 
-.card:hover {
-  background: #eaeaea;
-}
-
 .card-image {
   width: 100%;
   border-radius: 12px;
@@ -340,4 +336,28 @@ body.shift-down .card:hover .card-image {
   display: flex;
   gap: 12px;
   margin-bottom: 24px;
+}
+
+.identity-card-slot {
+  width: 260px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.identity-card-slot .card--small {
+  width: 180px;
+}
+
+.identity-card-slot .card.card--exhausted .card-image {
+  transform: rotate(90deg);
+}
+
+.card {
+  background: transparent;
+  border: none;
+  padding: 0;
+  min-height: unset;
 }

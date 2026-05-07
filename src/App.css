@@ -290,7 +290,7 @@ body.shift-down .card:hover .card-image {
 }
 
 .card.card--exhausted .card-image {
-  transform: rotate(90deg);
+  transform: rotate(90deg) !important;
   transform-origin: center center;
 }
 

@@ -8,6 +8,7 @@ import { DiscardPanel } from "./DiscardPanel";
 import { GameControls } from "./GameControls";
 import { EncounterArea } from "./EncounterArea";
 import { useGameStore } from "../store/gameStore";
+import { EncounterDeckPanel } from "./EncounterDeckPanel";
 import { EncounterDiscardPanel } from "./EncounterDiscardPanel";
 
 export function GameBoard() {
@@ -35,6 +36,7 @@ export function GameBoard() {
       <div className="table-zones">
         <DeckPanel />
         <DiscardPanel />
+        <EncounterDeckPanel />
         <EncounterDiscardPanel />
       </div>
 

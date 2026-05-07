@@ -372,3 +372,17 @@ body.shift-down .card:hover .card-image {
   margin-bottom: 24px;
   align-items: flex-start;
 }
+
+.encounter-deck-card-back {
+  width: 120px;
+  height: 168px;
+  border-radius: 12px;
+  border: 2px solid #633;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+  background: #3a1111;
+  color: white;
+}

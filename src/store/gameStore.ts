@@ -407,30 +407,36 @@ export const useGameStore = create<GameStore>((set) => ({
 
   basicRecover: () =>
     set((state) => {
-      if (
-        state.hero.identity.exhausted ||
-        state.hero.form !== "alterEgo"
-      ) {
-        return state;
+      if (state.hero.identity.exhausted) {
+        return {
+          log: [
+            ...state.log,
+            "Cannot recover while exhausted.",
+          ],
+        };
       }
 
-      const amount =
-        state.hero.identity.recover ?? 0;
+      if (state.hero.form !== "alterEgo") {
+        return {
+          log: [
+            ...state.log,
+            "Cannot recover while in hero form.",
+          ],
+        };
+      }
+
+      const amount = state.hero.identity.recover ?? 0;
 
       const recoverEvent = {
         type: "BASIC_RECOVER" as const,
         amount,
       };
 
-      const healEvent = {
+      const healingEvent = {
         type: "HEALING_DONE" as const,
         target: "hero" as const,
         amount,
       };
-
-      //dispatchGameEvent(recoverEvent);
-
-      //dispatchGameEvent(healEvent);
 
       return {
         hero: {
@@ -439,14 +445,12 @@ export const useGameStore = create<GameStore>((set) => ({
             ...state.hero.identity,
             exhausted: true,
           },
-
-          hitPoints:
-            state.hero.hitPoints + amount,
+          hitPoints: state.hero.hitPoints + amount,
         },
 
         eventHistory: appendEvents(state.eventHistory, [
           recoverEvent,
-          healEvent,
+          healingEvent,
         ]),
 
         log: [

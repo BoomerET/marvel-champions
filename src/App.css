@@ -361,3 +361,14 @@ body.shift-down .card:hover .card-image {
   padding: 0;
   min-height: unset;
 }
+
+.encounter-area {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-height: 220px;
+  padding: 12px;
+  border: 1px dashed #b44;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}

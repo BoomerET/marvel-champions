@@ -7,6 +7,7 @@ import { VillainPanel } from "./VillainPanel";
 import { DeckPanel } from "./DeckPanel";
 import { DiscardPanel } from "./DiscardPanel";
 import { GameControls } from "./GameControls";
+import { EncounterArea } from "./EncounterArea";
 
 export function GameBoard() {
   const phase = useGameStore((s) => s.phase);
@@ -27,6 +28,8 @@ export function GameBoard() {
         <VillainPanel />
         <HeroPanel />
       </div>
+      <EncounterArea />
+      <GameControls />
       <div className="table-zones">
         <DeckPanel />
         <DiscardPanel />

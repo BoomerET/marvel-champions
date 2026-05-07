@@ -320,9 +320,9 @@ export const useGameStore = create<GameStore>((set) => ({
       //  amount,
       //});
 
-      dispatchGameEvent(basicAttackEvent);
+      //dispatchGameEvent(basicAttackEvent);
 
-      dispatchGameEvent(damageEvent);
+      //dispatchGameEvent(damageEvent);
 
       return {
         hero: {
@@ -340,6 +340,11 @@ export const useGameStore = create<GameStore>((set) => ({
             state.villain.hitPoints - amount
           ),
         },
+
+        eventHistory: appendEvents(state.eventHistory, [
+          basicAttackEvent,
+          damageEvent,
+        ]),
 
         log: [
           ...state.log,
@@ -367,14 +372,9 @@ export const useGameStore = create<GameStore>((set) => ({
         amount,
       };
 
-      dispatchGameEvent(basicThwartEvent);
+      //dispatchGameEvent(basicThwartEvent);
 
-      dispatchGameEvent(threatRemovedEvent);
-
-      eventHistory: appendEvents(state.eventHistory, [
-        basicThwartEvent,
-        threatRemovedEvent,
-      ]),
+      //dispatchGameEvent(threatRemovedEvent);
 
       return {
         hero: {
@@ -392,6 +392,11 @@ export const useGameStore = create<GameStore>((set) => ({
             state.villain.threat - amount
           ),
         },
+
+        eventHistory: appendEvents(state.eventHistory, [
+          basicThwartEvent,
+          threatRemovedEvent,
+        ]),
 
         log: [
           ...state.log,
@@ -423,9 +428,9 @@ export const useGameStore = create<GameStore>((set) => ({
         amount,
       };
 
-      dispatchGameEvent(recoverEvent);
+      //dispatchGameEvent(recoverEvent);
 
-      dispatchGameEvent(healEvent);
+      //dispatchGameEvent(healEvent);
 
       return {
         hero: {
@@ -438,6 +443,11 @@ export const useGameStore = create<GameStore>((set) => ({
           hitPoints:
             state.hero.hitPoints + amount,
         },
+
+        eventHistory: appendEvents(state.eventHistory, [
+          recoverEvent,
+          healEvent,
+        ]),
 
         log: [
           ...state.log,

@@ -418,3 +418,17 @@ body.shift-down .card:hover .card-image {
   font-weight: bold;
   font-size: 18px;
 }
+
+.event-history {
+  max-height: 300px;
+  overflow-y: auto;
+  background: #111;
+  color: #ddd;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.event-history pre {
+  margin: 0 0 12px 0;
+  font-size: 12px;
+}

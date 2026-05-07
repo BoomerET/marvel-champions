@@ -5,6 +5,7 @@ import { DeckPanel } from "./DeckPanel";
 import { PlayerHand } from "./PlayerHand";
 import { VillainPanel } from "./VillainPanel";
 import { DiscardPanel } from "./DiscardPanel";
+import { EventHistory } from "./EventHistory";
 import { GameControls } from "./GameControls";
 import { EncounterArea } from "./EncounterArea";
 import { useGameStore } from "../store/gameStore";
@@ -45,6 +46,8 @@ export function GameBoard() {
       <PlayerHand />
 
       <GameLog />
+
+      <EventHistory />
     </main>
   );
 }

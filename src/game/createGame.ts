@@ -37,8 +37,6 @@ export function createNewGame(): GameState {
       hitPoints: 14,
       threat: 0,
     },
-
-    encounterArea: [],
     log: [],
   };
 }

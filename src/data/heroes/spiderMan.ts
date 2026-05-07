@@ -10,6 +10,7 @@ export const spiderManCards: Card[] = [
     text: ["Enhanced Spider-Sense."],
     attack: 2,
     thwart: 1,
+    defense: 3,
     recover: 3,
   },
 

@@ -386,3 +386,35 @@ body.shift-down .card:hover .card-image {
   background: #3a1111;
   color: white;
 }
+
+.deck-pile {
+  position: relative;
+  width: 120px;
+}
+
+.deck-back-image {
+  width: 120px;
+  border-radius: 12px;
+  display: block;
+}
+
+.deck-count {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+  font-size: 18px;
+}

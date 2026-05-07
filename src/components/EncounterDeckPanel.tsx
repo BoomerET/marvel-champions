@@ -1,11 +1,17 @@
 import { useGameStore } from "../store/gameStore";
+import { getDeckBackImage } from "../utils/deckBackImages";
 
 export function EncounterDeckPanel() {
     const encounterDeckCount = useGameStore(
         (s) => s.encounterDeck.length
     );
+
     const dealEncounterCard = useGameStore(
         (s) => s.dealEncounterCard
+    );
+
+    const backImage = getDeckBackImage(
+        "encounter-back.webp"
     );
 
     return (
@@ -13,7 +19,13 @@ export function EncounterDeckPanel() {
             <h2>Encounter Deck</h2>
 
             <div className="deck-pile">
-                <div className="encounter-deck-card-back">
+                <img
+                    src={backImage}
+                    alt="Encounter Deck"
+                    className="deck-back-image"
+                />
+
+                <div className="deck-count">
                     {encounterDeckCount}
                 </div>
             </div>

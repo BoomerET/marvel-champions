@@ -293,7 +293,21 @@ export const useGameStore = create<GameStore>((set) => ({
   basicAttack: () =>
     set((state) => {
       if (state.hero.identity.exhausted) {
-        return state;
+        return {
+          log: [
+            ...state.log,
+            "Cannot basic attack while exhausted.",
+          ]
+        };
+      }
+
+      if (state.hero.form === "alterEgo") {
+        return {
+          log: [
+            ...state.log,
+            "Cannot basic attack while in alter-ego form.",
+          ],
+        };
       }
 
       const amount = state.hero.identity.attack ?? 0;
@@ -308,21 +322,6 @@ export const useGameStore = create<GameStore>((set) => ({
         target: "villain" as const,
         amount,
       };
-
-      //dispatchGameEvent({
-      //  type: "BASIC_ATTACK",
-      //  amount,
-      //});
-      //
-      //dispatchGameEvent({
-      //  type: "DAMAGE_DEALT",
-      //  target: "villain",
-      //  amount,
-      //});
-
-      //dispatchGameEvent(basicAttackEvent);
-
-      //dispatchGameEvent(damageEvent);
 
       return {
         hero: {
@@ -356,7 +355,21 @@ export const useGameStore = create<GameStore>((set) => ({
   basicThwart: () =>
     set((state) => {
       if (state.hero.identity.exhausted) {
-        return state;
+        return {
+          log: [
+            ...state.log,
+            "Cannot thwart while exhausted.",
+          ],
+        };
+      }
+
+      if (state.hero.form === "alterEgo") {
+        return {
+          log: [
+            ...state.log,
+            "Cannot thwart while in alter-ego form.",
+          ],
+        };
       }
 
       const amount =
@@ -371,10 +384,6 @@ export const useGameStore = create<GameStore>((set) => ({
         type: "THREAT_REMOVED" as const,
         amount,
       };
-
-      //dispatchGameEvent(basicThwartEvent);
-
-      //dispatchGameEvent(threatRemovedEvent);
 
       return {
         hero: {

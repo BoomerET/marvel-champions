@@ -60,10 +60,24 @@ export const useGameStore = create<GameStore>((set) => ({
         amount,
       };
 
+      const shouldTriggerSpiderSense =
+        state.hero.identity.name === "Spider-Man" &&
+        state.hero.form === "hero";
+
+      const drawnCards = shouldTriggerSpiderSense
+        ? state.hero.deck.slice(0, 1)
+        : [];
+
+      const remainingDeck = shouldTriggerSpiderSense
+        ? state.hero.deck.slice(1)
+        : state.hero.deck;
+
       return {
         hero: {
           ...state.hero,
           hitPoints: Math.max(0, state.hero.hitPoints - amount),
+          deck: remainingDeck,
+          hand: [...state.hero.hand, ...drawnCards],
         },
 
         eventHistory: appendEvents(state.eventHistory, [
@@ -71,7 +85,13 @@ export const useGameStore = create<GameStore>((set) => ({
           damageEvent,
         ]),
 
-        log: [...state.log, `Rhino attacked for ${amount} damage.`],
+        log: [
+          ...state.log,
+          `Rhino attacked for ${amount} damage.`,
+          ...(shouldTriggerSpiderSense
+            ? ["Spider-Sense triggered. Drew 1 card."]
+            : []),
+        ],
       };
     }),
 

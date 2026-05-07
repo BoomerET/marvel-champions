@@ -53,17 +53,25 @@ export function CardView({
       title="Hold Shift to zoom. Press F while holding Shift to flip preview."
     >
       {imageSrc ? (
-        <img
-          src={imageSrc}
-          alt={card.name}
-          className="card-image"
-        />
+        <>
+          <img
+            src={imageSrc}
+            alt={card.name}
+            className="card-image"
+          />
+          <div className="card-stat-overlay">
+            {card.attack !== undefined && <span>ATK {card.attack}</span>}
+            {card.thwart !== undefined && <span>THW {card.thwart}</span>}
+            {card.recover !== undefined && <span>REC {card.recover}</span>}
+            {card.hp !== undefined && <span>HP {card.hp}</span>}
+          </div></>
       ) : (
         <>
           <h3>{card.name}</h3>
           <div>{card.type}</div>
         </>
       )}
+
     </div>
   );
 }

@@ -432,3 +432,21 @@ body.shift-down .card:hover .card-image {
   margin: 0 0 12px 0;
   font-size: 12px;
 }
+
+.card-stat-overlay {
+  position: absolute;
+  left: 6px;
+  bottom: 6px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  pointer-events: none;
+}
+
+.card-stat-overlay span {
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  font-size: 11px;
+  padding: 2px 5px;
+  border-radius: 999px;
+}

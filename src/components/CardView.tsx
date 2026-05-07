@@ -48,7 +48,7 @@ export function CardView({
 
   return (
     <div
-      className={`card card--${size}`}
+      className={`card card--${size} ${card.exhausted ? "card--exhausted" : ""}`}
       onClick={onClick}
       title="Hold Shift to zoom. Press F while holding Shift to flip preview."
     >

@@ -3,6 +3,9 @@ import { CardView } from "./CardView";
 
 export function EncounterArea() {
     const encounterArea = useGameStore((s) => s.encounterArea);
+    const resolveEncounterCard = useGameStore(
+        (s) => s.resolveEncounterCard
+    );
 
     return (
         <section>
@@ -18,6 +21,7 @@ export function EncounterArea() {
                         <CardView
                             key={card.instanceId}
                             card={card}
+                            onClick={() => resolveEncounterCard(card.instanceId)}
                         />
                     ))
                 )}

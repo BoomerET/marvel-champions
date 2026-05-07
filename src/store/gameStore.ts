@@ -24,6 +24,7 @@ interface GameStore extends GameState {
   villainAttack: () => void;
   villainScheme: () => void;
   dealEncounterCard: () => void;
+  resolveEncounterCard: (instanceId: string) => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -377,6 +378,28 @@ export const useGameStore = create<GameStore>((set) => ({
         log: [
           ...state.log,
           `Dealt encounter card: ${card.name}.`,
+        ],
+      };
+    }),
+
+  resolveEncounterCard: (instanceId) =>
+    set((state) => {
+      const card = state.encounterArea.find(
+        (c) => c.instanceId === instanceId
+      );
+
+      if (!card) {
+        return state;
+      }
+
+      return {
+        encounterArea: state.encounterArea.filter(
+          (c) => c.instanceId !== instanceId
+        ),
+        encounterDiscard: [...state.encounterDiscard, card],
+        log: [
+          ...state.log,
+          `Resolved encounter card: ${card.name}.`,
         ],
       };
     }),

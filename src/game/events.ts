@@ -24,4 +24,12 @@ export type GameEvent =
         type: "HEALING_DONE";
         target: "hero";
         amount: number;
+    }
+    | {
+        type: "VILLAIN_ATTACK";
+        amount: number;
+    }
+    | {
+        type: "VILLAIN_SCHEME";
+        amount: number;
     };

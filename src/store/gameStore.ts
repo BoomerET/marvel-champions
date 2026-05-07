@@ -46,33 +46,57 @@ export const useGameStore = create<GameStore>((set) => ({
   ...createNewGame(),
 
   villainAttack: () =>
-    set((state) => ({
-      hero: {
-        ...state.hero,
-        hitPoints: Math.max(
-          0,
-          state.hero.hitPoints - 2
-        ),
-      },
+    set((state) => {
+      const amount = 2;
 
-      log: [
-        ...state.log,
-        "Rhino attacked for 2 damage.",
-      ],
-    })),
+      const attackEvent = {
+        type: "VILLAIN_ATTACK" as const,
+        amount,
+      };
+
+      const damageEvent = {
+        type: "DAMAGE_DEALT" as const,
+        target: "hero" as const,
+        amount,
+      };
+
+      return {
+        hero: {
+          ...state.hero,
+          hitPoints: Math.max(0, state.hero.hitPoints - amount),
+        },
+
+        eventHistory: appendEvents(state.eventHistory, [
+          attackEvent,
+          damageEvent,
+        ]),
+
+        log: [...state.log, `Rhino attacked for ${amount} damage.`],
+      };
+    }),
 
   villainScheme: () =>
-    set((state) => ({
-      villain: {
-        ...state.villain,
-        threat: state.villain.threat + 2,
-      },
+    set((state) => {
+      const amount = 2;
 
-      log: [
-        ...state.log,
-        "Rhino schemed for 2 threat.",
-      ],
-    })),
+      const schemeEvent = {
+        type: "VILLAIN_SCHEME" as const,
+        amount,
+      };
+
+      return {
+        villain: {
+          ...state.villain,
+          threat: state.villain.threat + amount,
+        },
+
+        eventHistory: appendEvents(state.eventHistory, [
+          schemeEvent,
+        ]),
+
+        log: [...state.log, `Rhino schemed for ${amount} threat.`],
+      };
+    }),
 
   drawCards: (count) =>
     set((state) => {

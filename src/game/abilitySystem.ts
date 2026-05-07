@@ -44,6 +44,20 @@ export function handleTriggeredAbilities(event: GameEvent) {
             );
             break;
 
+        case "VILLAIN_ATTACK":
+            console.log(
+                "Ability system saw VILLAIN_ATTACK:",
+                event
+            );
+            break;
+
+        case "VILLAIN_SCHEME":
+            console.log(
+                "Ability system saw VILLAIN_SCHEME:",
+                event
+            );
+            break;
+
         default:
             break;
     }

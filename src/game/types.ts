@@ -1,3 +1,5 @@
+import type { GameEvent } from "./events";
+
 export type IdentityForm = "hero" | "alterEgo";
 
 export type Phase =
@@ -35,6 +37,7 @@ export interface GameState {
   encounterArea: CardInstance[];
   encounterDeck: CardInstance[];
   encounterDiscard: CardInstance[];
+  eventHistory: GameEvent[];
 }
 
 export interface HeroState {

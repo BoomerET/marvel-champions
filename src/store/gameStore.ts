@@ -5,6 +5,7 @@ import type { GameState } from "../game/types";
 import { createNewGame } from "../game/createGame";
 import { shuffle } from "../utils/shuffle";
 import { dispatchGameEvent } from "../game/dispatch";
+import type { GameEvent } from "../game/events";
 
 interface GameStore extends GameState {
   drawCards: (count: number) => void;
@@ -26,6 +27,7 @@ interface GameStore extends GameState {
   villainScheme: () => void;
   dealEncounterCard: () => void;
   resolveEncounterCard: (instanceId: string) => void;
+  recordEvent: (event: GameEvent) => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -271,16 +273,31 @@ export const useGameStore = create<GameStore>((set) => ({
 
       const amount = state.hero.identity.attack ?? 0;
 
-      dispatchGameEvent({
-        type: "BASIC_ATTACK",
+      const basicAttackEvent = {
+        type: "BASIC_ATTACK" as const,
         amount,
-      });
+      };
 
-      dispatchGameEvent({
-        type: "DAMAGE_DEALT",
-        target: "villain",
+      const damageEvent = {
+        type: "DAMAGE_DEALT" as const,
+        target: "villain" as const,
         amount,
-      });
+      };
+
+      //dispatchGameEvent({
+      //  type: "BASIC_ATTACK",
+      //  amount,
+      //});
+      //
+      //dispatchGameEvent({
+      //  type: "DAMAGE_DEALT",
+      //  target: "villain",
+      //  amount,
+      //});
+
+      dispatchGameEvent(basicAttackEvent);
+
+      dispatchGameEvent(damageEvent);
 
       return {
         hero: {
@@ -435,5 +452,10 @@ export const useGameStore = create<GameStore>((set) => ({
         ],
       };
     }),
+
+  recordEvent: (event) =>
+    set((state) => ({
+      eventHistory: [...state.eventHistory, event],
+    })),
 }));
 

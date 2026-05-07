@@ -38,6 +38,7 @@ export function createNewGame(): GameState {
       threat: 0,
     },
     log: [],
+    eventHistory: [],
   };
 }
 

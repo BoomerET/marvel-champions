@@ -1,13 +1,14 @@
 // Track builds: 0004
 
 import { create } from "zustand";
-import type { GameState } from "../game/types";
-import { createNewGame } from "../game/createGame";
 import { shuffle } from "../utils/shuffle";
-import { dispatchGameEvent } from "../game/dispatch";
+import type { GameState } from "../game/types";
 import type { GameEvent } from "../game/events";
+import { createNewGame } from "../game/createGame";
+import { dispatchGameEvent } from "../game/dispatch";
+import { resolveVillainActivation } from "../game/rules/villainActivation";
 
-function appendEvents(
+export function appendEvents(
   existingEvents: GameState["eventHistory"],
   events: GameState["eventHistory"]
 ) {
@@ -199,63 +200,18 @@ export const useGameStore = create<GameStore>((set) => ({
       if (state.phase === "player") {
         nextPhase = "villain";
 
-        const amount = 2;
+        const villainActivation = resolveVillainActivation(state);
 
-        if (state.hero.form === "hero") {
-          const attackEvent = {
-            type: "VILLAIN_ATTACK" as const,
-            amount,
-          };
+        nextHero = villainActivation.hero ?? nextHero;
+        nextVillain = villainActivation.villain ?? nextVillain;
+        nextEventHistory =
+          villainActivation.eventHistory ?? nextEventHistory;
 
-          const damageEvent = {
-            type: "DAMAGE_DEALT" as const,
-            target: "hero" as const,
-            amount,
-          };
-
-          const shouldTriggerSpiderSense =
-            state.hero.identity.name === "Spider-Man";
-
-          const drawnCards = shouldTriggerSpiderSense
-            ? state.hero.deck.slice(0, 1)
-            : [];
-
-          nextHero = {
-            ...state.hero,
-            hitPoints: Math.max(0, state.hero.hitPoints - amount),
-            deck: shouldTriggerSpiderSense
-              ? state.hero.deck.slice(1)
-              : state.hero.deck,
-            hand: [...state.hero.hand, ...drawnCards],
-          };
-
-          nextEventHistory = appendEvents(state.eventHistory, [
-            attackEvent,
-            damageEvent,
-          ]);
-
-          nextLog.push(`Rhino attacked for ${amount} damage.`);
-
-          if (shouldTriggerSpiderSense) {
-            nextLog.push("Spider-Sense triggered. Drew 1 card.");
-          }
-        } else {
-          const schemeEvent = {
-            type: "VILLAIN_SCHEME" as const,
-            amount,
-          };
-
-          nextVillain = {
-            ...state.villain,
-            threat: state.villain.threat + amount,
-          };
-
-          nextEventHistory = appendEvents(state.eventHistory, [
-            schemeEvent,
-          ]);
-
-          nextLog.push(`Rhino schemed for ${amount} threat.`);
-        }
+        nextLog.splice(
+          0,
+          nextLog.length,
+          ...(villainActivation.log ?? nextLog)
+        );
       } else if (state.phase === "villain") {
         nextPhase = "encounter";
       } else {

@@ -10,6 +10,9 @@ export function HeroPanel() {
     const basicAttack = useGameStore((s) => s.basicAttack);
     const basicThwart = useGameStore((s) => s.basicThwart);
     const basicRecover = useGameStore((s) => s.basicRecover);
+    const toggleHeroStunned = useGameStore((s) => s.toggleHeroStunned);
+    const toggleHeroConfused = useGameStore((s) => s.toggleHeroConfused);
+    const toggleHeroTough = useGameStore((s) => s.toggleHeroTough);
 
     return (
         <section>
@@ -47,6 +50,18 @@ export function HeroPanel() {
 
             <button onClick={basicRecover}>
                 Recover
+            </button>
+
+            <button onClick={toggleHeroStunned}>
+                Toggle Stunned
+            </button>
+
+            <button onClick={toggleHeroConfused}>
+                Toggle Confused
+            </button>
+
+            <button onClick={toggleHeroTough}>
+                Toggle Tough
             </button>
         </section>
     );

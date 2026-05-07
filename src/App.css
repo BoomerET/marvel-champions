@@ -450,3 +450,20 @@ body.shift-down .card:hover .card-image {
   padding: 2px 5px;
   border-radius: 999px;
 }
+
+.card-status-overlay {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.card-status-overlay span {
+  background: rgba(180, 30, 30, 0.85);
+  color: white;
+  font-size: 10px;
+  padding: 2px 5px;
+  border-radius: 999px;
+}

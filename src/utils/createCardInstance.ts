@@ -7,6 +7,8 @@ export function createCardInstance(card: Card): CardInstance {
     instanceId: uuid(),
     exhausted: false,
     damage: 0,
+    stunned: false,
+    confused: false,
+    tough: false,
   };
 }
-

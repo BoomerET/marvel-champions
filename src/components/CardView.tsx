@@ -81,7 +81,13 @@ export function CardView({
             {card.hp !== undefined && (
               <span>HP {card.hp}</span>
             )}
-          </div></>
+          </div>
+          <div className="card-status-overlay">
+            {card.stunned && <span>STUN</span>}
+            {card.confused && <span>CONF</span>}
+            {card.tough && <span>TOUGH</span>}
+          </div>
+        </>
       ) : (
         <>
           <h3>{card.name}</h3>

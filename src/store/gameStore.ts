@@ -38,6 +38,9 @@ interface GameStore extends GameState {
   dealEncounterCard: () => void;
   resolveEncounterCard: (instanceId: string) => void;
   recordEvent: (event: GameEvent) => void;
+  toggleHeroStunned: () => void;
+  toggleHeroConfused: () => void;
+  toggleHeroTough: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -585,6 +588,54 @@ export const useGameStore = create<GameStore>((set) => ({
   recordEvent: (event) =>
     set((state) => ({
       eventHistory: [...state.eventHistory, event],
+    })),
+
+  toggleHeroStunned: () =>
+    set((state) => ({
+      hero: {
+        ...state.hero,
+        identity: {
+          ...state.hero.identity,
+          stunned: !state.hero.identity.stunned,
+        },
+      },
+
+      log: [
+        ...state.log,
+        `Hero stunned set to ${!state.hero.identity.stunned}.`,
+      ],
+    })),
+
+  toggleHeroConfused: () =>
+    set((state) => ({
+      hero: {
+        ...state.hero,
+        identity: {
+          ...state.hero.identity,
+          confused: !state.hero.identity.confused,
+        },
+      },
+
+      log: [
+        ...state.log,
+        `Hero confused set to ${!state.hero.identity.confused}.`,
+      ],
+    })),
+
+  toggleHeroTough: () =>
+    set((state) => ({
+      hero: {
+        ...state.hero,
+        identity: {
+          ...state.hero.identity,
+          tough: !state.hero.identity.tough,
+        },
+      },
+
+      log: [
+        ...state.log,
+        `Hero tough set to ${!state.hero.identity.tough}.`,
+      ],
     })),
 
 }));

@@ -27,6 +27,9 @@ export interface CardInstance extends Card {
   instanceId: string;
   exhausted?: boolean;
   damage?: number;
+  stunned?: boolean;
+  confused?: boolean;
+  tough?: boolean;
 }
 
 export interface GameState {

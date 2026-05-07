@@ -418,8 +418,8 @@ export const useGameStore = create<GameStore>((set) => ({
       };
 
       const healEvent = {
-        type: "HEALING_DONE",
-        target: "hero",
+        type: "HEALING_DONE" as const,
+        target: "hero" as const,
         amount,
       };
 

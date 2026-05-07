@@ -16,6 +16,34 @@ export function handleTriggeredAbilities(event: GameEvent) {
             );
             break;
 
+        case "BASIC_THWART":
+            console.log(
+                "Ability system saw BASIC_THWART:",
+                event
+            );
+            break;
+
+        case "THREAT_REMOVED":
+            console.log(
+                "Ability system saw THREAT_REMOVED:",
+                event
+            );
+            break;
+
+        case "BASIC_RECOVER":
+            console.log(
+                "Ability system saw BASIC_RECOVER:",
+                event
+            );
+            break;
+
+        case "HEALING_DONE":
+            console.log(
+                "Ability system saw HEALING_DONE:",
+                event
+            );
+            break;
+
         default:
             break;
     }

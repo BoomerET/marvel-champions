@@ -1,5 +1,5 @@
 export const cardImages = import.meta.glob(
-  "../assets/images/*.webp",
+  "../assets/images/**/*.webp",
   {
     eager: true,
     import: "default",
@@ -20,14 +20,23 @@ export function getCardImage(
 
   const faceSuffix = options?.face ?? "";
 
-  const doubleSidedPath =
-    `../assets/images/${image}${faceSuffix}.webp`;
+  //const doubleSidedPath =
+  //  `../assets/images/${image}${faceSuffix}.webp`;
 
-  const singleSidedPath =
-    `../assets/images/${image}.webp`;
+  //const singleSidedPath =
+  //  `../assets/images/${image}.webp`;
 
-  return (
-    cardImages[doubleSidedPath] ??
-    cardImages[singleSidedPath]
+  const matchingPath = Object.keys(cardImages).find(
+    (path) =>
+      path.endsWith(`/${image}${faceSuffix}.webp`) ||
+      path.endsWith(`/${image}.webp`)
   );
+
+  //return (
+  //  cardImages[doubleSidedPath] ??
+  //  cardImages[singleSidedPath]
+  //);
+  return matchingPath
+    ? cardImages[matchingPath]
+    : undefined;
 }

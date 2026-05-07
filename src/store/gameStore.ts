@@ -23,6 +23,7 @@ interface GameStore extends GameState {
   basicRecover: () => void;
   villainAttack: () => void;
   villainScheme: () => void;
+  dealEncounterCard: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -357,5 +358,27 @@ export const useGameStore = create<GameStore>((set) => ({
       };
     }),
 
+  dealEncounterCard: () =>
+    set((state) => {
+      const [card, ...remainingDeck] = state.encounterDeck;
+
+      if (!card) {
+        return {
+          log: [
+            ...state.log,
+            "Tried to deal an encounter card, but the encounter deck is empty.",
+          ],
+        };
+      }
+
+      return {
+        encounterDeck: remainingDeck,
+        encounterArea: [...state.encounterArea, card],
+        log: [
+          ...state.log,
+          `Dealt encounter card: ${card.name}.`,
+        ],
+      };
+    }),
 }));
 

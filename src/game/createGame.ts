@@ -1,12 +1,16 @@
 import type { GameState } from "./types";
-import { spiderManCards } from "../data/heroes/spiderMan";
-import { rhinoCards } from "../data/villains/rhino";
-import { createCardInstance } from "../utils/createCardInstance";
 import { shuffle } from "../utils/shuffle";
+import { rhinoCards } from "../data/villains/rhino";
+import { spiderManCards } from "../data/heroes/spiderMan";
+import { createCardInstance } from "../utils/createCardInstance";
+import { rhinoEncounterCards } from "../data/encounters/rhinoEncounter";
 
 export function createNewGame(): GameState {
 
   return {
+    encounterDeck: rhinoEncounterCards.map(createCardInstance),
+    encounterDiscard: [],
+    encounterArea: [],
     phase: "player",
     round: 1,
 

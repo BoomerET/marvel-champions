@@ -17,6 +17,7 @@ export interface Card {
   attack?: number;
   thwart?: number;
   recover?: number;
+  boostIcons?: number;
 }
 
 export interface CardInstance extends Card {
@@ -32,6 +33,8 @@ export interface GameState {
   villain: VillainState;
   log: string[];
   encounterArea: CardInstance[];
+  encounterDeck: CardInstance[];
+  encounterDiscard: CardInstance[];
 }
 
 export interface HeroState {

@@ -2,6 +2,7 @@ import { useGameStore } from "../store/gameStore";
 
 export function GameControls() {
     const endTurn = useGameStore((s) => s.endTurn);
+    const dealEncounterCard = useGameStore((s) => s.dealEncounterCard);
     const readyAllHeroCards = useGameStore(
         (s) => s.readyAllHeroCards
     );
@@ -14,6 +15,10 @@ export function GameControls() {
 
             <button onClick={readyAllHeroCards}>
                 Ready All
+            </button>
+
+            <button onClick={dealEncounterCard}>
+                Deal Encounter
             </button>
         </section>
     );

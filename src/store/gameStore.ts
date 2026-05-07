@@ -21,10 +21,30 @@ interface GameStore extends GameState {
   basicAttack: () => void;
   basicThwart: () => void;
   basicRecover: () => void;
+  villainAttack: () => void;
+  villainScheme: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
   ...createNewGame(),
+
+  villainAttack: () =>
+    set((state) => ({
+      hero: {
+        ...state.hero,
+        hitPoints: Math.max(
+          0,
+          state.hero.hitPoints - 2
+        ),
+      },
+
+      log: [
+        ...state.log,
+        "Rhino attacked for 2 damage.",
+      ],
+    })),
+  villainScheme: () => { },
+
   drawCards: (count) =>
     set((state) => {
       let deck = [...state.hero.deck];

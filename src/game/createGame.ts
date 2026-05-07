@@ -5,6 +5,7 @@ import { createCardInstance } from "../utils/createCardInstance";
 import { shuffle } from "../utils/shuffle";
 
 export function createNewGame(): GameState {
+
   return {
     phase: "player",
     round: 1,
@@ -24,6 +25,7 @@ export function createNewGame(): GameState {
       playArea: [],
 
       hitPoints: 10,
+      remainingActivations: 1,
     },
 
     villain: {
@@ -32,6 +34,7 @@ export function createNewGame(): GameState {
       threat: 0,
     },
 
+    encounterArea: [],
     log: [],
   };
 }

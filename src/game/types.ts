@@ -31,6 +31,7 @@ export interface GameState {
   hero: HeroState;
   villain: VillainState;
   log: string[];
+  encounterArea: CardInstance[];
 }
 
 export interface HeroState {
@@ -41,6 +42,7 @@ export interface HeroState {
   discard: CardInstance[];
   playArea: CardInstance[];
   hitPoints: number;
+  remainingActivations: number;
 }
 
 export interface VillainState {
@@ -48,3 +50,4 @@ export interface VillainState {
   hitPoints: number;
   threat: number;
 }
+

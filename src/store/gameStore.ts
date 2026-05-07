@@ -39,8 +39,6 @@ interface GameStore extends GameState {
   recordEvent: (event: GameEvent) => void;
 }
 
-
-
 export const useGameStore = create<GameStore>((set) => ({
 
   ...createNewGame(),
@@ -190,15 +188,73 @@ export const useGameStore = create<GameStore>((set) => ({
 
   endTurn: () =>
     set((state) => {
-      let nextPhase: typeof state.phase;
+      let nextPhase = state.phase;
       let nextRound = state.round;
+
+      let nextHero = state.hero;
+      let nextVillain = state.villain;
+      let nextEventHistory = state.eventHistory;
+      const nextLog = [...state.log];
 
       if (state.phase === "player") {
         nextPhase = "villain";
+
+        const amount = 2;
+
         if (state.hero.form === "hero") {
-          // attack
+          const attackEvent = {
+            type: "VILLAIN_ATTACK" as const,
+            amount,
+          };
+
+          const damageEvent = {
+            type: "DAMAGE_DEALT" as const,
+            target: "hero" as const,
+            amount,
+          };
+
+          const shouldTriggerSpiderSense =
+            state.hero.identity.name === "Spider-Man";
+
+          const drawnCards = shouldTriggerSpiderSense
+            ? state.hero.deck.slice(0, 1)
+            : [];
+
+          nextHero = {
+            ...state.hero,
+            hitPoints: Math.max(0, state.hero.hitPoints - amount),
+            deck: shouldTriggerSpiderSense
+              ? state.hero.deck.slice(1)
+              : state.hero.deck,
+            hand: [...state.hero.hand, ...drawnCards],
+          };
+
+          nextEventHistory = appendEvents(state.eventHistory, [
+            attackEvent,
+            damageEvent,
+          ]);
+
+          nextLog.push(`Rhino attacked for ${amount} damage.`);
+
+          if (shouldTriggerSpiderSense) {
+            nextLog.push("Spider-Sense triggered. Drew 1 card.");
+          }
         } else {
-          // scheme
+          const schemeEvent = {
+            type: "VILLAIN_SCHEME" as const,
+            amount,
+          };
+
+          nextVillain = {
+            ...state.villain,
+            threat: state.villain.threat + amount,
+          };
+
+          nextEventHistory = appendEvents(state.eventHistory, [
+            schemeEvent,
+          ]);
+
+          nextLog.push(`Rhino schemed for ${amount} threat.`);
         }
       } else if (state.phase === "villain") {
         nextPhase = "encounter";
@@ -207,14 +263,15 @@ export const useGameStore = create<GameStore>((set) => ({
         nextRound += 1;
       }
 
+      nextLog.push(`Phase advanced to ${nextPhase}.`);
+
       return {
         phase: nextPhase,
         round: nextRound,
-
-        log: [
-          ...state.log,
-          `Phase advanced to ${nextPhase}.`,
-        ],
+        hero: nextHero,
+        villain: nextVillain,
+        eventHistory: nextEventHistory,
+        log: nextLog,
       };
     }),
 

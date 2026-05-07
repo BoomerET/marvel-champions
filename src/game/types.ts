@@ -19,6 +19,7 @@ export interface Card {
   attack?: number;
   thwart?: number;
   recover?: number;
+  defense?: number;
   boostIcons?: number;
 }
 

@@ -23,6 +23,7 @@ export function HeroPanel() {
                             ? "a"
                             : "b"
                     }
+                    identityForm={hero.form}
                 />
             </div>
 

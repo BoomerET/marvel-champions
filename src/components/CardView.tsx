@@ -7,6 +7,7 @@ interface Props {
   onClick?: () => void;
   size?: "normal" | "small";
   face?: "a" | "b";
+  identityForm?: "hero" | "alterEgo";
 }
 
 export function CardView({
@@ -14,6 +15,7 @@ export function CardView({
   onClick,
   size = "normal",
   face,
+  identityForm,
 }: Props) {
   const [flippedPreview, setFlippedPreview] = useState(false);
 
@@ -60,10 +62,25 @@ export function CardView({
             className="card-image"
           />
           <div className="card-stat-overlay">
-            {card.attack !== undefined && <span>ATK {card.attack}</span>}
-            {card.thwart !== undefined && <span>THW {card.thwart}</span>}
-            {card.recover !== undefined && <span>REC {card.recover}</span>}
-            {card.hp !== undefined && <span>HP {card.hp}</span>}
+            {card.attack !== undefined && identityForm === "hero" && (
+              <span>ATK {card.attack}</span>
+            )}
+
+            {card.thwart !== undefined && identityForm === "hero" && (
+              <span>THW {card.thwart}</span>
+            )}
+
+            {card.defense !== undefined && identityForm === "hero" && (
+              <span>DEF {card.defense}</span>
+            )}
+
+            {card.recover !== undefined && identityForm === "alterEgo" && (
+              <span>REC {card.recover}</span>
+            )}
+
+            {card.hp !== undefined && (
+              <span>HP {card.hp}</span>
+            )}
           </div></>
       ) : (
         <>

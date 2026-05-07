@@ -528,22 +528,33 @@ export const useGameStore = create<GameStore>((set) => ({
 
   dealEncounterCard: () =>
     set((state) => {
-      const [card, ...remainingDeck] = state.encounterDeck;
+      let encounterDeck = [...state.encounterDeck];
+      let encounterDiscard = [...state.encounterDiscard];
+      const nextLog = [...state.log];
+
+      if (encounterDeck.length === 0 && encounterDiscard.length > 0) {
+        encounterDeck = shuffle(encounterDiscard);
+        encounterDiscard = [];
+        nextLog.push("Shuffled encounter discard into encounter deck.");
+      }
+
+      const card = encounterDeck.shift();
 
       if (!card) {
         return {
           log: [
-            ...state.log,
+            ...nextLog,
             "Tried to deal an encounter card, but the encounter deck is empty.",
           ],
         };
       }
 
       return {
-        encounterDeck: remainingDeck,
+        encounterDeck,
+        encounterDiscard,
         encounterArea: [...state.encounterArea, card],
         log: [
-          ...state.log,
+          ...nextLog,
           `Dealt encounter card: ${card.name}.`,
         ],
       };

@@ -18,7 +18,7 @@ export function GameBoard() {
 
       <section>
         <div>Round: {round}</div>
-        <div>Phase: {phase}</div>
+        <h2>Phase: {phase}</h2>
       </section>
 
       <GameControls />

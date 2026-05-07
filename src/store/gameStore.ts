@@ -43,7 +43,19 @@ export const useGameStore = create<GameStore>((set) => ({
         "Rhino attacked for 2 damage.",
       ],
     })),
-  villainScheme: () => { },
+
+  villainScheme: () =>
+    set((state) => ({
+      villain: {
+        ...state.villain,
+        threat: state.villain.threat + 2,
+      },
+
+      log: [
+        ...state.log,
+        "Rhino schemed for 2 threat.",
+      ],
+    })),
 
   drawCards: (count) =>
     set((state) => {
@@ -116,11 +128,34 @@ export const useGameStore = create<GameStore>((set) => ({
     }),
 
   endTurn: () =>
-    set((state) => ({
-      phase: state.phase === "player" ? "villain" : "player",
-      round: state.phase === "villain" ? state.round + 1 : state.round,
-      log: [...state.log, "Ended turn."],
-    })),
+    set((state) => {
+      let nextPhase = state.phase;
+      let nextRound = state.round;
+
+      if (state.phase === "player") {
+        nextPhase = "villain";
+        if (state.hero.form === "hero") {
+          // attack
+        } else {
+          // scheme
+        }
+      } else if (state.phase === "villain") {
+        nextPhase = "encounter";
+      } else {
+        nextPhase = "player";
+        nextRound += 1;
+      }
+
+      return {
+        phase: nextPhase,
+        round: nextRound,
+
+        log: [
+          ...state.log,
+          `Phase advanced to ${nextPhase}.`,
+        ],
+      };
+    }),
 
   pushLog: (message) =>
     set((state) => ({
@@ -144,6 +179,7 @@ export const useGameStore = create<GameStore>((set) => ({
         }.`,
       ],
     })),
+
   damageHero: (amount) =>
     set((state) => ({
       hero: {
@@ -170,6 +206,7 @@ export const useGameStore = create<GameStore>((set) => ({
       },
       log: [...state.log, `Villain took ${amount} damage.`],
     })),
+
   addThreat: (amount) =>
     set((state) => ({
       villain: {
@@ -319,7 +356,6 @@ export const useGameStore = create<GameStore>((set) => ({
         ],
       };
     }),
-
 
 }));
 

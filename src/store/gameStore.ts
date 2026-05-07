@@ -315,6 +315,16 @@ export const useGameStore = create<GameStore>((set) => ({
       const amount =
         state.hero.identity.thwart ?? 0;
 
+      dispatchGameEvent({
+        type: "BASIC_THWART",
+        amount,
+      });
+
+      dispatchGameEvent({
+        type: "THREAT_REMOVED",
+        amount,
+      });
+
       return {
         hero: {
           ...state.hero,
@@ -350,6 +360,17 @@ export const useGameStore = create<GameStore>((set) => ({
 
       const amount =
         state.hero.identity.recover ?? 0;
+
+      dispatchGameEvent({
+        type: "BASIC_RECOVER",
+        amount,
+      });
+
+      dispatchGameEvent({
+        type: "HEALING_DONE",
+        target: "hero",
+        amount,
+      });
 
       return {
         hero: {

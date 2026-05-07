@@ -22,14 +22,15 @@ export function GameBoard() {
         <h2>Phase: {phase}</h2>
       </section>
 
-      <GameControls />
-
       <div className="table-top">
         <VillainPanel />
         <HeroPanel />
       </div>
+
       <EncounterArea />
+
       <GameControls />
+
       <div className="table-zones">
         <DeckPanel />
         <DiscardPanel />

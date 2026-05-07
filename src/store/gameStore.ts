@@ -7,6 +7,15 @@ import { shuffle } from "../utils/shuffle";
 import { dispatchGameEvent } from "../game/dispatch";
 import type { GameEvent } from "../game/events";
 
+function appendEvents(
+  existingEvents: GameState["eventHistory"],
+  events: GameState["eventHistory"]
+) {
+  events.forEach(dispatchGameEvent);
+
+  return [...existingEvents, ...events];
+}
+
 interface GameStore extends GameState {
   drawCards: (count: number) => void;
   playCard: (instanceId: string) => void;
@@ -30,7 +39,10 @@ interface GameStore extends GameState {
   recordEvent: (event: GameEvent) => void;
 }
 
+
+
 export const useGameStore = create<GameStore>((set) => ({
+
   ...createNewGame(),
 
   villainAttack: () =>
@@ -204,13 +216,26 @@ export const useGameStore = create<GameStore>((set) => ({
     })),
 
   damageVillain: (amount) =>
-    set((state) => ({
-      villain: {
-        ...state.villain,
-        hitPoints: Math.max(0, state.villain.hitPoints - amount),
-      },
-      log: [...state.log, `Villain took ${amount} damage.`],
-    })),
+    set((state) => {
+      const damageEvent = {
+        type: "DAMAGE_DEALT" as const,
+        target: "villain" as const,
+        amount,
+      };
+
+      return {
+        villain: {
+          ...state.villain,
+          hitPoints: Math.max(0, state.villain.hitPoints - amount),
+        },
+
+        eventHistory: appendEvents(state.eventHistory, [
+          damageEvent,
+        ]),
+
+        log: [...state.log, `Villain took ${amount} damage.`],
+      };
+    }),
 
   addThreat: (amount) =>
     set((state) => ({
@@ -332,15 +357,24 @@ export const useGameStore = create<GameStore>((set) => ({
       const amount =
         state.hero.identity.thwart ?? 0;
 
-      dispatchGameEvent({
-        type: "BASIC_THWART",
+      const basicThwartEvent = {
+        type: "BASIC_THWART" as const,
         amount,
-      });
+      };
 
-      dispatchGameEvent({
-        type: "THREAT_REMOVED",
+      const threatRemovedEvent = {
+        type: "THREAT_REMOVED" as const,
         amount,
-      });
+      };
+
+      dispatchGameEvent(basicThwartEvent);
+
+      dispatchGameEvent(threatRemovedEvent);
+
+      eventHistory: appendEvents(state.eventHistory, [
+        basicThwartEvent,
+        threatRemovedEvent,
+      ]),
 
       return {
         hero: {
@@ -378,16 +412,20 @@ export const useGameStore = create<GameStore>((set) => ({
       const amount =
         state.hero.identity.recover ?? 0;
 
-      dispatchGameEvent({
-        type: "BASIC_RECOVER",
+      const recoverEvent = {
+        type: "BASIC_RECOVER" as const,
         amount,
-      });
+      };
 
-      dispatchGameEvent({
+      const healEvent = {
         type: "HEALING_DONE",
         target: "hero",
         amount,
-      });
+      };
+
+      dispatchGameEvent(recoverEvent);
+
+      dispatchGameEvent(healEvent);
 
       return {
         hero: {
@@ -457,5 +495,6 @@ export const useGameStore = create<GameStore>((set) => ({
     set((state) => ({
       eventHistory: [...state.eventHistory, event],
     })),
+
 }));
 

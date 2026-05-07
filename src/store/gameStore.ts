@@ -166,24 +166,26 @@ export const useGameStore = create<GameStore>((set) => ({
         threat: Math.max(0, state.villain.threat - amount),
       },
       log: [...state.log, `Removed ${amount} threat.`],
-    })), toggleExhausted: (instanceId) =>
-      set((state) => ({
-        hero: {
-          ...state.hero,
-          playArea: state.hero.playArea.map((card) =>
-            card.instanceId === instanceId
-              ? { ...card, exhausted: !card.exhausted }
-              : card
-          ),
-          identity:
-            state.hero.identity.instanceId === instanceId
-              ? {
-                ...state.hero.identity,
-                exhausted: !state.hero.identity.exhausted,
-              }
-              : state.hero.identity,
-        },
-      })),
+    })),
+
+  toggleExhausted: (instanceId) =>
+    set((state) => ({
+      hero: {
+        ...state.hero,
+        playArea: state.hero.playArea.map((card) =>
+          card.instanceId === instanceId
+            ? { ...card, exhausted: !card.exhausted }
+            : card
+        ),
+        identity:
+          state.hero.identity.instanceId === instanceId
+            ? {
+              ...state.hero.identity,
+              exhausted: !state.hero.identity.exhausted,
+            }
+            : state.hero.identity,
+      },
+    })),
 
   readyAllHeroCards: () =>
     set((state) => ({
@@ -297,5 +299,7 @@ export const useGameStore = create<GameStore>((set) => ({
         ],
       };
     }),
+
+
 }));
 

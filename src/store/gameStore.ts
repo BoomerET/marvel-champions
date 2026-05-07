@@ -18,6 +18,9 @@ interface GameStore extends GameState {
   removeThreat: (amount: number) => void;
   toggleExhausted: (instanceId: string) => void;
   readyAllHeroCards: () => void;
+  basicAttack: () => void;
+  basicThwart: () => void;
+  basicRecover: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -197,5 +200,102 @@ export const useGameStore = create<GameStore>((set) => ({
       },
       log: [...state.log, "Readied all hero cards."],
     })),
+
+  basicAttack: () =>
+    set((state) => {
+      if (state.hero.identity.exhausted) {
+        return state;
+      }
+
+      const amount =
+        state.hero.identity.attack ?? 0;
+
+      return {
+        hero: {
+          ...state.hero,
+          identity: {
+            ...state.hero.identity,
+            exhausted: true,
+          },
+        },
+
+        villain: {
+          ...state.villain,
+          hitPoints: Math.max(
+            0,
+            state.villain.hitPoints - amount
+          ),
+        },
+
+        log: [
+          ...state.log,
+          `Hero attacked for ${amount}.`,
+        ],
+      };
+    }),
+
+  basicThwart: () =>
+    set((state) => {
+      if (state.hero.identity.exhausted) {
+        return state;
+      }
+
+      const amount =
+        state.hero.identity.thwart ?? 0;
+
+      return {
+        hero: {
+          ...state.hero,
+          identity: {
+            ...state.hero.identity,
+            exhausted: true,
+          },
+        },
+
+        villain: {
+          ...state.villain,
+          threat: Math.max(
+            0,
+            state.villain.threat - amount
+          ),
+        },
+
+        log: [
+          ...state.log,
+          `Hero thwarted for ${amount}.`,
+        ],
+      };
+    }),
+
+  basicRecover: () =>
+    set((state) => {
+      if (
+        state.hero.identity.exhausted ||
+        state.hero.form !== "alterEgo"
+      ) {
+        return state;
+      }
+
+      const amount =
+        state.hero.identity.recover ?? 0;
+
+      return {
+        hero: {
+          ...state.hero,
+          identity: {
+            ...state.hero.identity,
+            exhausted: true,
+          },
+
+          hitPoints:
+            state.hero.hitPoints + amount,
+        },
+
+        log: [
+          ...state.log,
+          `Hero recovered ${amount} HP.`,
+        ],
+      };
+    }),
 }));
 

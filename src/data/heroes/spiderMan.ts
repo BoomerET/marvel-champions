@@ -8,6 +8,9 @@ export const spiderManCards: Card[] = [
     image: "01001",
     hp: 10,
     text: ["Enhanced Spider-Sense."],
+    attack: 2,
+    thwart: 1,
+    recover: 3,
   },
 
   {

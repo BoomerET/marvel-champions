@@ -1,3 +1,5 @@
+export type IdentityForm = "hero" | "alterEgo";
+
 export type Phase =
   | "setup"
   | "player"
@@ -8,26 +10,19 @@ export interface Card {
   code: string;
   name: string;
   type: string;
-
   image?: string;
-
   text?: string[];
   cost?: number;
-
   hp?: number;
+  attack?: number;
+  thwart?: number;
+  recover?: number;
 }
 
 export interface CardInstance extends Card {
   instanceId: string;
   exhausted?: boolean;
   damage?: number;
-}
-
-export interface HeroState {
-  identity: CardInstance;
-  hand: CardInstance[];
-  deck: CardInstance[];
-  discard: CardInstance[];
 }
 
 export interface GameState {
@@ -38,17 +33,13 @@ export interface GameState {
   log: string[];
 }
 
-export type IdentityForm = "hero" | "alterEgo";
-
 export interface HeroState {
   identity: CardInstance;
   form: IdentityForm;
-
   hand: CardInstance[];
   deck: CardInstance[];
   discard: CardInstance[];
   playArea: CardInstance[];
-
   hitPoints: number;
 }
 

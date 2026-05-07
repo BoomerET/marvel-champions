@@ -7,6 +7,9 @@ export function HeroPanel() {
     const damageHero = useGameStore((s) => s.damageHero);
     const healHero = useGameStore((s) => s.healHero);
     const toggleExhausted = useGameStore((s) => s.toggleExhausted);
+    const basicAttack = useGameStore((s) => s.basicAttack);
+    const basicThwart = useGameStore((s) => s.basicThwart);
+    const basicRecover = useGameStore((s) => s.basicRecover);
 
     return (
         <section>
@@ -31,6 +34,17 @@ export function HeroPanel() {
             </button>
             <button onClick={() => toggleExhausted(hero.identity.instanceId)}>
                 Exhaust / Ready
+            </button>
+            <button onClick={basicAttack}>
+                Attack
+            </button>
+
+            <button onClick={basicThwart}>
+                Thwart
+            </button>
+
+            <button onClick={basicRecover}>
+                Recover
             </button>
         </section>
     );

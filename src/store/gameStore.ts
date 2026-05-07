@@ -4,6 +4,7 @@ import { create } from "zustand";
 import type { GameState } from "../game/types";
 import { createNewGame } from "../game/createGame";
 import { shuffle } from "../utils/shuffle";
+import { dispatchGameEvent } from "../game/dispatch";
 
 interface GameStore extends GameState {
   drawCards: (count: number) => void;
@@ -268,8 +269,18 @@ export const useGameStore = create<GameStore>((set) => ({
         return state;
       }
 
-      const amount =
-        state.hero.identity.attack ?? 0;
+      const amount = state.hero.identity.attack ?? 0;
+
+      dispatchGameEvent({
+        type: "BASIC_ATTACK",
+        amount,
+      });
+
+      dispatchGameEvent({
+        type: "DAMAGE_DEALT",
+        target: "villain",
+        amount,
+      });
 
       return {
         hero: {

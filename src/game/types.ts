@@ -21,6 +21,7 @@ export interface Card {
   recover?: number;
   defense?: number;
   boostIcons?: number;
+  scheme?: number;
 }
 
 export interface CardInstance extends Card {

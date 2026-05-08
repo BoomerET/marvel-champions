@@ -8,5 +8,7 @@ export const rhinoCards: Card[] = [
         image: "01094",
         hp: 14,
         text: ["Brute force villain placeholder."],
+        scheme: 1,
+        attack: 2,
     },
 ];

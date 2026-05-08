@@ -4,19 +4,24 @@ import { appendEvents } from "../../store/gameStore";
 export function resolveVillainActivation(
     state: GameState
 ): Partial<GameState> {
-    const amount = 2;
+    const attackAmount =
+        state.villain.identity.attack ?? 0;
+
+    const schemeAmount =
+        state.villain.identity.scheme ?? 0;
+
     const nextLog = [...state.log];
 
     if (state.hero.form === "hero") {
         const attackEvent = {
             type: "VILLAIN_ATTACK" as const,
-            amount,
+            amount: attackAmount,
         };
 
         const damageEvent = {
             type: "DAMAGE_DEALT" as const,
             target: "hero" as const,
-            amount,
+            amount: attackAmount,
         };
 
         const shouldTriggerSpiderSense =
@@ -39,7 +44,7 @@ export function resolveVillainActivation(
 
         const damageAmount = Math.max(
             0,
-            amount - defense
+            attackAmount - defense
         );
 
         const nextHero = {
@@ -94,15 +99,15 @@ export function resolveVillainActivation(
 
     const schemeEvent = {
         type: "VILLAIN_SCHEME" as const,
-        amount,
+        amount: schemeAmount,
     };
 
-    nextLog.push(`Rhino schemed for ${amount} threat.`);
+    nextLog.push(`Rhino schemed for ${schemeAmount} threat.`);
 
     return {
         villain: {
             ...state.villain,
-            threat: state.villain.threat + amount,
+            threat: state.villain.threat + schemeAmount,
         },
         eventHistory: appendEvents(state.eventHistory, [
             schemeEvent,

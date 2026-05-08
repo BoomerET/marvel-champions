@@ -57,15 +57,19 @@ export function CardView({
     face: previewFace,
   });
 
+  const className = [
+    "card",
+    `card--${size}`,
+    card.exhausted ? "card--exhausted" : "",
+    isSelected ? "card--selected" : "",
+    isPendingPlay ? "card--pending-play" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <div
-      className={`
-        card
-        card--${size}
-        ${card.exhausted ? "card--exhausted" : ""}
-        ${isSelected ? "card--selected" : ""}
-        ${isPendingPlay ? "card--pending-play" : ""}
-      `}
+      className={className}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {

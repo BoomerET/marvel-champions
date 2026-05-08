@@ -54,6 +54,7 @@ export interface HeroState {
   discard: CardInstance[];
   playArea: CardInstance[];
   remainingActivations: number;
+  isDefending: boolean;
 }
 
 export interface VillainState {

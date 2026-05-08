@@ -6,6 +6,7 @@ export function HeroPanel() {
     const flipIdentity = useGameStore((s) => s.flipIdentity);
     const damageHero = useGameStore((s) => s.damageHero);
     const healHero = useGameStore((s) => s.healHero);
+    const defend = useGameStore((s) => s.defend);
     const toggleExhausted = useGameStore((s) => s.toggleExhausted);
     const basicAttack = useGameStore((s) => s.basicAttack);
     const basicThwart = useGameStore((s) => s.basicThwart);
@@ -62,6 +63,10 @@ export function HeroPanel() {
 
             <button onClick={toggleHeroTough}>
                 Toggle Tough
+            </button>
+
+            <button onClick={defend}>
+                Defend
             </button>
         </section>
     );

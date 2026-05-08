@@ -32,6 +32,16 @@ export function resolveVillainActivation(
 
         const isTough = state.hero.identity.tough;
 
+        const defense =
+            state.hero.isDefending
+                ? state.hero.identity.defense ?? 0
+                : 0;
+
+        const damageAmount = Math.max(
+            0,
+            amount - defense
+        );
+
         const nextHero = {
             ...state.hero,
 
@@ -42,13 +52,25 @@ export function resolveVillainActivation(
 
             hitPoints: isTough
                 ? state.hero.hitPoints
-                : Math.max(0, state.hero.hitPoints - amount),
+                : Math.max(
+                    0,
+                    state.hero.hitPoints - damageAmount
+                ),
 
             deck: remainingDeck,
             hand: [...state.hero.hand, ...drawnCards],
+            isDefending: false,
         };
 
-        nextLog.push(`Rhino attacked for ${amount} damage.`);
+        nextLog.push(
+            `Rhino attacked for ${damageAmount} damage.`
+        );
+
+        if (state.hero.isDefending) {
+            nextLog.push(
+                `Defense reduced damage by ${defense}.`
+            );
+        }
 
         if (shouldTriggerSpiderSense) {
             nextLog.push("Spider-Sense triggered. Drew 1 card.");

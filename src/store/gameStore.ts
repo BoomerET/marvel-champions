@@ -41,10 +41,10 @@ interface GameStore extends GameState {
   toggleHeroStunned: () => void;
   toggleHeroConfused: () => void;
   toggleHeroTough: () => void;
+  defend: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
-
   ...createNewGame(),
 
   villainAttack: () =>
@@ -724,5 +724,31 @@ export const useGameStore = create<GameStore>((set) => ({
       ],
     })),
 
+  defend: () =>
+    set((state) => {
+      if (state.hero.form !== "hero") {
+        return {
+          log: [...state.log, "Cannot defend while in alter-ego form."],
+        };
+      }
+
+      if (state.hero.identity.exhausted) {
+        return {
+          log: [...state.log, "Cannot defend while exhausted."],
+        };
+      }
+
+      return {
+        hero: {
+          ...state.hero,
+          isDefending: true,
+          identity: {
+            ...state.hero.identity,
+            exhausted: true,
+          },
+        },
+        log: [...state.log, "Hero is defending."],
+      };
+    }),
 }));
 

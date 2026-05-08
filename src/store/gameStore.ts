@@ -430,6 +430,22 @@ export const useGameStore = create<GameStore>((set) => ({
 
   basicThwart: () =>
     set((state) => {
+      if (state.hero.identity.confused) {
+        return {
+          hero: {
+            ...state.hero,
+            identity: {
+              ...state.hero.identity,
+              confused: false,
+            },
+          },
+
+          log: [
+            ...state.log,
+            "Thwart canceled by CONFUSED. Removed confused status.",
+          ],
+        };
+      }
       if (state.hero.identity.exhausted) {
         return {
           log: [

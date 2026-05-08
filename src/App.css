@@ -314,29 +314,15 @@ body.shift-down .card:hover .card-image {
   min-width: 200px;
 }
 
-.deck-pile {
-  margin-bottom: 12px;
-}
-
-.deck-card-back {
-  width: 120px;
-  height: 168px;
-  border-radius: 12px;
-  border: 2px solid #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  font-weight: bold;
-  background: #222;
-  color: white;
-}
-
 .game-controls {
   display: flex;
   gap: 12px;
   margin-bottom: 24px;
 }
+
+/*
+ * Identity card slot
+*/
 
 .identity-card-slot {
   width: 260px;
@@ -355,12 +341,9 @@ body.shift-down .card:hover .card-image {
   transform: rotate(90deg);
 }
 
-.card {
-  background: transparent;
-  border: none;
-  padding: 0;
-  min-height: unset;
-}
+/*
+ * Encounter area
+*/
 
 .encounter-area {
   display: flex;
@@ -384,6 +367,28 @@ body.shift-down .card:hover .card-image {
   font-size: 32px;
   font-weight: bold;
   background: #3a1111;
+  color: white;
+}
+
+/*
+ * Deck pile
+*/
+
+.deck-pile {
+  margin-bottom: 12px;
+}
+
+.deck-card-back {
+  width: 120px;
+  height: 168px;
+  border-radius: 12px;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+  background: #222;
   color: white;
 }
 
@@ -419,6 +424,10 @@ body.shift-down .card:hover .card-image {
   font-size: 18px;
 }
 
+/*
+ * Game log
+*/
+
 .event-history {
   max-height: 300px;
   overflow-y: auto;
@@ -431,6 +440,17 @@ body.shift-down .card:hover .card-image {
 .event-history pre {
   margin: 0 0 12px 0;
   font-size: 12px;
+}
+
+/*
+ * Overlays for cards
+*/
+
+.card {
+  background: transparent;
+  border: none;
+  padding: 0;
+  min-height: unset;
 }
 
 .card-stat-overlay {

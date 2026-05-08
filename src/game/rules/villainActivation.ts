@@ -1,7 +1,9 @@
 import type { GameState } from "../types";
 import { appendEvents } from "../../store/gameStore";
 
-export function resolveVillainActivation(state: GameState): Partial<GameState> {
+export function resolveVillainActivation(
+    state: GameState
+): Partial<GameState> {
     const amount = 2;
     const nextLog = [...state.log];
 
@@ -24,12 +26,25 @@ export function resolveVillainActivation(state: GameState): Partial<GameState> {
             ? state.hero.deck.slice(0, 1)
             : [];
 
+        const remainingDeck = shouldTriggerSpiderSense
+            ? state.hero.deck.slice(1)
+            : state.hero.deck;
+
+        const isTough = state.hero.identity.tough;
+
         const nextHero = {
             ...state.hero,
-            hitPoints: Math.max(0, state.hero.hitPoints - amount),
-            deck: shouldTriggerSpiderSense
-                ? state.hero.deck.slice(1)
-                : state.hero.deck,
+
+            identity: {
+                ...state.hero.identity,
+                tough: isTough ? false : state.hero.identity.tough,
+            },
+
+            hitPoints: isTough
+                ? state.hero.hitPoints
+                : Math.max(0, state.hero.hitPoints - amount),
+
+            deck: remainingDeck,
             hand: [...state.hero.hand, ...drawnCards],
         };
 
@@ -39,12 +54,18 @@ export function resolveVillainActivation(state: GameState): Partial<GameState> {
             nextLog.push("Spider-Sense triggered. Drew 1 card.");
         }
 
+        if (isTough) {
+            nextLog.push("Damage prevented by TOUGH. Removed tough status.");
+        }
+
         return {
             hero: nextHero,
-            eventHistory: appendEvents(state.eventHistory, [
-                attackEvent,
-                damageEvent,
-            ]),
+            eventHistory: appendEvents(
+                state.eventHistory,
+                isTough
+                    ? [attackEvent]
+                    : [attackEvent, damageEvent]
+            ),
             log: nextLog,
         };
     }

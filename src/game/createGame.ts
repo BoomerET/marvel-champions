@@ -30,6 +30,7 @@ export function createNewGame(): GameState {
 
       hitPoints: 10,
       remainingActivations: 1,
+      maxHitPoints: 10,
     },
 
     villain: {

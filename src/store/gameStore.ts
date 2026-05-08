@@ -313,7 +313,10 @@ export const useGameStore = create<GameStore>((set) => ({
   healHero: (amount) =>
 
     set((state) => ({
-
+      hitPoints: Math.min(
+        state.hero.maxHitPoints,
+        state.hero.hitPoints + amount
+      ),
       hero: {
         ...state.hero,
         hitPoints: state.hero.hitPoints + amount,
@@ -554,6 +557,7 @@ export const useGameStore = create<GameStore>((set) => ({
 
   basicRecover: () =>
     set((state) => {
+
       if (state.hero.identity.exhausted) {
         return {
           log: [
@@ -586,6 +590,10 @@ export const useGameStore = create<GameStore>((set) => ({
       };
 
       return {
+        hitPoints: Math.min(
+          state.hero.maxHitPoints,
+          state.hero.hitPoints + amount
+        ),
         hero: {
           ...state.hero,
           identity: {

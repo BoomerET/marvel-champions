@@ -45,13 +45,14 @@ export interface GameState {
 }
 
 export interface HeroState {
-  identity: CardInstance;
+  hitPoints: number;
   form: IdentityForm;
+  maxHitPoints: number;
   hand: CardInstance[];
   deck: CardInstance[];
+  identity: CardInstance;
   discard: CardInstance[];
   playArea: CardInstance[];
-  hitPoints: number;
   remainingActivations: number;
 }
 

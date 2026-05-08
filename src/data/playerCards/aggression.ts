@@ -1,6 +1,6 @@
 import type { Card } from "../../game/types";
 
-export const basicPlayerCards: Card[] = [
+export const aggressionPlayerCards: Card[] = [
   {
     "code": "01050",
     "name": "Hulk",

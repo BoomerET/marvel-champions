@@ -8,6 +8,13 @@ export type Phase =
   | "villain"
   | "encounter";
 
+export type ResourceType =
+  | "mental"
+  | "wild"
+  | "energy"
+  | "physical"
+
+
 export interface Card {
   code: string;
   name: string;
@@ -23,7 +30,7 @@ export interface Card {
   boostIcons?: number;
   scheme?: number;
   boostText?: string[];
-  resources?: number;
+  resources?: ResourceType[];
 }
 
 export interface CardInstance extends Card {

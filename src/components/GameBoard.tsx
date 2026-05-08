@@ -3,6 +3,7 @@ import { PlayArea } from "./PlayArea";
 import { HeroPanel } from "./HeroPanel";
 import { DeckPanel } from "./DeckPanel";
 import { PlayerHand } from "./PlayerHand";
+import { DeckLoader } from "./DeckLoader";
 import { VillainPanel } from "./VillainPanel";
 import { DiscardPanel } from "./DiscardPanel";
 import { EventHistory } from "./EventHistory";
@@ -19,6 +20,8 @@ export function GameBoard() {
   return (
     <main>
       <h1>Marvel Champions</h1>
+
+      <DeckLoader />
 
       <section>
         <div>Round: {round}</div>

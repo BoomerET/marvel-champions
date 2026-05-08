@@ -10,6 +10,7 @@ import { resolveVillainActivation } from "../game/rules/villainActivation";
 import { buildPlayerDeckFromMarvelCdb } from "../game/buildDeckFromMarvelCdb";
 import marvelDeck from "../data/decks/spiderMan.json";
 import { heroCardByCode } from "../data/heroes";
+import { fetchMarvelCdbDeck } from "../api/marvelCdb";
 
 export function appendEvents(
   existingEvents: GameState["eventHistory"],
@@ -49,6 +50,7 @@ interface GameStore extends GameState {
   togglePaymentCard: (instanceId: string) => void;
   confirmPlayCard: () => void;
   cancelPayment: () => void;
+  loadMarvelCdbDeck: (deckId: string) => Promise<void>;
 }
 
 const heroCode = marvelDeck.hero_code.replace(
@@ -964,6 +966,26 @@ export const useGameStore = create<GameStore>((set) => ({
         ],
       };
     }),
+
+  loadMarvelCdbDeck: async (deckId) => {
+    const marvelDeck = await fetchMarvelCdbDeck(deckId);
+
+    const heroCode = marvelDeck.hero_code.replace(/[ab]$/, "");
+    const hero = heroCardByCode.get(heroCode);
+
+    if (!hero) {
+      throw new Error(`Hero not found for code ${heroCode}`);
+    }
+
+    const deck = buildPlayerDeckFromMarvelCdb(marvelDeck);
+
+    set(
+      createNewGame({
+        hero,
+        deck,
+      })
+    );
+  },
 
 }));
 

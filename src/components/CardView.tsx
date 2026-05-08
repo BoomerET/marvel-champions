@@ -8,6 +8,8 @@ interface Props {
   size?: "normal" | "small";
   face?: "a" | "b";
   identityForm?: "hero" | "alterEgo";
+  isSelected?: boolean;
+  isPendingPlay?: boolean;
 }
 
 export function CardView({
@@ -16,6 +18,8 @@ export function CardView({
   size = "normal",
   face,
   identityForm,
+  isSelected = false,
+  isPendingPlay = false,
 }: Props) {
   const [isHovered, setIsHovered] = useState(false);
   const [flippedPreview, setFlippedPreview] = useState(false);
@@ -55,7 +59,13 @@ export function CardView({
 
   return (
     <div
-      className={`card card--${size} ${card.exhausted ? "card--exhausted" : ""}`}
+      className={`
+  card
+  card--${size}
+  ${card.exhausted ? "card--exhausted" : ""}
+  ${isSelected ? "card--selected" : ""}
+  ${isPendingPlay ? "card--pending-play" : ""}
+`}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {

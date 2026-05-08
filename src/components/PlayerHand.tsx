@@ -6,32 +6,35 @@ export function PlayerHand() {
   const pendingPayment = useGameStore((s) => s.hero.pendingPayment);
   const beginPlayCard = useGameStore((s) => s.beginPlayCard);
   const togglePaymentCard = useGameStore((s) => s.togglePaymentCard);
-  const isPaymentCard =
-    pendingPayment?.paidWith.some(
-      (c) => c.instanceId === card.instanceId
-    ) ?? false;
-
-  const isCardBeingPlayed =
-    pendingPayment?.cardToPlay.instanceId === card.instanceId;
 
   return (
     <section>
       <h2>Player Hand ({hand.length})</h2>
 
       <div className="player-hand">
-        {hand.map((card) => (
-          <CardView
-            key={card.instanceId}
-            card={card}
-            isSelected={isPaymentCard}
-            isPendingPlay={isCardBeingPlayed}
-            onClick={() =>
-              pendingPayment
-                ? togglePaymentCard(card.instanceId)
-                : beginPlayCard(card.instanceId)
-            }
-          />
-        ))}
+        {hand.map((card) => {
+          const isPaymentCard =
+            pendingPayment?.paidWith.some(
+              (c) => c.instanceId === card.instanceId
+            ) ?? false;
+
+          const isCardBeingPlayed =
+            pendingPayment?.cardToPlay.instanceId === card.instanceId;
+
+          return (
+            <CardView
+              key={card.instanceId}
+              card={card}
+              isSelected={isPaymentCard}
+              isPendingPlay={isCardBeingPlayed}
+              onClick={() =>
+                pendingPayment
+                  ? togglePaymentCard(card.instanceId)
+                  : beginPlayCard(card.instanceId)
+              }
+            />
+          );
+        })}
       </div>
     </section>
   );

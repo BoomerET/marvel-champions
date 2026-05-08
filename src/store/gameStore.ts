@@ -200,6 +200,8 @@ export const useGameStore = create<GameStore>((set) => ({
 
   endTurn: () =>
     set((state) => {
+      let nextEncounterDeck = state.encounterDeck;
+      let nextEncounterDiscard = state.encounterDiscard;
       let nextPhase: typeof state.phase;
       let nextRound = state.round;
 
@@ -212,6 +214,11 @@ export const useGameStore = create<GameStore>((set) => ({
         nextPhase = "villain";
 
         const villainActivation = resolveVillainActivation(state);
+        nextEncounterDeck =
+          villainActivation.encounterDeck ?? nextEncounterDeck;
+
+        nextEncounterDiscard =
+          villainActivation.encounterDiscard ?? nextEncounterDiscard;
 
         nextHero = villainActivation.hero ?? nextHero;
         nextVillain = villainActivation.villain ?? nextVillain;
@@ -239,6 +246,8 @@ export const useGameStore = create<GameStore>((set) => ({
         villain: nextVillain,
         eventHistory: nextEventHistory,
         log: nextLog,
+        encounterDeck: nextEncounterDeck,
+        encounterDiscard: nextEncounterDiscard,
       };
     }),
 

@@ -77,6 +77,11 @@ export function resolveVillainActivation(
         } else {
             nextLog.push("No boost card available.");
         }
+        if (boostCard?.boostText?.length) {
+            boostCard.boostText.forEach((text) => {
+                nextLog.push(`BOOST: ${text}`);
+            });
+        }
         nextLog.push(
             `Rhino attacked for ${damageAmount} damage.`
         );

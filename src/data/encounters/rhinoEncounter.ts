@@ -7,6 +7,11 @@ export const rhinoEncounterCards: Card[] = [
         type: "treachery",
         image: "01099",
         boostIcons: 2,
-        text: ["Rhino gets +3 ATK for this attack."],
+        boostText: [
+            "Give the villain +3 ATK for this attack."
+        ],
+        text: [
+            "Rhino gets +3 ATK for this attack."
+        ],
     },
 ];

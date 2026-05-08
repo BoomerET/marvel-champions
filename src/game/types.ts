@@ -22,6 +22,7 @@ export interface Card {
   defense?: number;
   boostIcons?: number;
   scheme?: number;
+  boostText?: string[];
 }
 
 export interface CardInstance extends Card {

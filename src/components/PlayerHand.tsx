@@ -6,6 +6,13 @@ export function PlayerHand() {
   const pendingPayment = useGameStore((s) => s.hero.pendingPayment);
   const beginPlayCard = useGameStore((s) => s.beginPlayCard);
   const togglePaymentCard = useGameStore((s) => s.togglePaymentCard);
+  const isPaymentCard =
+    pendingPayment?.paidWith.some(
+      (c) => c.instanceId === card.instanceId
+    ) ?? false;
+
+  const isCardBeingPlayed =
+    pendingPayment?.cardToPlay.instanceId === card.instanceId;
 
   return (
     <section>
@@ -16,6 +23,8 @@ export function PlayerHand() {
           <CardView
             key={card.instanceId}
             card={card}
+            isSelected={isPaymentCard}
+            isPendingPlay={isCardBeingPlayed}
             onClick={() =>
               pendingPayment
                 ? togglePaymentCard(card.instanceId)

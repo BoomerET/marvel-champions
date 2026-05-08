@@ -313,13 +313,13 @@ export const useGameStore = create<GameStore>((set) => ({
   healHero: (amount) =>
 
     set((state) => ({
-      hitPoints: Math.min(
-        state.hero.maxHitPoints,
-        state.hero.hitPoints + amount
-      ),
+
       hero: {
         ...state.hero,
-        hitPoints: state.hero.hitPoints + amount,
+        hitPoints: Math.min(
+          state.hero.maxHitPoints,
+          state.hero.hitPoints + amount
+        ),
       },
       log: [...state.log, `Hero healed ${amount} damage.`],
     })),

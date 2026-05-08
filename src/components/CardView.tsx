@@ -17,6 +17,7 @@ export function CardView({
   face,
   identityForm,
 }: Props) {
+  const [isHovered, setIsHovered] = useState(false);
   const [flippedPreview, setFlippedPreview] = useState(false);
 
   const previewFace =
@@ -30,6 +31,10 @@ export function CardView({
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (!isHovered) {
+        return;
+      }
+
       if (!event.shiftKey || event.key.toLowerCase() !== "f") {
         return;
       }
@@ -42,7 +47,7 @@ export function CardView({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [isHovered]);
 
   const imageSrc = getCardImage(card.image, {
     face: previewFace,
@@ -52,6 +57,11 @@ export function CardView({
     <div
       className={`card card--${size} ${card.exhausted ? "card--exhausted" : ""}`}
       onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setFlippedPreview(false);
+      }}
       title="Hold Shift to zoom. Press F while holding Shift to flip preview."
     >
       {imageSrc ? (
@@ -61,6 +71,7 @@ export function CardView({
             alt={card.name}
             className="card-image"
           />
+
           <div className="card-stat-overlay">
             {card.attack !== undefined && identityForm === "hero" && (
               <span>ATK {card.attack}</span>
@@ -82,6 +93,7 @@ export function CardView({
               <span>HP {card.hp}</span>
             )}
           </div>
+
           <div className="card-status-overlay">
             {card.stunned && <span>STUN</span>}
             {card.confused && <span>CONF</span>}
@@ -94,7 +106,6 @@ export function CardView({
           <div>{card.type}</div>
         </>
       )}
-
     </div>
   );
 }

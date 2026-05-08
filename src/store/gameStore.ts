@@ -590,17 +590,17 @@ export const useGameStore = create<GameStore>((set) => ({
       };
 
       return {
-        hitPoints: Math.min(
-          state.hero.maxHitPoints,
-          state.hero.hitPoints + amount
-        ),
+
         hero: {
           ...state.hero,
           identity: {
             ...state.hero.identity,
             exhausted: true,
           },
-          hitPoints: state.hero.hitPoints + amount,
+          hitPoints: Math.min(
+            state.hero.maxHitPoints,
+            state.hero.hitPoints + amount
+          ),
         },
 
         eventHistory: appendEvents(state.eventHistory, [

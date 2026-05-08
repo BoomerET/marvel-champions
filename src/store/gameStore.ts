@@ -352,6 +352,22 @@ export const useGameStore = create<GameStore>((set) => ({
 
   basicAttack: () =>
     set((state) => {
+      if (state.hero.identity.stunned) {
+        return {
+          hero: {
+            ...state.hero,
+            identity: {
+              ...state.hero.identity,
+              stunned: false,
+            },
+          },
+
+          log: [
+            ...state.log,
+            "Attack canceled by STUNNED. Removed stunned status.",
+          ],
+        };
+      }
       if (state.hero.identity.exhausted) {
         return {
           log: [

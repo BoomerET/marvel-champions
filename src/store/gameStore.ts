@@ -7,14 +7,9 @@ import type { GameEvent } from "../game/events";
 import { createNewGame } from "../game/createGame";
 import { dispatchGameEvent } from "../game/dispatch";
 import { resolveVillainActivation } from "../game/rules/villainActivation";
-
-import { spiderManHero } from "../data/heroes/spiderMan";
-import { spiderManPlayerCards } from "../data/playerCards/spiderMan";
-import { basicPlayerCards } from "../data/playerCards/basic";
-import { aggressionPlayerCards } from "../data/playerCards/aggression";
-import { justicePlayerCards } from "../data/playerCards/justice";
-import { leadershipPlayerCards } from "../data/playerCards/leadership";
-import { protectionPlayerCards } from "../data/playerCards/protection";
+import { buildPlayerDeckFromMarvelCdb } from "../game/buildDeckFromMarvelCdb";
+import marvelDeck from "../data/decks/spiderMan.json";
+import { heroCardByCode } from "../data/heroes";
 
 export function appendEvents(
   existingEvents: GameState["eventHistory"],
@@ -56,17 +51,28 @@ interface GameStore extends GameState {
   cancelPayment: () => void;
 }
 
+const heroCode = marvelDeck.hero_code.replace(
+  /[ab]$/,
+  ""
+);
+
+const hero = heroCardByCode.get(heroCode);
+
+if (!hero) {
+  throw new Error(
+    `Hero not found for code ${heroCode}`
+  );
+}
+
+const deck = buildPlayerDeckFromMarvelCdb(
+  marvelDeck
+);
+
 export const useGameStore = create<GameStore>((set) => ({
+
   ...createNewGame({
-    hero: spiderManHero,
-    deck: [
-      ...spiderManPlayerCards,
-      ...basicPlayerCards,
-      ...aggressionPlayerCards,
-      ...justicePlayerCards,
-      ...leadershipPlayerCards,
-      ...protectionPlayerCards,
-    ],
+    hero,
+    deck,
   }),
 
   villainAttack: () =>

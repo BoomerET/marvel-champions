@@ -60,12 +60,12 @@ export function CardView({
   return (
     <div
       className={`
-  card
-  card--${size}
-  ${card.exhausted ? "card--exhausted" : ""}
-  ${isSelected ? "card--selected" : ""}
-  ${isPendingPlay ? "card--pending-play" : ""}
-`}
+        card
+        card--${size}
+        ${card.exhausted ? "card--exhausted" : ""}
+        ${isSelected ? "card--selected" : ""}
+        ${isPendingPlay ? "card--pending-play" : ""}
+      `}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {

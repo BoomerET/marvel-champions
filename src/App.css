@@ -1,16 +1,26 @@
+/* ==========================================================================
+   Starter / template styles
+   --------------------------------------------------------------------------
+   These look like Vite starter styles. Keep them if your app still uses these
+   elements; otherwise they can probably be removed later.
+   ========================================================================== */
+
 .counter {
-  font-size: 16px;
+  margin-bottom: 24px;
   padding: 5px 10px;
+  border: 2px solid transparent;
   border-radius: 5px;
+
   color: var(--accent);
   background: var(--accent-bg);
-  border: 2px solid transparent;
+
+  font-size: 16px;
   transition: border-color 0.3s;
-  margin-bottom: 24px;
 
   &:hover {
     border-color: var(--accent-border);
   }
+
   &:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
@@ -28,9 +38,9 @@
   }
 
   .base {
-    width: 170px;
     position: relative;
     z-index: 0;
+    width: 170px;
   }
 
   .framework,
@@ -39,18 +49,18 @@
   }
 
   .framework {
-    z-index: 1;
     top: 34px;
+    z-index: 1;
     height: 28px;
     transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
       scale(1.4);
   }
 
   .vite {
-    z-index: 0;
     top: 107px;
-    height: 26px;
+    z-index: 0;
     width: auto;
+    height: 26px;
     transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
       scale(0.8);
   }
@@ -59,14 +69,14 @@
 #center {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   gap: 25px;
   place-content: center;
   place-items: center;
-  flex-grow: 1;
 
   @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
     gap: 18px;
+    padding: 32px 20px 24px;
   }
 }
 
@@ -78,15 +88,16 @@
   & > div {
     flex: 1 1 0;
     padding: 32px;
+
     @media (max-width: 1024px) {
       padding: 24px 20px;
     }
   }
 
   .icon {
-    margin-bottom: 16px;
     width: 22px;
     height: 22px;
+    margin-bottom: 16px;
   }
 
   @media (max-width: 1024px) {
@@ -105,50 +116,54 @@
 }
 
 #next-steps ul {
-  list-style: none;
-  padding: 0;
   display: flex;
   gap: 8px;
   margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
 
   .logo {
     height: 18px;
   }
 
   a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
     display: flex;
-    padding: 6px 12px;
     align-items: center;
     gap: 8px;
+
+    padding: 6px 12px;
+    border-radius: 6px;
+
+    color: var(--text-h);
+    background: var(--social-bg);
+
+    font-size: 16px;
     text-decoration: none;
     transition: box-shadow 0.3s;
 
     &:hover {
       box-shadow: var(--shadow);
     }
+
     .button-icon {
-      height: 18px;
       width: 18px;
+      height: 18px;
     }
   }
 
   @media (max-width: 1024px) {
-    margin-top: 20px;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 20px;
 
     li {
       flex: 1 1 calc(50% - 8px);
     }
 
     a {
+      box-sizing: border-box;
       width: 100%;
       justify-content: center;
-      box-sizing: border-box;
     }
   }
 }
@@ -156,6 +171,7 @@
 #spacer {
   height: 88px;
   border-top: 1px solid var(--border);
+
   @media (max-width: 1024px) {
     height: 48px;
   }
@@ -167,9 +183,9 @@
 
   &::before,
   &::after {
-    content: '';
     position: absolute;
     top: -4.5px;
+    content: "";
     border: 5px solid transparent;
   }
 
@@ -177,16 +193,16 @@
     left: 0;
     border-left-color: var(--border);
   }
+
   &::after {
     right: 0;
     border-right-color: var(--border);
   }
 }
 
-/* 
- * Starting CSS for Marvel Champions TCG
- *
-*/
+/* ==========================================================================
+   Base layout
+   ========================================================================== */
 
 main {
   padding: 24px;
@@ -198,50 +214,91 @@ button {
   margin-bottom: 16px;
 }
 
-.player-hand {
+/* ==========================================================================
+   Game controls
+   ========================================================================== */
+
+.game-controls {
   display: flex;
   gap: 12px;
-  flex-wrap: wrap;
-}
-
-.card-image {
-  width: 100%;
-  border-radius: 12px;
-  display: block;
-}
-
-.play-area {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  min-height: 260px;
-  padding: 12px;
-  border: 1px dashed #aaa;
   margin-bottom: 24px;
-  background: transparent;
-  align-items: flex-start;
 }
 
-.table-top {
+/* ==========================================================================
+   Table layout and zones
+   ========================================================================== */
+
+.table-top,
+.table-zones {
   display: flex;
   gap: 24px;
   margin-bottom: 24px;
 }
 
-.table-top section {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 12px;
+.table-zones {
+  align-items: flex-start;
 }
 
-.card {
-  width: 250px;
-  cursor: pointer;
-  position: relative;
+.table-top section,
+.zone-panel {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.zone-panel {
+  min-width: 200px;
+}
+
+.player-hand {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.play-area,
+.encounter-area {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 12px;
+  margin-bottom: 24px;
+
   background: transparent;
-  border: none;
-  padding: 0;
+}
+
+.play-area {
+  min-height: 260px;
+  border: 1px dashed #aaa;
+}
+
+.encounter-area {
+  min-height: 220px;
+  border: 1px dashed #b44;
+}
+
+.empty-zone {
+  padding: 12px;
+  color: #777;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+
+.card {
+  position: relative;
+
+  width: 250px;
   min-height: unset;
+  padding: 0;
+  border: none;
+
+  background: transparent;
+  cursor: pointer;
 }
 
 .card--small {
@@ -249,9 +306,9 @@ button {
 }
 
 .card-image {
+  display: block;
   width: 100%;
   border-radius: 12px;
-  display: block;
 }
 
 .card:has(.card-image):hover {
@@ -262,29 +319,24 @@ body:has(:focus-visible) .card {
   outline: none;
 }
 
-/* Hold Shift while hovering */
-.card:hover .card-image {
-  transition: transform 120ms ease;
-}
-
+/* Keep the page from getting a horizontal scrollbar when preview zoom is active. */
 body:has(.card:hover) {
   overflow-x: hidden;
 }
 
+/* Hold Shift while hovering to zoom card preview.
+   This requires the React helper that toggles body.shift-down. */
 .card:hover .card-image {
   transform-origin: top left;
+  transition: transform 120ms ease;
 }
 
-.card:hover:has(.card-image) .card-image {
-  /* normal hover does nothing visually */
-}
-
-/* This part requires a tiny React helper below for Shift detection */
 body.shift-down .card:hover .card-image {
   transform: scale(1.9);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
+/* Exhausted cards rotate sideways. */
 .card.card--exhausted .card-image {
   transform: rotate(90deg) !important;
   transform-origin: center center;
@@ -294,42 +346,68 @@ body.shift-down .card:hover .card-image {
   margin: 36px 64px;
 }
 
-.empty-zone {
-  color: #777;
-  font-style: italic;
-  padding: 12px;
+.card--selected {
+  outline: 4px solid #00d26a;
+  outline-offset: 2px;
 }
 
-.table-zones {
+.card--pending-play {
+  outline: 4px solid #ffd24a;
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Card overlays
+   ========================================================================== */
+
+.card-stat-overlay,
+.card-status-overlay {
+  position: absolute;
+  left: 6px;
+
   display: flex;
-  gap: 24px;
-  margin-bottom: 24px;
-  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
-.zone-panel {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 12px;
-  min-width: 200px;
+.card-stat-overlay {
+  bottom: 6px;
+  pointer-events: none;
 }
 
-.game-controls {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
+.card-status-overlay {
+  top: 6px;
 }
 
-/*
- * Identity card slot
-*/
+.card-stat-overlay span,
+.card-status-overlay span {
+  color: white;
+  border-radius: 999px;
+}
+
+.card-stat-overlay span {
+  padding: 2px 5px;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 11px;
+}
+
+.card-status-overlay span {
+  padding: 2px 5px;
+  background: rgba(180, 30, 30, 0.85);
+  font-size: 10px;
+}
+
+/* ==========================================================================
+   Identity card slot
+   ========================================================================== */
 
 .identity-card-slot {
-  width: 260px;
-  height: 260px;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  width: 260px;
+  height: 260px;
   overflow: visible;
 }
 
@@ -341,66 +419,45 @@ body.shift-down .card:hover .card-image {
   transform: rotate(90deg);
 }
 
-/*
- * Encounter area
-*/
-
-.encounter-area {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  min-height: 220px;
-  padding: 12px;
-  border: 1px dashed #b44;
-  margin-bottom: 24px;
-  align-items: flex-start;
-}
-
-.encounter-deck-card-back {
-  width: 120px;
-  height: 168px;
-  border-radius: 12px;
-  border: 2px solid #633;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  font-weight: bold;
-  background: #3a1111;
-  color: white;
-}
-
-/*
- * Deck pile
-*/
-
-.deck-pile {
-  margin-bottom: 12px;
-}
-
-.deck-card-back {
-  width: 120px;
-  height: 168px;
-  border-radius: 12px;
-  border: 2px solid #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  font-weight: bold;
-  background: #222;
-  color: white;
-}
+/* ==========================================================================
+   Deck piles
+   ========================================================================== */
 
 .deck-pile {
   position: relative;
   width: 120px;
+  margin-bottom: 12px;
+}
+
+.deck-card-back,
+.encounter-deck-card-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 120px;
+  height: 168px;
+  border-radius: 12px;
+
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.deck-card-back {
+  border: 2px solid #333;
+  background: #222;
+}
+
+.encounter-deck-card-back {
+  border: 2px solid #633;
+  background: #3a1111;
 }
 
 .deck-back-image {
+  display: block;
   width: 120px;
   border-radius: 12px;
-  display: block;
 }
 
 .deck-count {
@@ -408,92 +465,36 @@ body.shift-down .card:hover .card-image {
   right: 8px;
   bottom: 8px;
 
-  width: 36px;
-  height: 36px;
-
-  border-radius: 50%;
-
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-weight: bold;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+
+  color: white;
+  background: rgba(0, 0, 0, 0.8);
+
   font-size: 18px;
+  font-weight: bold;
 }
 
-/*
- * Game log
-*/
+/* ==========================================================================
+   Game log
+   ========================================================================== */
 
 .event-history {
   max-height: 300px;
-  overflow-y: auto;
-  background: #111;
-  color: #ddd;
   padding: 12px;
+  overflow-y: auto;
+
+  color: #ddd;
+  background: #111;
   border-radius: 8px;
 }
 
 .event-history pre {
-  margin: 0 0 12px 0;
+  margin: 0 0 12px;
   font-size: 12px;
-}
-
-/*
- * Overlays for cards
-*/
-
-.card {
-  background: transparent;
-  border: none;
-  padding: 0;
-  min-height: unset;
-}
-
-.card-stat-overlay {
-  position: absolute;
-  left: 6px;
-  bottom: 6px;
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-  pointer-events: none;
-}
-
-.card-stat-overlay span {
-  background: rgba(0, 0, 0, 0.75);
-  color: white;
-  font-size: 11px;
-  padding: 2px 5px;
-  border-radius: 999px;
-}
-
-.card-status-overlay {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-}
-
-.card-status-overlay span {
-  background: rgba(180, 30, 30, 0.85);
-  color: white;
-  font-size: 10px;
-  padding: 2px 5px;
-  border-radius: 999px;
-}
-
-.card--selected {
-  outline: 4px solid #00d26a;
-  outline-offset: 2px;
-}
-
-.card--pending-play {
-  outline: 4px solid #ffd24a;
-  outline-offset: 2px;
 }

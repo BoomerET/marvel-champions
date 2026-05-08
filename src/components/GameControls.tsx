@@ -7,6 +7,10 @@ export function GameControls() {
         (s) => s.readyAllHeroCards
     );
 
+    const pendingPayment = useGameStore((s) => s.hero.pendingPayment);
+    const confirmPlayCard = useGameStore((s) => s.confirmPlayCard);
+    const cancelPayment = useGameStore((s) => s.cancelPayment);
+
     return (
         <section className="game-controls">
             <button onClick={endTurn}>
@@ -20,6 +24,18 @@ export function GameControls() {
             <button onClick={dealEncounterCard}>
                 Deal Encounter
             </button>
+
+            {pendingPayment && (
+                <>
+                    <button onClick={confirmPlayCard}>
+                        Confirm Play
+                    </button>
+
+                    <button onClick={cancelPayment}>
+                        Cancel Payment
+                    </button>
+                </>
+            )}
         </section>
     );
 }

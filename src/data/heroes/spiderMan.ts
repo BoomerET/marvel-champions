@@ -66,6 +66,7 @@ export const spiderManCards: Card[] = [
     type: "resource",
     image: "01088",
     text: ["Max 1 per deck."],
+    resources: 2,
   },
 
   {

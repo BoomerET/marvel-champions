@@ -23,6 +23,7 @@ export interface Card {
   boostIcons?: number;
   scheme?: number;
   boostText?: string[];
+  resources?: number;
 }
 
 export interface CardInstance extends Card {
@@ -57,6 +58,10 @@ export interface HeroState {
   playArea: CardInstance[];
   remainingActivations: number;
   isDefending: boolean;
+  pendingPayment?: {
+    cardToPlay: CardInstance;
+    paidWith: CardInstance[];
+  };
 }
 
 export interface VillainState {

@@ -42,6 +42,10 @@ interface GameStore extends GameState {
   toggleHeroConfused: () => void;
   toggleHeroTough: () => void;
   defend: () => void;
+  beginPlayCard: (instanceId: string) => void;
+  togglePaymentCard: (instanceId: string) => void;
+  confirmPlayCard: () => void;
+  cancelPayment: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -759,5 +763,182 @@ export const useGameStore = create<GameStore>((set) => ({
         log: [...state.log, "Hero is defending."],
       };
     }),
+
+  beginPlayCard: (instanceId) =>
+    set((state) => {
+      const card = state.hero.hand.find(
+        (c) => c.instanceId === instanceId
+      );
+
+      if (!card) {
+        return state;
+      }
+
+      return {
+        hero: {
+          ...state.hero,
+          pendingPayment: {
+            cardToPlay: card,
+            paidWith: [],
+          },
+        },
+
+        log: [
+          ...state.log,
+          `Started paying for ${card.name}.`,
+        ],
+      };
+    }),
+
+  togglePaymentCard: (instanceId) =>
+    set((state) => {
+      if (!state.hero.pendingPayment) {
+        return state;
+      }
+
+      const paymentCard = state.hero.hand.find(
+        (c) => c.instanceId === instanceId
+      );
+
+      if (!paymentCard) {
+        return state;
+      }
+
+      if (
+        paymentCard.instanceId ===
+        state.hero.pendingPayment.cardToPlay.instanceId
+      ) {
+        return {
+          log: [
+            ...state.log,
+            "A card cannot pay for itself.",
+          ],
+        };
+      }
+
+      const cardIsAlreadyPaid =
+        state.hero.pendingPayment.paidWith.some(
+          (c) => c.instanceId === instanceId
+        );
+
+      if (cardIsAlreadyPaid) {
+        return {
+          hero: {
+            ...state.hero,
+            pendingPayment: {
+              ...state.hero.pendingPayment,
+              paidWith: state.hero.pendingPayment.paidWith.filter(
+                (c) => c.instanceId !== instanceId
+              ),
+            },
+          },
+          log: [
+            ...state.log,
+            `Unpaid ${paymentCard.name}.`,
+          ],
+        };
+      } else {
+        return {
+          hero: {
+            ...state.hero,
+            pendingPayment: {
+              ...state.hero.pendingPayment,
+              paidWith: [...state.hero.pendingPayment.paidWith, paymentCard],
+            },
+          },
+          log: [
+            ...state.log,
+            `Paid ${paymentCard.name} toward ${state.hero.pendingPayment.cardToPlay.name}.`,
+          ],
+        };
+      }
+    }),
+
+  confirmPlayCard: () =>
+    set((state) => {
+      const pendingPayment = state.hero.pendingPayment;
+
+      if (!pendingPayment) {
+        return state;
+      }
+
+      const { cardToPlay, paidWith } = pendingPayment;
+
+      const totalCost = cardToPlay.cost ?? 0;
+
+      const paidResources = paidWith.reduce(
+        (sum, card) => sum + (card.resources ?? 1),
+        0
+      );
+
+      if (paidResources < totalCost) {
+        return {
+          log: [
+            ...state.log,
+            `Not enough resources paid for ${cardToPlay.name} (${paidResources}/${totalCost}).`,
+          ],
+        };
+      }
+
+      const paymentIds = new Set(
+        paidWith.map((card) => card.instanceId)
+      );
+
+      const newHand = state.hero.hand.filter(
+        (card) =>
+          card.instanceId !== cardToPlay.instanceId &&
+          !paymentIds.has(card.instanceId)
+      );
+
+      const goesToDiscard =
+        cardToPlay.type === "event" ||
+        cardToPlay.type === "resource";
+
+      return {
+        hero: {
+          ...state.hero,
+          hand: newHand,
+          pendingPayment: undefined,
+
+          discard: goesToDiscard
+            ? [...state.hero.discard, ...paidWith, cardToPlay]
+            : [...state.hero.discard, ...paidWith],
+
+          playArea: goesToDiscard
+            ? state.hero.playArea
+            : [...state.hero.playArea, cardToPlay],
+        },
+
+        log: [
+          ...state.log,
+          `Paid ${paidResources} resource(s) for ${cardToPlay.name}.`,
+          goesToDiscard
+            ? `Played ${cardToPlay.name} and discarded it.`
+            : `Played ${cardToPlay.name}.`,
+        ],
+      };
+    }),
+
+  cancelPayment: () =>
+    set((state) => {
+      const pendingPayment = state.hero.pendingPayment;
+
+      if (!pendingPayment) {
+        return state;
+      }
+
+      return {
+        hero: {
+          ...state.hero,
+          pendingPayment: undefined,
+        },
+
+        log: [
+          ...state.log,
+          `Cancelled playing ${pendingPayment.cardToPlay.name}.`,
+        ],
+      };
+    }),
+
 }));
 

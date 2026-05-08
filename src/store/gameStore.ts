@@ -876,16 +876,17 @@ export const useGameStore = create<GameStore>((set) => ({
 
       const totalCost = cardToPlay.cost ?? 0;
 
-      const paidResources = paidWith.reduce(
-        (sum, card) => sum + (card.resources ?? 1),
-        0
+      const paidResources = paidWith.flatMap(
+        (card) => card.resources ?? ["wild"]
       );
 
-      if (paidResources < totalCost) {
+      const totalResources = paidResources.length;
+
+      if (totalResources < totalCost) {
         return {
           log: [
             ...state.log,
-            `Not enough resources paid for ${cardToPlay.name} (${paidResources}/${totalCost}).`,
+            `Not enough resources paid for ${cardToPlay.name} (${totalResources}/${totalCost}).`,
           ],
         };
       }

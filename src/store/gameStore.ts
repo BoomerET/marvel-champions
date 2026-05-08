@@ -8,6 +8,10 @@ import { createNewGame } from "../game/createGame";
 import { dispatchGameEvent } from "../game/dispatch";
 import { resolveVillainActivation } from "../game/rules/villainActivation";
 
+import { spiderManHero } from "../data/heroes/spiderMan";
+import { spiderManPlayerCards } from "../data/playerCards/spiderMan";
+import { basicPlayerCards } from "../data/playerCards/basic";
+
 export function appendEvents(
   existingEvents: GameState["eventHistory"],
   events: GameState["eventHistory"]
@@ -49,7 +53,13 @@ interface GameStore extends GameState {
 }
 
 export const useGameStore = create<GameStore>((set) => ({
-  ...createNewGame(),
+  ...createNewGame({
+    hero: spiderManHero,
+    deck: [
+      ...spiderManPlayerCards,
+      ...basicPlayerCards,
+    ],
+  }),
 
   villainAttack: () =>
     set((state) => {

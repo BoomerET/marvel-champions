@@ -487,3 +487,13 @@ body.shift-down .card:hover .card-image {
   padding: 2px 5px;
   border-radius: 999px;
 }
+
+.card--selected {
+  outline: 4px solid #00d26a;
+  outline-offset: 2px;
+}
+
+.card--pending-play {
+  outline: 4px solid #ffd24a;
+  outline-offset: 2px;
+}

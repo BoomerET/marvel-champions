@@ -4,11 +4,15 @@ import { appendEvents } from "../../store/gameStore";
 export function resolveVillainActivation(
     state: GameState
 ): Partial<GameState> {
+
+    const boostCard = state.encounterDeck[0];
+    const remainingEncounterDeck = state.encounterDeck.slice(1);
+    const boostAmount = boostCard?.boostIcons ?? 0;
     const attackAmount =
-        state.villain.identity.attack ?? 0;
+        (state.villain.identity.attack ?? 0) + boostAmount;
 
     const schemeAmount =
-        state.villain.identity.scheme ?? 0;
+        (state.villain.identity.scheme ?? 0) + boostAmount;
 
     const nextLog = [...state.log];
 
@@ -66,7 +70,13 @@ export function resolveVillainActivation(
             hand: [...state.hero.hand, ...drawnCards],
             isDefending: false,
         };
-
+        if (boostCard) {
+            nextLog.push(
+                `Boost card: ${boostCard.name} (+${boostAmount}).`
+            );
+        } else {
+            nextLog.push("No boost card available.");
+        }
         nextLog.push(
             `Rhino attacked for ${damageAmount} damage.`
         );
@@ -94,6 +104,10 @@ export function resolveVillainActivation(
                     : [attackEvent, damageEvent]
             ),
             log: nextLog,
+            encounterDeck: remainingEncounterDeck,
+            encounterDiscard: boostCard
+                ? [...state.encounterDiscard, boostCard]
+                : state.encounterDiscard,
         };
     }
 
@@ -101,6 +115,14 @@ export function resolveVillainActivation(
         type: "VILLAIN_SCHEME" as const,
         amount: schemeAmount,
     };
+
+    if (boostCard) {
+        nextLog.push(
+            `Boost card: ${boostCard.name} (+${boostAmount}).`
+        );
+    } else {
+        nextLog.push("No boost card available.");
+    }
 
     nextLog.push(`Rhino schemed for ${schemeAmount} threat.`);
 
@@ -113,5 +135,9 @@ export function resolveVillainActivation(
             schemeEvent,
         ]),
         log: nextLog,
+        encounterDeck: remainingEncounterDeck,
+        encounterDiscard: boostCard
+            ? [...state.encounterDiscard, boostCard]
+            : state.encounterDiscard,
     };
 }

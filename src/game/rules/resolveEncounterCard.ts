@@ -4,37 +4,22 @@ export function resolveEncounterCardEffect(
     state: GameState,
     card: CardInstance
 ): Partial<GameState> {
-    switch (card.type) {
-        case "treachery":
-            return {
-                log: [
-                    ...state.log,
-                    `${card.name} resolved as a treachery.`,
-                ],
-            };
-
-        case "minion":
-            return {
-                log: [
-                    ...state.log,
-                    `${card.name} entered play as a minion.`,
-                ],
-            };
-
-        case "sideScheme":
-            return {
-                log: [
-                    ...state.log,
-                    `${card.name} entered play as a side scheme.`,
-                ],
-            };
-
-        default:
-            return {
-                log: [
-                    ...state.log,
-                    `No resolver for ${card.type}.`,
-                ],
-            };
+    if (card.type === "minion") {
+        return {
+            minions: [...state.minions, card],
+            log: [...state.log, `${card.name} engaged as a minion.`],
+        };
     }
+
+    if (card.type === "sideScheme") {
+        return {
+            sideSchemes: [...state.sideSchemes, card],
+            log: [...state.log, `${card.name} entered play as a side scheme.`],
+        };
+    }
+
+    return {
+        encounterDiscard: [...state.encounterDiscard, card],
+        log: [...state.log, `${card.name} resolved and discarded.`],
+    };
 }

@@ -7,6 +7,7 @@ import type { GameEvent } from "../game/events";
 import { createNewGame } from "../game/createGame";
 import { dispatchGameEvent } from "../game/dispatch";
 import { resolveVillainActivation } from "../game/rules/villainActivation";
+import { resolveEncounterCardEffect } from "../game/rules/resolveEncounterCard";
 import { buildPlayerDeckFromMarvelCdb } from "../game/buildDeckFromMarvelCdb";
 //import marvelDeck from "../data/decks/spiderMan.json";
 //import { defaultMarvelCdbDeckId } from "../data/defaultDeck";
@@ -736,15 +737,15 @@ export const useGameStore = create<GameStore>((set) => ({
         return state;
       }
 
+      const remainingEncounterArea = state.encounterArea.filter(
+        (c) => c.instanceId !== instanceId
+      );
+
+      const resolved = resolveEncounterCardEffect(state, card);
+
       return {
-        encounterArea: state.encounterArea.filter(
-          (c) => c.instanceId !== instanceId
-        ),
-        encounterDiscard: [...state.encounterDiscard, card],
-        log: [
-          ...state.log,
-          `Resolved encounter card: ${card.name}.`,
-        ],
+        ...resolved,
+        encounterArea: remainingEncounterArea,
       };
     }),
 

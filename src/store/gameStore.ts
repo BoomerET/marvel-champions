@@ -9,7 +9,7 @@ import { dispatchGameEvent } from "../game/dispatch";
 import { resolveVillainActivation } from "../game/rules/villainActivation";
 import { buildPlayerDeckFromMarvelCdb } from "../game/buildDeckFromMarvelCdb";
 //import marvelDeck from "../data/decks/spiderMan.json";
-import { defaultMarvelCdbDeckId } from "../data/defaultDeck";
+//import { defaultMarvelCdbDeckId } from "../data/defaultDeck";
 import { spiderManHero } from "../data/heroes/spiderMan";
 import { heroCardByCode } from "../data/heroes";
 import { fetchMarvelCdbDeck } from "../api/marvelCdb";

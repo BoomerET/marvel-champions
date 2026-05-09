@@ -36,6 +36,7 @@ export const rhinoEncounterCards: Card[] = [
         type: "minion",
         image: "01101",
         boostIcons: 1,
+        orientation: "landscape",
         hp: 3,
         attack: 1,
         scheme: 0,

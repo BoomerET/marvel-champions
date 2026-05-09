@@ -10,6 +10,7 @@ interface Props {
   identityForm?: "hero" | "alterEgo";
   isSelected?: boolean;
   isPendingPlay?: boolean;
+  orientation?: "portrait" | "landscape";
 }
 
 export function CardView({
@@ -63,6 +64,7 @@ export function CardView({
     card.exhausted ? "card--exhausted" : "",
     isSelected ? "card--selected" : "",
     isPendingPlay ? "card--pending-play" : "",
+    card.orientation === "landscape" ? "card--landscape" : "",
   ]
     .filter(Boolean)
     .join(" ");

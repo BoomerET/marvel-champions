@@ -32,6 +32,7 @@ export interface Card {
   boostText?: string[];
   resources?: ResourceType[];
   threat?: number;
+  orientation?: "portrait" | "landscape";
 }
 
 export interface CardInstance extends Card {

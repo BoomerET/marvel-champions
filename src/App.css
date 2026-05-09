@@ -510,3 +510,11 @@ body.shift-down .card:hover .card-image {
   margin-bottom: 24px;
   align-items: flex-start;
 }
+
+.card--landscape {
+  width: 250px;
+}
+
+.card--small.card--landscape {
+  width: 220px;
+}

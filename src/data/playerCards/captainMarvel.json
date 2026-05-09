@@ -1,0 +1,103 @@
+import type { Card } from "../../game/types";
+
+export const captainMarvelPlayerCards: Card[] = [
+
+[
+  {
+    "code": "01011",
+    "name": "Spider-Woman",
+    "type": "ally",
+    "image": "01011",
+    "text": [
+      "Response: After Spider-Woman enters play, confuse the villain."
+    ],
+    "resources": [
+      "wild"
+    ]
+  },
+  {
+    "code": "01012",
+    "name": "Crisis Interdiction",
+    "type": "event",
+    "image": "01012",
+    "text": [
+      "Hero Action (thwart): Remove 2 threat from a scheme. Then, if you have the [[Aerial]] trait, remove 2 threat from a different scheme."
+    ],
+    "resources": [
+      "energy"
+    ]
+  },
+  {
+    "code": "01013",
+    "name": "Photonic Blast",
+    "type": "event",
+    "image": "01013",
+    "text": [
+      "Hero Action (attack): Deal 5 damage to an enemy. If you paid for this card using a [energy] resource, draw 1 card."
+    ],
+    "resources": [
+      "physical"
+    ]
+  },
+  {
+    "code": "01014",
+    "name": "Energy Absorption",
+    "type": "resource",
+    "image": "01014",
+    "text": [],
+    "resources": [
+      "energy"
+    ]
+  },
+  {
+    "code": "01015",
+    "name": "Alpha Flight Station",
+    "type": "support",
+    "image": "01015",
+    "text": [
+      "Action: Exhaust Alpha Flight Station, choose and discard 1 card from your hand → draw 1 card (draw 2 cards instead if you are Carol Danvers)."
+    ],
+    "resources": [
+      "mental"
+    ]
+  },
+  {
+    "code": "01016",
+    "name": "Captain Marvel's Helmet",
+    "type": "upgrade",
+    "image": "01016",
+    "text": [
+      "Captain Marvel gets +1 DEF (+2 DEF instead if you have the [[Aerial]] trait)."
+    ],
+    "resources": [
+      "physical"
+    ]
+  },
+  {
+    "code": "01017",
+    "name": "Cosmic Flight",
+    "type": "upgrade",
+    "image": "01017",
+    "text": [
+      "Captain Marvel gains the [[Aerial]] trait.",
+      "Hero Interrupt (defense): When Captain Marvel would take damage, discard Cosmic Flight → prevent 3 of that damage."
+    ],
+    "resources": [
+      "energy"
+    ]
+  },
+  {
+    "code": "01018",
+    "name": "Energy Channel",
+    "type": "upgrade",
+    "image": "01018",
+    "text": [
+      "Max 1 per player.",
+      "Action: Spend X [energy] resources → put X energy counters here.",
+      "Hero Action (attack): Discard Energy Channel → deal 2 damage to an enemy (to a maximum of 10) for each energy counter here."
+    ],
+    "resources": [
+      "mental"
+    ]
+  },
+] 

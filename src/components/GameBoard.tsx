@@ -9,6 +9,8 @@ import { DiscardPanel } from "./DiscardPanel";
 import { EventHistory } from "./EventHistory";
 import { GameControls } from "./GameControls";
 import { EncounterArea } from "./EncounterArea";
+import { MinionArea } from "./MinionArea";
+import { SideSchemeArea } from "./SideSchemeArea";
 import { useGameStore } from "../store/gameStore";
 import { EncounterDeckPanel } from "./EncounterDeckPanel";
 import { EncounterDiscardPanel } from "./EncounterDiscardPanel";
@@ -33,7 +35,11 @@ export function GameBoard() {
         <HeroPanel />
       </div>
 
+
       <EncounterArea />
+
+      <MinionArea />
+      <SideSchemeArea />
 
       <GameControls />
 

@@ -8,7 +8,7 @@ import { createNewGame } from "../game/createGame";
 import { dispatchGameEvent } from "../game/dispatch";
 import { resolveVillainActivation } from "../game/rules/villainActivation";
 import { buildPlayerDeckFromMarvelCdb } from "../game/buildDeckFromMarvelCdb";
-import marvelDeck from "../data/decks/spiderMan.json";
+//import marvelDeck from "../data/decks/spiderMan.json";
 import { heroCardByCode } from "../data/heroes";
 import { fetchMarvelCdbDeck } from "../api/marvelCdb";
 
@@ -53,10 +53,10 @@ interface GameStore extends GameState {
   loadMarvelCdbDeck: (deckId: string) => Promise<void>;
 }
 
-const heroCode = marvelDeck.hero_code.replace(
-  /[ab]$/,
-  ""
-);
+//const heroCode = marvelDeck.hero_code.replace(
+//  /[ab]$/,
+//  ""
+//);
 
 const hero = heroCardByCode.get(heroCode);
 
@@ -66,9 +66,9 @@ if (!hero) {
   );
 }
 
-const deck = buildPlayerDeckFromMarvelCdb(
-  marvelDeck
-);
+//const deck = buildPlayerDeckFromMarvelCdb(
+//  marvelDeck
+//);
 
 export const useGameStore = create<GameStore>((set) => ({
 

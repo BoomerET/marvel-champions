@@ -47,5 +47,7 @@ export function createNewGame({
 
     log: [],
     eventHistory: [],
+    sideScheme: [],
+    minions: [],
   };
 }

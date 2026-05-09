@@ -52,6 +52,8 @@ export interface GameState {
   encounterDeck: CardInstance[];
   encounterDiscard: CardInstance[];
   eventHistory: GameEvent[];
+  sideScheme: CardInstance[];
+  minions: CardInstance[];
 }
 
 export interface HeroState {

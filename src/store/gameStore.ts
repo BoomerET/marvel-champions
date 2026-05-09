@@ -8,7 +8,9 @@ import { createNewGame } from "../game/createGame";
 import { dispatchGameEvent } from "../game/dispatch";
 import { resolveVillainActivation } from "../game/rules/villainActivation";
 import { buildPlayerDeckFromMarvelCdb } from "../game/buildDeckFromMarvelCdb";
-import marvelDeck from "../data/decks/spiderMan.json";
+//import marvelDeck from "../data/decks/spiderMan.json";
+import { defaultMarvelCdbDeckId } from "../data/defaultDeck";
+import { spiderManHero } from "../data/heroes/spiderMan";
 import { heroCardByCode } from "../data/heroes";
 import { fetchMarvelCdbDeck } from "../api/marvelCdb";
 
@@ -53,28 +55,64 @@ interface GameStore extends GameState {
   loadMarvelCdbDeck: (deckId: string) => Promise<void>;
 }
 
-const heroCode = marvelDeck.hero_code.replace(
-  /[ab]$/,
-  ""
-);
+const defaultHero = spiderManHero;
 
-const hero = heroCardByCode.get(heroCode);
+const defaultDeck = buildPlayerDeckFromMarvelCdb({
+  hero_code: "01001a",
+  hero_name: "Spider-Man",
+  slots: {
+    "01002": 1,
+    "01003": 2,
+    "01004": 2,
+    "01005": 3,
+    "01006": 1,
+    "01007": 2,
+    "01008": 2,
+    "01009": 2,
+    "01058": 1,
+    "01059": 1,
+    "01060": 2,
+    "01061": 2,
+    "01062": 2,
+    "01063": 2,
+    "01064": 2,
+    "01065": 2,
+    "01083": 1,
+    "01084": 1,
+    "01085": 1,
+    "01086": 1,
+    "01087": 1,
+    "01088": 1,
+    "01089": 1,
+    "01090": 1,
+    "01091": 1,
+    "01092": 1,
+    "01093": 1,
+  },
+});
 
-if (!hero) {
-  throw new Error(
-    `Hero not found for code ${heroCode}`
-  );
-}
+//const heroCode = defaultDeck.hero_code.replace(
+//  /[ab]$/,
+//  ""
+//);
 
-const deck = buildPlayerDeckFromMarvelCdb(
-  marvelDeck
-);
+//const hero = heroCardByCode.get(heroCode);
+
+//if (!hero) {
+//  throw new Error(
+//    `Hero not found for code ${heroCode}`
+//  );
+//}
+
+//const deck = buildPlayerDeckFromMarvelCdb(
+//  marvelDeck
+//);
 
 export const useGameStore = create<GameStore>((set) => ({
 
   ...createNewGame({
-    hero,
-    deck,
+    hero: defaultHero,
+    deck: defaultDeck,
   }),
 
   villainAttack: () =>

@@ -14,4 +14,30 @@ export const rhinoEncounterCards: Card[] = [
             "Rhino gets +3 ATK for this attack."
         ],
     },
+    {
+        code: "01104",
+        name: "Hard to Keep Down",
+        type: "treachery",
+        image: "01104",
+        boostIcons: 1,
+        text: ["Heal damage from Rhino."],
+    },
+    {
+        code: "01107",
+        name: "Breaking & Taking",
+        type: "sideScheme",
+        image: "01107",
+        boostIcons: 2,
+        threat: 2,
+    },
+    {
+        code: "01101",
+        name: "Hydra Mercenary",
+        type: "minion",
+        image: "01101",
+        boostIcons: 1,
+        hp: 3,
+        attack: 1,
+        scheme: 0,
+    },
 ];

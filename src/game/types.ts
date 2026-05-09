@@ -31,6 +31,7 @@ export interface Card {
   scheme?: number;
   boostText?: string[];
   resources?: ResourceType[];
+  threat?: number;
 }
 
 export interface CardInstance extends Card {

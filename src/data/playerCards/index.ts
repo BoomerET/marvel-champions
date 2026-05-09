@@ -4,6 +4,7 @@ import { aggressionPlayerCards } from "./aggression";
 import { justicePlayerCards } from "./justice";
 import { leadershipPlayerCards } from "./leadership";
 import { protectionPlayerCards } from "./protection";
+import { captainMarvelPlayerCards } from "./captainMarvel";
 
 export const allPlayerCards = [
     ...spiderManPlayerCards,
@@ -12,6 +13,7 @@ export const allPlayerCards = [
     ...justicePlayerCards,
     ...leadershipPlayerCards,
     ...protectionPlayerCards,
+    ...captainMarvelPlayerCards,
 ];
 
 export const playerCardByCode = new Map(

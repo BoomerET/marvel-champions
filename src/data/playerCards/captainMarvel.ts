@@ -1,8 +1,6 @@
 import type { Card } from "../../game/types";
 
 export const captainMarvelPlayerCards: Card[] = [
-
-[
   {
     "code": "01011",
     "name": "Spider-Woman",

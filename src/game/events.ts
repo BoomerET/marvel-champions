@@ -5,7 +5,7 @@ export type GameEvent =
     }
     | {
         type: "DAMAGE_DEALT";
-        target: "hero" | "villain";
+        target: "hero" | "villain" | "minion";
         amount: number;
     }
     | {

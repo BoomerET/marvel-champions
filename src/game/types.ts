@@ -56,6 +56,7 @@ export interface GameState {
   eventHistory: GameEvent[];
   sideSchemes: CardInstance[];
   minions: CardInstance[];
+  selectedAttackTarget?: string;
 }
 
 export interface HeroState {

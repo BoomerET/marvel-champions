@@ -54,6 +54,9 @@ interface GameStore extends GameState {
   confirmPlayCard: () => void;
   cancelPayment: () => void;
   loadMarvelCdbDeck: (deckId: string) => Promise<void>;
+  selectAttackTarget: (
+    instanceId?: string
+  ) => void;
 }
 
 const defaultHero = spiderManHero;
@@ -488,19 +491,16 @@ export const useGameStore = create<GameStore>((set) => ({
               stunned: false,
             },
           },
-
           log: [
             ...state.log,
             "Attack canceled by STUNNED. Removed stunned status.",
           ],
         };
       }
+
       if (state.hero.identity.exhausted) {
         return {
-          log: [
-            ...state.log,
-            "Cannot basic attack while exhausted.",
-          ]
+          log: [...state.log, "Cannot basic attack while exhausted."],
         };
       }
 
@@ -515,16 +515,61 @@ export const useGameStore = create<GameStore>((set) => ({
 
       const amount = state.hero.identity.attack ?? 0;
 
+      const targetedMinion = state.minions.find(
+        (minion) => minion.instanceId === state.selectedAttackTarget
+      );
+
       const basicAttackEvent = {
         type: "BASIC_ATTACK" as const,
         amount,
       };
 
-      const damageEvent = {
-        type: "DAMAGE_DEALT" as const,
-        target: "villain" as const,
-        amount,
-      };
+      if (targetedMinion) {
+        const remainingHp = Math.max(
+          0,
+          (targetedMinion.currentHitPoints ?? targetedMinion.hp ?? 0) - amount
+        );
+
+        const defeated = remainingHp <= 0;
+
+        const updatedMinions = defeated
+          ? state.minions.filter(
+            (minion) => minion.instanceId !== targetedMinion.instanceId
+          )
+          : state.minions.map((minion) =>
+            minion.instanceId === targetedMinion.instanceId
+              ? { ...minion, currentHitPoints: remainingHp }
+              : minion
+          );
+
+        return {
+          hero: {
+            ...state.hero,
+            identity: {
+              ...state.hero.identity,
+              exhausted: true,
+            },
+          },
+
+          minions: updatedMinions,
+          selectedAttackTarget: undefined,
+
+          eventHistory: appendEvents(state.eventHistory, [
+            basicAttackEvent,
+            {
+              type: "DAMAGE_DEALT" as const,
+              target: "minion" as const,
+              amount,
+            },
+          ]),
+
+          log: [
+            ...state.log,
+            `Hero attacked ${targetedMinion.name} for ${amount}.`,
+            ...(defeated ? [`${targetedMinion.name} was defeated.`] : []),
+          ],
+        };
+      }
 
       return {
         hero: {
@@ -537,21 +582,19 @@ export const useGameStore = create<GameStore>((set) => ({
 
         villain: {
           ...state.villain,
-          hitPoints: Math.max(
-            0,
-            state.villain.hitPoints - amount
-          ),
+          hitPoints: Math.max(0, state.villain.hitPoints - amount),
         },
 
         eventHistory: appendEvents(state.eventHistory, [
           basicAttackEvent,
-          damageEvent,
+          {
+            type: "DAMAGE_DEALT" as const,
+            target: "villain" as const,
+            amount,
+          },
         ]),
 
-        log: [
-          ...state.log,
-          `Hero attacked for ${amount}.`,
-        ],
+        log: [...state.log, `Hero attacked villain for ${amount}.`],
       };
     }),
 
@@ -1025,6 +1068,11 @@ export const useGameStore = create<GameStore>((set) => ({
       })
     );
   },
+
+  selectAttackTarget: (instanceId) =>
+    set(() => ({
+      selectedAttackTarget: instanceId,
+    })),
 
 }));
 

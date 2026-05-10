@@ -4,7 +4,7 @@ import type {
     VillainState,
 } from "../types";
 
-export function resolveMinionActivations({
+export function resolveMinionActivation({
     state,
     hero,
     villain,

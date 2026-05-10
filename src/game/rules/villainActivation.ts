@@ -1,6 +1,6 @@
 import type { GameState } from "../types";
 import { appendEvents } from "../../store/gameStore";
-import { resolveMinionActivations } from "./resolveMinionActivation";
+import { resolveMinionActivation } from "./resolveMinionActivation";
 
 export function resolveVillainActivation(
     state: GameState
@@ -86,7 +86,7 @@ export function resolveVillainActivation(
             nextLog.push("Damage prevented by TOUGH. Removed tough status.");
         }
 
-        const minionActivation = resolveMinionActivations({
+        const minionActivation = resolveMinionActivation({
             state,
             hero: nextHero,
             villain: state.villain,
@@ -128,7 +128,7 @@ export function resolveVillainActivation(
         nextLog.push("Main scheme threat limit reached. You lose!");
     }
 
-    const minionActivation = resolveMinionActivations({
+    const minionActivation = resolveMinionActivation({
         state,
         hero: state.hero,
         villain: nextVillain,

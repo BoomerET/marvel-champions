@@ -101,22 +101,25 @@ export function resolveVillainActivation(
             nextLog.push("Damage prevented by TOUGH. Removed tough status.");
         }
 
-        const minionActivations =
-            resolveMinionActivations(state);
+        const minionActivation = resolveMinionActivations({
+            state,
+            hero: nextHero,
+            log: nextLog,
+        });
 
         return {
-            hero: minionActivations.hero ?? nextHero,
+            hero: minionActivation.hero,
             eventHistory: appendEvents(
                 state.eventHistory,
                 isTough
                     ? [attackEvent]
                     : [attackEvent, damageEvent]
             ),
-            log: minionActivations.log ?? nextLog,
             encounterDeck: remainingEncounterDeck,
             encounterDiscard: boostCard
                 ? [...state.encounterDiscard, boostCard]
                 : state.encounterDiscard,
+            log: minionActivation.log,
         };
     }
 

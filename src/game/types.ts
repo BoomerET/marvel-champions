@@ -33,6 +33,7 @@ export interface Card {
   resources?: ResourceType[];
   threat?: number;
   orientation?: "portrait" | "landscape";
+  currentHitPoints?: number;
 }
 
 export interface CardInstance extends Card {

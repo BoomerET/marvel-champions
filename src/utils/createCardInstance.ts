@@ -10,5 +10,6 @@ export function createCardInstance(card: Card): CardInstance {
     stunned: false,
     confused: false,
     tough: false,
+    currentHitPoints: card.hp,
   };
 }

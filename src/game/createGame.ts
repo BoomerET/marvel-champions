@@ -37,6 +37,7 @@ export function createNewGame({
       identity: createCardInstance(rhinoCards[0]),
       hitPoints: rhinoCards[0].hp ?? 14,
       threat: 0,
+      threatLimit: 7,
     },
 
     encounterDeck: shuffle(

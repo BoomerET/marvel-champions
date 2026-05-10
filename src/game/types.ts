@@ -81,5 +81,6 @@ export interface VillainState {
   identity: CardInstance;
   hitPoints: number;
   threat: number;
+  threatLimit: number;
 }
 

@@ -428,13 +428,28 @@ export const useGameStore = create<GameStore>((set) => ({
     }),
 
   addThreat: (amount) =>
-    set((state) => ({
-      villain: {
-        ...state.villain,
-        threat: state.villain.threat + amount,
-      },
-      log: [...state.log, `Added ${amount} threat.`],
-    })),
+    set((state) => {
+      const nextThreat =
+        state.villain.threat + amount;
+
+      const threatLimitReached =
+        nextThreat >= state.villain.threatLimit;
+
+      return {
+        villain: {
+          ...state.villain,
+          threat: nextThreat,
+        },
+
+        log: [
+          ...state.log,
+          `Added ${amount} threat.`,
+          ...(threatLimitReached
+            ? ["Main scheme threat limit reached. You lose!"]
+            : []),
+        ],
+      };
+    }),
 
   removeThreat: (amount) =>
     set((state) => ({

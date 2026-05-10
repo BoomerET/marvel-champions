@@ -50,5 +50,6 @@ export function createNewGame({
     eventHistory: [],
     sideSchemes: [],
     minions: [],
+    gameStatus: "playing",
   };
 }

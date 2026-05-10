@@ -58,6 +58,7 @@ export interface GameState {
   sideSchemes: CardInstance[];
   minions: CardInstance[];
   selectedAttackTarget?: string;
+  gameStatus: GameStatus;
 }
 
 export interface HeroState {
@@ -84,3 +85,7 @@ export interface VillainState {
   threatLimit: number;
 }
 
+export type GameStatus =
+  | "playing"
+  | "won"
+  | "lost";

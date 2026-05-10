@@ -1,5 +1,6 @@
 import type { GameState } from "../types";
 import { appendEvents } from "../../store/gameStore";
+import { resolveMinionActivations } from "./resolveMinionActivation";
 
 export function resolveVillainActivation(
     state: GameState
@@ -100,15 +101,18 @@ export function resolveVillainActivation(
             nextLog.push("Damage prevented by TOUGH. Removed tough status.");
         }
 
+        const minionActivations =
+            resolveMinionActivations(state);
+
         return {
-            hero: nextHero,
+            hero: minionActivations.hero ?? nextHero,
             eventHistory: appendEvents(
                 state.eventHistory,
                 isTough
                     ? [attackEvent]
                     : [attackEvent, damageEvent]
             ),
-            log: nextLog,
+            log: minionActivations.log ?? nextLog,
             encounterDeck: remainingEncounterDeck,
             encounterDiscard: boostCard
                 ? [...state.encounterDiscard, boostCard]

@@ -461,6 +461,10 @@ export const useGameStore = create<GameStore>((set) => ({
           threat: nextThreat,
         },
 
+        gameStatus: threatLimitReached
+          ? "lost"
+          : state.gameStatus,
+
         log: [
           ...state.log,
           `Added ${amount} threat.`,

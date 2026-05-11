@@ -62,6 +62,8 @@ export interface GameState {
   selectedAttackTarget?: string;
   gameStatus: GameStatus;
   mainScheme: MainSchemeState;
+  villainCards: Card[];
+  mainSchemes: Card[];
 }
 
 export interface HeroState {

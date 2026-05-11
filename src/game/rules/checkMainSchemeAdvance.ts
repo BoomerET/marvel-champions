@@ -1,5 +1,5 @@
 import type { GameState, MainSchemeState } from "../types";
-import { rhinoMainSchemes } from "../../data/schemes/rhinoMainScheme";
+//import { rhinoMainSchemes } from "../../data/schemes/rhinoMainScheme";
 import { createCardInstance } from "../../utils/createCardInstance";
 
 export function checkMainSchemeAdvance({
@@ -24,7 +24,10 @@ export function checkMainSchemeAdvance({
     }
 
     const nextStage = mainScheme.stage + 1;
-    const nextSchemeCard = rhinoMainSchemes[nextStage - 1];
+    const nextSchemeCard =
+        state.mainSchemes.find(
+            (scheme) => scheme.stage === nextStage
+        );
 
     if (!nextSchemeCard) {
         return {

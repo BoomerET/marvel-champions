@@ -43,7 +43,7 @@ export function createNewGame({
     villain: {
       identity: createCardInstance(villainCards[0]),
       hitPoints: villainCards[0].hp ?? 14,
-      stage: 1,
+      stage: villainCards[0].stage ?? 1,
     },
 
     encounterDeck: shuffle(
@@ -60,8 +60,10 @@ export function createNewGame({
     mainScheme: {
       card: createCardInstance(mainSchemes[0]),
       threat: 0,
-      stage: 1,
+      stage: mainSchemes[0].stage ?? 1,
       threatLimit: mainSchemes[0].threatLimit ?? 7,
     },
+    villainCards,
+    mainSchemes,
   };
 }

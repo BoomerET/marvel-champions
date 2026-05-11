@@ -1126,6 +1126,9 @@ export const useGameStore = create<GameStore>((set) => ({
       createNewGame({
         hero,
         deck,
+        villainCards: rhinoCards,
+        mainSchemes: rhinoMainSchemes,
+        encounterCards: rhinoEncounterCards,
       })
     );
   },

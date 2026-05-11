@@ -2,6 +2,7 @@
 
 import { create } from "zustand";
 import { shuffle } from "../utils/shuffle";
+import { scenarios } from "../data/scenarios";
 import type { GameState } from "../game/types";
 import type { GameEvent } from "../game/events";
 import { heroCardByCode } from "../data/heroes";
@@ -63,7 +64,7 @@ interface GameStore extends GameState {
   selectAttackTarget: (
     instanceId?: string
   ) => void;
-  newGame: () => void;
+  newGame: (scenarioId?: string) => void;
 }
 
 const defaultHero = spiderManHero;
@@ -1138,15 +1139,26 @@ export const useGameStore = create<GameStore>((set) => ({
       selectedAttackTarget: instanceId,
     })),
 
-  newGame: () =>
+  newGame: (scenarioId = "rhino") => {
+    const scenario = scenarios[scenarioId];
+
+    if (!scenario) {
+      console.error(
+        `Unknown scenario: ${scenarioId}`
+      );
+
+      return;
+    }
+
     set(
       createNewGame({
         hero: defaultHero,
         deck: defaultDeck,
-        villainCards: klawCards,
-        mainSchemes: klawMainSchemes,
-        encounterCards: klawEncounterCards,
+        villainCards: scenario.villainCards,
+        mainSchemes: scenario.mainSchemes,
+        encounterCards: scenario.encounterCards,
       })
-    ),
+    );
+  },
 }));
 

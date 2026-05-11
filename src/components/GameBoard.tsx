@@ -12,6 +12,7 @@ import { GameControls } from "./GameControls";
 import { EncounterArea } from "./EncounterArea";
 import { SideSchemeArea } from "./SideSchemeArea";
 import { useGameStore } from "../store/gameStore";
+import { MainSchemePanel } from "./MainSchemePanel";
 import { GameStatusBanner } from "./GameStatusBanner";
 import { EncounterDeckPanel } from "./EncounterDeckPanel";
 import { EncounterDiscardPanel } from "./EncounterDiscardPanel";
@@ -34,6 +35,7 @@ export function GameBoard() {
 
       <div className="table-top">
         <VillainPanel />
+        <MainSchemePanel />
         <HeroPanel />
       </div>
 

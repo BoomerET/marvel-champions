@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { scenarios } from "../data/scenarios";
+import { scenarios, type ScenarioId } from "../data/scenarios";
 import { useGameStore } from "../store/gameStore";
 
 export function ScenarioSelector() {
@@ -12,7 +12,9 @@ export function ScenarioSelector() {
                 Scenario{" "}
                 <select
                     value={scenarioId}
-                    onChange={(event) => setScenarioId(event.target.value)}
+                    onChange={(event) =>
+                        setScenarioId(event.target.value as ScenarioId)
+                    }
                 >
                     {Object.values(scenarios).map((scenario) => (
                         <option key={scenario.id} value={scenario.id}>

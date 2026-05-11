@@ -57,6 +57,7 @@ interface GameStore extends GameState {
   selectAttackTarget: (
     instanceId?: string
   ) => void;
+  newGame: () => void;
 }
 
 const defaultHero = spiderManHero;
@@ -1126,5 +1127,12 @@ export const useGameStore = create<GameStore>((set) => ({
       selectedAttackTarget: instanceId,
     })),
 
+  newGame: () =>
+    set(
+      createNewGame({
+        hero: defaultHero,
+        deck: defaultDeck,
+      })
+    ),
 }));
 

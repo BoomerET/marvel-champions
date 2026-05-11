@@ -2,6 +2,7 @@ import { useGameStore } from "../store/gameStore";
 
 export function GameStatusBanner() {
     const gameStatus = useGameStore((s) => s.gameStatus);
+    const newGame = useGameStore((s) => s.newGame);
 
     if (gameStatus === "playing") {
         return null;
@@ -10,6 +11,9 @@ export function GameStatusBanner() {
     return (
         <div className={`game-status-banner game-status-banner--${gameStatus}`}>
             {gameStatus === "won" ? "You Win!" : "You Lose!"}
+            <button onClick={newGame}>
+                New Game
+            </button>
         </div>
     );
 }

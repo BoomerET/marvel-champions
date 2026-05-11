@@ -2,10 +2,10 @@ import type { Card } from "../../game/types";
 
 export const rhinoMainSchemes: Card[] = [
     {
-        code: "01113",
+        code: "01097",
         name: "The Break-In!",
         type: "mainScheme",
-        image: "01113",
+        image: "01097",
         orientation: "landscape",
         threat: 0,
         threatLimit: 7,

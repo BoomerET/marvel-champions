@@ -34,6 +34,7 @@ export interface Card {
   threat?: number;
   orientation?: "portrait" | "landscape";
   currentHitPoints?: number;
+  threatLimit?: number;
 }
 
 export interface CardInstance extends Card {

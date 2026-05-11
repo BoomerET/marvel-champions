@@ -1,4 +1,4 @@
-import type { GameState } from "../types";
+import type { GameState, GameStatus } from "../types";
 import { appendEvents } from "../../store/gameStore";
 import { resolveMinionActivation } from "./resolveMinionActivation";
 
@@ -16,6 +16,8 @@ export function resolveVillainActivation(
         (state.villain.identity.scheme ?? 0) + boostAmount;
 
     const nextLog = [...state.log];
+
+    let nextGameStatus: GameStatus = state.gameStatus;
 
     if (boostCard) {
         nextLog.push(`Boost card: ${boostCard.name} (+${boostAmount}).`);
@@ -41,6 +43,14 @@ export function resolveVillainActivation(
 
         const damageAmount = Math.max(0, attackAmount - defense);
 
+        const nextHitPoints = isTough
+            ? state.hero.hitPoints
+            : Math.max(0, state.hero.hitPoints - damageAmount);
+
+        if (nextHitPoints <= 0) {
+            nextGameStatus = "lost";
+        }
+
         const damageEvent = {
             type: "DAMAGE_DEALT" as const,
             target: "hero" as const,
@@ -64,9 +74,7 @@ export function resolveVillainActivation(
                 ...state.hero.identity,
                 tough: isTough ? false : state.hero.identity.tough,
             },
-            hitPoints: isTough
-                ? state.hero.hitPoints
-                : Math.max(0, state.hero.hitPoints - damageAmount),
+            hitPoints: nextHitPoints,
             deck: remainingDeck,
             hand: [...state.hero.hand, ...drawnCards],
             isDefending: false,
@@ -86,8 +94,15 @@ export function resolveVillainActivation(
             nextLog.push("Damage prevented by TOUGH. Removed tough status.");
         }
 
+        if (nextHitPoints <= 0) {
+            nextLog.push("Hero defeated. You lose!");
+        }
+
         const minionActivation = resolveMinionActivation({
-            state,
+            state: {
+                ...state,
+                gameStatus: nextGameStatus,
+            },
             hero: nextHero,
             villain: state.villain,
             log: nextLog,
@@ -96,6 +111,7 @@ export function resolveVillainActivation(
         return {
             hero: minionActivation.hero,
             villain: minionActivation.villain,
+            gameStatus: minionActivation.gameStatus,
             eventHistory: appendEvents(
                 state.eventHistory,
                 isTough || damageAmount === 0
@@ -125,11 +141,15 @@ export function resolveVillainActivation(
     nextLog.push(`Rhino schemed for ${schemeAmount} threat.`);
 
     if (nextThreat >= state.villain.threatLimit) {
+        nextGameStatus = "lost";
         nextLog.push("Main scheme threat limit reached. You lose!");
     }
 
     const minionActivation = resolveMinionActivation({
-        state,
+        state: {
+            ...state,
+            gameStatus: nextGameStatus,
+        },
         hero: state.hero,
         villain: nextVillain,
         log: nextLog,
@@ -138,6 +158,7 @@ export function resolveVillainActivation(
     return {
         hero: minionActivation.hero,
         villain: minionActivation.villain,
+        gameStatus: minionActivation.gameStatus,
         eventHistory: appendEvents(state.eventHistory, [schemeEvent]),
         encounterDeck: remainingEncounterDeck,
         encounterDiscard: boostCard

@@ -1,5 +1,6 @@
 import type {
     GameState,
+    GameStatus,
     HeroState,
     VillainState,
 } from "../types";
@@ -18,26 +19,35 @@ export function resolveMinionActivation({
     hero: HeroState;
     villain: VillainState;
     log: string[];
+    gameStatus: GameStatus;
 } {
     let nextHero = hero;
     let nextVillain = villain;
     const nextLog = [...log];
+    let nextGameStatus = state.gameStatus;
 
     state.minions.forEach((minion) => {
         if (state.hero.form === "hero") {
             const attack = minion.attack ?? 0;
 
+            const nextHitPoints = Math.max(
+                0,
+                nextHero.hitPoints - attack
+            );
+
             nextHero = {
                 ...nextHero,
-                hitPoints: Math.max(
-                    0,
-                    nextHero.hitPoints - attack
-                ),
+                hitPoints: nextHitPoints,
             };
 
             nextLog.push(
                 `${minion.name} attacked for ${attack} damage.`
             );
+
+            if (nextHitPoints <= 0) {
+                nextGameStatus = "lost";
+                nextLog.push("Hero defeated. You lose!");
+            }
 
             return;
         }
@@ -58,6 +68,7 @@ export function resolveMinionActivation({
         );
 
         if (threatLimitReached) {
+            nextGameStatus = "lost";
             nextLog.push(
                 "Main scheme threat limit reached. You lose!"
             );
@@ -68,5 +79,6 @@ export function resolveMinionActivation({
         hero: nextHero,
         villain: nextVillain,
         log: nextLog,
+        gameStatus: nextGameStatus,
     };
 }

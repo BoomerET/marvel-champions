@@ -621,3 +621,63 @@ body.shift-down .card:hover .card-image {
 .scenario-selector button:active {
   transform: translateY(1px);
 }
+
+
+.game-board {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.round-phase {
+  display: flex;
+  gap: 16px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.setup-row,
+.villain-row,
+.encounter-row,
+.player-row,
+.player-deck-row,
+.log-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.villain-row > *,
+.encounter-row > *,
+.player-row > *,
+.player-deck-row > *,
+.log-row > * {
+  flex: 1;
+}
+
+.player-hand,
+.play-area,
+.encounter-area,
+.minion-area,
+.side-scheme-area {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.player-deck-row .player-hand {
+  flex: 3;
+}
+
+.log-row > * {
+  max-height: 360px;
+  overflow-y: auto;
+}

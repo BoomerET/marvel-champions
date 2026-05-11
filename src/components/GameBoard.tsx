@@ -23,48 +23,53 @@ export function GameBoard() {
   const round = useGameStore((s) => s.round);
 
   return (
-    <main>
-      <h1>Marvel Champions</h1>
+    <main className="game-board">
+      <header className="game-header">
+        <h1>Marvel Champions</h1>
+
+        <div className="round-phase">
+          <div>Round {round}</div>
+          <div>Phase: {phase}</div>
+        </div>
+      </header>
+
       <GameStatusBanner />
 
-      <DeckLoader />
-
-      <ScenarioSelector />
-
-      <section>
-        <div>Round: {round}</div>
-        <h2>Phase: {phase}</h2>
+      <section className="setup-row">
+        <DeckLoader />
+        <ScenarioSelector />
       </section>
-
-      <div className="table-top">
-        <VillainPanel />
-        <MainSchemePanel />
-        <HeroPanel />
-      </div>
-
-
-      <EncounterArea />
-
-      <MinionArea />
-      <SideSchemeArea />
 
       <GameControls />
 
-      <div className="table-zones">
-        <DeckPanel />
-        <DiscardPanel />
+      <section className="villain-row">
+        <VillainPanel />
+        <MainSchemePanel />
+        <SideSchemeArea />
+      </section>
+
+      <section className="encounter-row">
         <EncounterDeckPanel />
+        <EncounterArea />
+        <MinionArea />
         <EncounterDiscardPanel />
-      </div>
+      </section>
 
-      <PlayArea />
+      <section className="player-row">
+        <HeroPanel />
+        <PlayArea />
+      </section>
 
-      <PlayerHand />
+      <section className="player-deck-row">
+        <DeckPanel />
+        <PlayerHand />
+        <DiscardPanel />
+      </section>
 
-      <GameLog />
-
-      <EventHistory />
+      <section className="log-row">
+        <GameLog />
+        <EventHistory />
+      </section>
     </main>
   );
 }
-

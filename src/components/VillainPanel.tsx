@@ -18,6 +18,7 @@ export function VillainPanel() {
             />
 
             <div>HP: {villain.hitPoints}</div>
+            <div>Stage: {villain.stage}</div>
 
             <button onClick={() => addThreat(1)}>Threat +1</button>
             <button onClick={() => removeThreat(1)}>Threat -1</button>

@@ -3,7 +3,9 @@ import { scenarios, type ScenarioId } from "../data/scenarios";
 import { useGameStore } from "../store/gameStore";
 
 export function ScenarioSelector() {
-    const [scenarioId, setScenarioId] = useState("rhino");
+    const [scenarioId, setScenarioId] =
+        useState<ScenarioId>("rhino");
+
     const newGame = useGameStore((s) => s.newGame);
 
     return (

@@ -8,9 +8,15 @@ import { rhinoEncounterCards } from "../data/encounters/rhinoEncounter";
 export function createNewGame({
   hero,
   deck,
+  villainCards,
+  mainSchemes,
+  encounterCards,
 }: {
   hero: Card;
   deck: Card[];
+  villainCards: Card[];
+  mainSchemes: Card[];
+  encounterCards: Card[];
 }): GameState {
   const heroIdentity = createCardInstance(hero);
 
@@ -35,13 +41,13 @@ export function createNewGame({
     },
 
     villain: {
-      identity: createCardInstance(rhinoCards[0]),
-      hitPoints: rhinoCards[0].hp ?? 14,
+      identity: createCardInstance(villainCards[0]),
+      hitPoints: villainCards[0].hp ?? 14,
       stage: 1,
     },
 
     encounterDeck: shuffle(
-      rhinoEncounterCards.map(createCardInstance)
+      encounterCards.map(createCardInstance)
     ),
     encounterDiscard: [],
     encounterArea: [],
@@ -52,10 +58,10 @@ export function createNewGame({
     minions: [],
     gameStatus: "playing",
     mainScheme: {
-      card: createCardInstance(rhinoMainSchemes[0]),
+      card: createCardInstance(mainSchemes[0]),
       threat: 0,
       stage: 1,
-      threatLimit: rhinoMainSchemes[0].threatLimit ?? 7,
+      threatLimit: mainSchemes[0].threatLimit ?? 7,
     },
   };
 }

@@ -37,8 +37,7 @@ export function createNewGame({
     villain: {
       identity: createCardInstance(rhinoCards[0]),
       hitPoints: rhinoCards[0].hp ?? 14,
-      threat: 0,
-      threatLimit: 7,
+      stage: 1,
     },
 
     encounterDeck: shuffle(

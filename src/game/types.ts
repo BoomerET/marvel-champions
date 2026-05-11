@@ -27,6 +27,7 @@ export interface Card {
   thwart?: number;
   recover?: number;
   defense?: number;
+  stage?: number;
   boostIcons?: number;
   scheme?: number;
   boostText?: string[];
@@ -83,8 +84,7 @@ export interface HeroState {
 export interface VillainState {
   identity: CardInstance;
   hitPoints: number;
-  threat: number;
-  threatLimit: number;
+  stage: number;
 }
 
 export type GameStatus =

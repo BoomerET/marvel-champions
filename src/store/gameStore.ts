@@ -10,8 +10,9 @@ import { dispatchGameEvent } from "../game/dispatch";
 import { fetchMarvelCdbDeck } from "../api/marvelCdb";
 import { spiderManHero } from "../data/heroes/spiderMan";
 import { resolveVillainActivation } from "../game/rules/villainActivation";
-import { resolveEncounterCardEffect } from "../game/rules/resolveEncounterCard";
 import { buildPlayerDeckFromMarvelCdb } from "../game/buildDeckFromMarvelCdb";
+import { checkMainSchemeAdvance } from "../game/rules/checkMainSchemeAdvance";
+import { resolveEncounterCardEffect } from "../game/rules/resolveEncounterCard";
 
 export function appendEvents(
   existingEvents: GameState["eventHistory"],
@@ -431,28 +432,26 @@ export const useGameStore = create<GameStore>((set) => ({
 
   addThreat: (amount) =>
     set((state) => {
-      const nextThreat = state.mainScheme.threat + amount;
+      const nextLog = [
+        ...state.log,
+        `Added ${amount} threat.`,
+      ];
 
-      const threatLimitReached =
-        nextThreat >= state.mainScheme.threatLimit;
+      const nextMainScheme = {
+        ...state.mainScheme,
+        threat: state.mainScheme.threat + amount,
+      };
+
+      const checked = checkMainSchemeAdvance({
+        state,
+        mainScheme: nextMainScheme,
+        log: nextLog,
+      });
 
       return {
-        mainScheme: {
-          ...state.mainScheme,
-          threat: nextThreat,
-        },
-
-        gameStatus: threatLimitReached
-          ? "lost"
-          : state.gameStatus,
-
-        log: [
-          ...state.log,
-          `Added ${amount} threat.`,
-          ...(threatLimitReached
-            ? ["Main scheme threat limit reached. You lose!"]
-            : []),
-        ],
+        mainScheme: checked.mainScheme,
+        gameStatus: checked.gameStatus,
+        log: checked.log,
       };
     }),
 

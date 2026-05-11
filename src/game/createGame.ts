@@ -55,6 +55,7 @@ export function createNewGame({
     mainScheme: {
       card: createCardInstance(rhinoMainSchemes[0]),
       threat: 0,
+      stage: 1,
       threatLimit: rhinoMainSchemes[0].threatLimit ?? 7,
     },
   };

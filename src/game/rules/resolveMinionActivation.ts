@@ -5,6 +5,8 @@ import type {
     MainSchemeState,
 } from "../types";
 
+import { checkMainSchemeAdvance } from "./checkMainSchemeAdvance";
+
 export function resolveMinionActivation({
     state,
     hero,
@@ -75,10 +77,16 @@ export function resolveMinionActivation({
         }
     });
 
-    return {
-        hero: nextHero,
+    const checked = checkMainSchemeAdvance({
+        state,
         mainScheme: nextMainScheme,
         log: nextLog,
-        gameStatus: nextGameStatus,
+    });
+
+    return {
+        hero: nextHero,
+        mainScheme: checked.mainScheme,
+        log: checked.log,
+        gameStatus: checked.gameStatus,
     };
 }

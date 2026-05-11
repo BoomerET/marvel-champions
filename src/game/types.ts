@@ -94,6 +94,7 @@ export type GameStatus =
 
 export interface MainSchemeState {
   card: CardInstance;
+  stage: number;
   threat: number;
   threatLimit: number;
 }

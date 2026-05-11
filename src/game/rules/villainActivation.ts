@@ -1,5 +1,6 @@
 import type { GameState, GameStatus } from "../types";
 import { appendEvents } from "../../store/gameStore";
+import { checkMainSchemeAdvance } from "./checkMainSchemeAdvance";
 import { resolveMinionActivation } from "./resolveMinionActivation";
 
 export function resolveVillainActivation(
@@ -130,28 +131,27 @@ export function resolveVillainActivation(
         amount: schemeAmount,
     };
 
-    const nextThreat = state.mainScheme.threat + schemeAmount;
-
     const nextMainScheme = {
         ...state.mainScheme,
-        threat: nextThreat,
+        threat: state.mainScheme.threat + schemeAmount,
     };
 
     nextLog.push(`Rhino schemed for ${schemeAmount} threat.`);
 
-    if (nextThreat >= state.mainScheme.threatLimit) {
-        nextGameStatus = "lost";
-        nextLog.push("Main scheme threat limit reached. You lose!");
-    }
+    const checkedScheme = checkMainSchemeAdvance({
+        state,
+        mainScheme: nextMainScheme,
+        log: nextLog,
+    });
 
     const minionActivation = resolveMinionActivation({
         state: {
             ...state,
-            gameStatus: nextGameStatus,
+            gameStatus: checkedScheme.gameStatus,
         },
         hero: state.hero,
-        mainScheme: nextMainScheme,
-        log: nextLog,
+        mainScheme: checkedScheme.mainScheme,
+        log: checkedScheme.log,
     });
 
     return {

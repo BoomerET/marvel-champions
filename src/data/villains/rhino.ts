@@ -4,6 +4,7 @@ export const rhinoCards: Card[] = [
     {
         code: "01094",
         name: "Rhino (I)",
+        stage: 1,
         type: "villain",
         image: "01094",
         hp: 2,
@@ -12,7 +13,7 @@ export const rhinoCards: Card[] = [
         attack: 2,
     },
     {
-        code: "01094",
+        code: "01095",
         name: "Rhino (II)",
         stage: 2,
         type: "villain",

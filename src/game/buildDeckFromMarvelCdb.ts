@@ -1,5 +1,5 @@
 import type { Card } from "./types";
-import { playerCardByCode } from "../data/playerCards";
+import { playerCardByCode } from "../data/playerCards/index";
 
 interface MarvelCdbDeck {
     hero_code: string;

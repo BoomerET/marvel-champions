@@ -4,14 +4,15 @@ import { HeroPanel } from "./HeroPanel";
 import { DeckPanel } from "./DeckPanel";
 import { PlayerHand } from "./PlayerHand";
 import { DeckLoader } from "./DeckLoader";
+import { MinionArea } from "./MinionArea";
 import { VillainPanel } from "./VillainPanel";
 import { DiscardPanel } from "./DiscardPanel";
 import { EventHistory } from "./EventHistory";
 import { GameControls } from "./GameControls";
 import { EncounterArea } from "./EncounterArea";
-import { MinionArea } from "./MinionArea";
 import { SideSchemeArea } from "./SideSchemeArea";
 import { useGameStore } from "../store/gameStore";
+import { GameStatusBanner } from "./GameStatusBanner";
 import { EncounterDeckPanel } from "./EncounterDeckPanel";
 import { EncounterDiscardPanel } from "./EncounterDiscardPanel";
 
@@ -22,6 +23,7 @@ export function GameBoard() {
   return (
     <main>
       <h1>Marvel Champions</h1>
+      <GameStatusBanner />
 
       <DeckLoader />
 

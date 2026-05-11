@@ -9,11 +9,13 @@ export function GameStatusBanner() {
     }
 
     return (
-        <div className={`game-status-banner game-status-banner--${gameStatus}`}>
-            {gameStatus === "won" ? "You Win!" : "You Lose!"}
+        <>
+            <div className={`game-status-banner game-status-banner--${gameStatus}`}>
+                {gameStatus === "won" ? "You Win!" : "You Lose!"}
+            </div>
             <button onClick={newGame}>
                 New Game
             </button>
-        </div>
+        </>
     );
 }

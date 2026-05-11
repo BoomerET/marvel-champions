@@ -6,7 +6,7 @@ export const rhinoCards: Card[] = [
         name: "Rhino (I)",
         type: "villain",
         image: "01094",
-        hp: 14,
+        hp: 2,
         text: ["Brute force villain placeholder."],
         scheme: 1,
         attack: 2,

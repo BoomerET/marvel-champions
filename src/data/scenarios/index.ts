@@ -22,3 +22,5 @@ export const scenarios = {
         encounterCards: klawEncounterCards,
     },
 };
+
+export type ScenarioId = keyof typeof scenarios;

@@ -169,9 +169,9 @@ export const useGameStore = create<GameStore>((set) => ({
       };
 
       return {
-        villain: {
-          ...state.villain,
-          threat: state.villain.threat + amount,
+        mainScheme: {
+          ...state.mainScheme,
+          threat: state.mainScheme.threat + amount,
         },
 
         eventHistory: appendEvents(state.eventHistory, [
@@ -696,11 +696,11 @@ export const useGameStore = create<GameStore>((set) => ({
           },
         },
 
-        villain: {
-          ...state.villain,
+        mainScheme: {
+          ...state.mainScheme,
           threat: Math.max(
             0,
-            state.villain.threat - amount
+            state.mainScheme.threat - amount
           ),
         },
 

@@ -1,9 +1,9 @@
 import { shuffle } from "../utils/shuffle";
 import type { Card, GameState } from "./types";
-import { rhinoCards } from "../data/villains/rhino";
+//import { rhinoCards } from "../data/villains/rhino";
 import { createCardInstance } from "../utils/createCardInstance";
-import { rhinoMainSchemes } from "../data/schemes/rhinoMainScheme";
-import { rhinoEncounterCards } from "../data/encounters/rhinoEncounter";
+//import { rhinoMainSchemes } from "../data/schemes/rhinoMainScheme";
+//import { rhinoEncounterCards } from "../data/encounters/rhinoEncounter";
 
 export function createNewGame({
   hero,

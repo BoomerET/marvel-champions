@@ -17,9 +17,9 @@ import { resolveEncounterCardEffect } from "../game/rules/resolveEncounterCard";
 import { rhinoCards } from "../data/villains/rhino";
 import { rhinoMainSchemes } from "../data/schemes/rhinoMainScheme";
 import { rhinoEncounterCards } from "../data/encounters/rhinoEncounter";
-import { klawCards } from "../data/villains/klaw";
-import { klawMainSchemes } from "../data/schemes/klawMainScheme";
-import { klawEncounterCards } from "../data/encounters/klawEncounters";
+//import { klawCards } from "../data/villains/klaw";
+//import { klawMainSchemes } from "../data/schemes/klawMainScheme";
+//import { klawEncounterCards } from "../data/encounters/klawEncounters";
 
 export function appendEvents(
   existingEvents: GameState["eventHistory"],

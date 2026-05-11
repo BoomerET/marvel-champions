@@ -96,23 +96,6 @@ const defaultDeck = buildPlayerDeckFromMarvelCdb({
   },
 });
 
-//const heroCode = defaultDeck.hero_code.replace(
-//  /[ab]$/,
-//  ""
-//);
-
-//const hero = heroCardByCode.get(heroCode);
-
-//if (!hero) {
-//  throw new Error(
-//    `Hero not found for code ${heroCode}`
-//  );
-//}
-
-//const deck = buildPlayerDeckFromMarvelCdb(
-//  marvelDeck
-//);
-
 export const useGameStore = create<GameStore>((set) => ({
 
   ...createNewGame({

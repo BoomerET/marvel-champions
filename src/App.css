@@ -543,3 +543,9 @@ body.shift-down .card:hover .card-image {
 .game-status-banner--lost {
   background: #b42318;
 }
+
+.game-status-banner button {
+  margin-top: 12px;
+  font-size: 16px;
+  padding: 8px 16px;
+}

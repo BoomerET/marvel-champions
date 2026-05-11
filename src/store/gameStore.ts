@@ -413,17 +413,26 @@ export const useGameStore = create<GameStore>((set) => ({
         amount,
       };
 
+      const nextHitPoints = Math.max(
+        0,
+        state.villain.hitPoints - amount
+      );
+
+      const defeated = nextHitPoints <= 0;
+
       return {
         villain: {
           ...state.villain,
-          hitPoints: Math.max(0, state.villain.hitPoints - amount),
+          hitPoints: nextHitPoints,
         },
 
-        eventHistory: appendEvents(state.eventHistory, [
-          damageEvent,
-        ]),
+        gameStatus: defeated ? "won" : state.gameStatus,
 
-        log: [...state.log, `Villain took ${amount} damage.`],
+        log: [
+          ...state.log,
+          `Villain took ${amount} damage.`,
+          ...(defeated ? ["Villain defeated. You win!"] : []),
+        ],
       };
     }),
 

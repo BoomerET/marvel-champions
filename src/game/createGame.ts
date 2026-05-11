@@ -2,7 +2,7 @@ import { shuffle } from "../utils/shuffle";
 import type { Card, GameState } from "./types";
 import { rhinoCards } from "../data/villains/rhino";
 import { createCardInstance } from "../utils/createCardInstance";
-import { rhinoMainSchemes } from "../data/schemes/rhinoMainScheme";
+import { rhinoMainScheme } from "../data/schemes/rhinoMainScheme";
 import { rhinoEncounterCards } from "../data/encounters/rhinoEncounter";
 
 export function createNewGame({
@@ -53,9 +53,9 @@ export function createNewGame({
     minions: [],
     gameStatus: "playing",
     mainScheme: {
-      card: createCardInstance(rhinoMainSchemes[0]),
+      card: createCardInstance(rhinoMainScheme[0]),
       threat: 0,
-      threatLimit: rhinoMainSchemes[0].threatLimit ?? 7,
+      threatLimit: rhinoMainScheme[0].threatLimit ?? 7,
     },
   };
 }

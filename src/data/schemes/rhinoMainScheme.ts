@@ -1,6 +1,6 @@
 import type { Card } from "../../game/types";
 
-export const rhinoMainScheme: Card[] = [
+export const rhinoMainSchemes: Card[] = [
     {
         code: "01097",
         name: "The Break-In!",

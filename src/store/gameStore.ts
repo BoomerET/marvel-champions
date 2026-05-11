@@ -599,6 +599,13 @@ export const useGameStore = create<GameStore>((set) => ({
         };
       }
 
+      const nextHitPoints = Math.max(
+        0,
+        state.villain.hitPoints - amount
+      );
+
+      const villainDefeated = nextHitPoints <= 0;
+
       return {
         hero: {
           ...state.hero,
@@ -610,8 +617,10 @@ export const useGameStore = create<GameStore>((set) => ({
 
         villain: {
           ...state.villain,
-          hitPoints: Math.max(0, state.villain.hitPoints - amount),
+          hitPoints: nextHitPoints,
         },
+
+        gameStatus: villainDefeated ? "won" : state.gameStatus,
 
         eventHistory: appendEvents(state.eventHistory, [
           basicAttackEvent,
@@ -622,7 +631,11 @@ export const useGameStore = create<GameStore>((set) => ({
           },
         ]),
 
-        log: [...state.log, `Hero attacked villain for ${amount}.`],
+        log: [
+          ...state.log,
+          `Hero attacked villain for ${amount}.`,
+          ...(villainDefeated ? ["Villain defeated. You win!"] : []),
+        ],
       };
     }),
 

@@ -14,7 +14,7 @@ export function GameStatusBanner() {
                 {gameStatus === "won" ? "You Win!" : "You Lose!"}
             </div>
 
-            <button onClick={newGame}>
+            <button onClick={() => newGame()}>
                 New Game
             </button>
         </div>

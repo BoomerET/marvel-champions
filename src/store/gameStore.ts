@@ -2,7 +2,7 @@
 
 import { create } from "zustand";
 import { shuffle } from "../utils/shuffle";
-import { scenarios } from "../data/scenarios";
+//import { scenarios } from "../data/scenarios";
 import type { GameState } from "../game/types";
 import type { GameEvent } from "../game/events";
 import { heroCardByCode } from "../data/heroes";
@@ -21,6 +21,8 @@ import { resolveEncounterCardEffect } from "../game/rules/resolveEncounterCard";
 import { klawCards } from "../data/villains/klaw";
 import { klawMainSchemes } from "../data/schemes/klawMainScheme";
 import { klawEncounterCards } from "../data/encounters/klawEncounters";
+import { scenarios, type ScenarioId } from "../data/scenarios/index";
+
 
 export function appendEvents(
   existingEvents: GameState["eventHistory"],
@@ -64,7 +66,7 @@ interface GameStore extends GameState {
   selectAttackTarget: (
     instanceId?: string
   ) => void;
-  newGame: (scenarioId?: string) => void;
+  newGame: (scenarioId?: ScenarioId) => void;
 }
 
 const defaultHero = spiderManHero;
@@ -1141,14 +1143,6 @@ export const useGameStore = create<GameStore>((set) => ({
 
   newGame: (scenarioId = "rhino") => {
     const scenario = scenarios[scenarioId];
-
-    if (!scenario) {
-      console.error(
-        `Unknown scenario: ${scenarioId}`
-      );
-
-      return;
-    }
 
     set(
       createNewGame({

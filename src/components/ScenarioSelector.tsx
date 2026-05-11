@@ -28,3 +28,5 @@ export function ScenarioSelector() {
         </section>
     );
 }
+
+export type ScenarioId = keyof typeof scenarios;

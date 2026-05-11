@@ -14,12 +14,12 @@ import { resolveVillainActivation } from "../game/rules/villainActivation";
 import { buildPlayerDeckFromMarvelCdb } from "../game/buildDeckFromMarvelCdb";
 import { checkMainSchemeAdvance } from "../game/rules/checkMainSchemeAdvance";
 import { resolveEncounterCardEffect } from "../game/rules/resolveEncounterCard";
-import { rhinoCards } from "../data/villains/rhino";
-import { rhinoMainSchemes } from "../data/schemes/rhinoMainScheme";
-import { rhinoEncounterCards } from "../data/encounters/rhinoEncounter";
-//import { klawCards } from "../data/villains/klaw";
-//import { klawMainSchemes } from "../data/schemes/klawMainScheme";
-//import { klawEncounterCards } from "../data/encounters/klawEncounters";
+//import { rhinoCards } from "../data/villains/rhino";
+//import { rhinoMainSchemes } from "../data/schemes/rhinoMainScheme";
+//import { rhinoEncounterCards } from "../data/encounters/rhinoEncounter";
+import { klawCards } from "../data/villains/klaw";
+import { klawMainSchemes } from "../data/schemes/klawMainScheme";
+import { klawEncounterCards } from "../data/encounters/klawEncounters";
 
 export function appendEvents(
   existingEvents: GameState["eventHistory"],
@@ -107,9 +107,9 @@ export const useGameStore = create<GameStore>((set) => ({
   ...createNewGame({
     hero: defaultHero,
     deck: defaultDeck,
-    villainCards: rhinoCards,
-    mainSchemes: rhinoMainSchemes,
-    encounterCards: rhinoEncounterCards,
+    villainCards: klawCards,
+    mainSchemes: klawMainSchemes,
+    encounterCards: klawEncounterCards,
   }),
 
   villainAttack: () =>
@@ -137,7 +137,7 @@ export const useGameStore = create<GameStore>((set) => ({
 
           log: [
             ...state.log,
-            `Rhino attacked for ${amount} damage.`,
+            `klaw attacked for ${amount} damage.`,
             "Damage prevented by TOUGH. Removed tough status.",
           ],
         };
@@ -165,7 +165,7 @@ export const useGameStore = create<GameStore>((set) => ({
 
         log: [
           ...state.log,
-          `Rhino attacked for ${amount} damage.`,
+          `klaw attacked for ${amount} damage.`,
         ],
       };
     }),
@@ -189,7 +189,7 @@ export const useGameStore = create<GameStore>((set) => ({
           schemeEvent,
         ]),
 
-        log: [...state.log, `Rhino schemed for ${amount} threat.`],
+        log: [...state.log, `klaw schemed for ${amount} threat.`],
       };
     }),
 
@@ -1126,9 +1126,9 @@ export const useGameStore = create<GameStore>((set) => ({
       createNewGame({
         hero,
         deck,
-        villainCards: rhinoCards,
-        mainSchemes: rhinoMainSchemes,
-        encounterCards: rhinoEncounterCards,
+        villainCards: klawCards,
+        mainSchemes: klawMainSchemes,
+        encounterCards: klawEncounterCards,
       })
     );
   },
@@ -1143,9 +1143,9 @@ export const useGameStore = create<GameStore>((set) => ({
       createNewGame({
         hero: defaultHero,
         deck: defaultDeck,
-        villainCards: rhinoCards,
-        mainSchemes: rhinoMainSchemes,
-        encounterCards: rhinoEncounterCards,
+        villainCards: klawCards,
+        mainSchemes: klawMainSchemes,
+        encounterCards: klawEncounterCards,
       })
     ),
 }));

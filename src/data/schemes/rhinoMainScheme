@@ -1,0 +1,14 @@
+import type { Card } from "../../game/types";
+
+export const rhinoMainSchemes: Card[] = [
+    {
+        code: "01113",
+        name: "The Break-In!",
+        type: "mainScheme",
+        image: "01113",
+        orientation: "landscape",
+        threat: 0,
+        threatLimit: 7,
+        text: ["Rhino is trying to smash through the facility wall."],
+    },
+];

@@ -16,7 +16,6 @@ export function resolveVillainActivation(
         (state.villain.identity.scheme ?? 0) + boostAmount;
 
     const nextLog = [...state.log];
-
     let nextGameStatus: GameStatus = state.gameStatus;
 
     if (boostCard) {
@@ -104,13 +103,13 @@ export function resolveVillainActivation(
                 gameStatus: nextGameStatus,
             },
             hero: nextHero,
-            villain: state.villain,
+            mainScheme: state.mainScheme,
             log: nextLog,
         });
 
         return {
             hero: minionActivation.hero,
-            villain: minionActivation.villain,
+            mainScheme: minionActivation.mainScheme,
             gameStatus: minionActivation.gameStatus,
             eventHistory: appendEvents(
                 state.eventHistory,
@@ -131,16 +130,16 @@ export function resolveVillainActivation(
         amount: schemeAmount,
     };
 
-    const nextThreat = state.villain.threat + schemeAmount;
+    const nextThreat = state.mainScheme.threat + schemeAmount;
 
-    const nextVillain = {
-        ...state.villain,
+    const nextMainScheme = {
+        ...state.mainScheme,
         threat: nextThreat,
     };
 
     nextLog.push(`Rhino schemed for ${schemeAmount} threat.`);
 
-    if (nextThreat >= state.villain.threatLimit) {
+    if (nextThreat >= state.mainScheme.threatLimit) {
         nextGameStatus = "lost";
         nextLog.push("Main scheme threat limit reached. You lose!");
     }
@@ -151,13 +150,13 @@ export function resolveVillainActivation(
             gameStatus: nextGameStatus,
         },
         hero: state.hero,
-        villain: nextVillain,
+        mainScheme: nextMainScheme,
         log: nextLog,
     });
 
     return {
         hero: minionActivation.hero,
-        villain: minionActivation.villain,
+        mainScheme: minionActivation.mainScheme,
         gameStatus: minionActivation.gameStatus,
         eventHistory: appendEvents(state.eventHistory, [schemeEvent]),
         encounterDeck: remainingEncounterDeck,

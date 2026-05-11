@@ -2,27 +2,27 @@ import type {
     GameState,
     GameStatus,
     HeroState,
-    VillainState,
+    MainSchemeState,
 } from "../types";
 
 export function resolveMinionActivation({
     state,
     hero,
-    villain,
+    mainScheme,
     log,
 }: {
     state: GameState;
     hero: HeroState;
-    villain: VillainState;
+    mainScheme: MainSchemeState;
     log: string[];
 }): {
     hero: HeroState;
-    villain: VillainState;
+    mainScheme: MainSchemeState;
     log: string[];
     gameStatus: GameStatus;
 } {
     let nextHero = hero;
-    let nextVillain = villain;
+    let nextMainScheme = mainScheme;
     const nextLog = [...log];
     let nextGameStatus = state.gameStatus;
 
@@ -53,13 +53,13 @@ export function resolveMinionActivation({
         }
 
         const scheme = minion.scheme ?? 0;
-        const nextThreat = nextVillain.threat + scheme;
+        const nextThreat = nextMainScheme.threat + scheme;
 
         const threatLimitReached =
-            nextThreat >= nextVillain.threatLimit;
+            nextThreat >= nextMainScheme.threatLimit;
 
-        nextVillain = {
-            ...nextVillain,
+        nextMainScheme = {
+            ...nextMainScheme,
             threat: nextThreat,
         };
 
@@ -77,7 +77,7 @@ export function resolveMinionActivation({
 
     return {
         hero: nextHero,
-        villain: nextVillain,
+        mainScheme: nextMainScheme,
         log: nextLog,
         gameStatus: nextGameStatus,
     };

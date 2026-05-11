@@ -4,16 +4,14 @@ import { create } from "zustand";
 import { shuffle } from "../utils/shuffle";
 import type { GameState } from "../game/types";
 import type { GameEvent } from "../game/events";
+import { heroCardByCode } from "../data/heroes";
 import { createNewGame } from "../game/createGame";
 import { dispatchGameEvent } from "../game/dispatch";
+import { fetchMarvelCdbDeck } from "../api/marvelCdb";
+import { spiderManHero } from "../data/heroes/spiderMan";
 import { resolveVillainActivation } from "../game/rules/villainActivation";
 import { resolveEncounterCardEffect } from "../game/rules/resolveEncounterCard";
 import { buildPlayerDeckFromMarvelCdb } from "../game/buildDeckFromMarvelCdb";
-//import marvelDeck from "../data/decks/spiderMan.json";
-//import { defaultMarvelCdbDeckId } from "../data/defaultDeck";
-import { spiderManHero } from "../data/heroes/spiderMan";
-import { heroCardByCode } from "../data/heroes";
-import { fetchMarvelCdbDeck } from "../api/marvelCdb";
 
 export function appendEvents(
   existingEvents: GameState["eventHistory"],
@@ -433,15 +431,14 @@ export const useGameStore = create<GameStore>((set) => ({
 
   addThreat: (amount) =>
     set((state) => {
-      const nextThreat =
-        state.villain.threat + amount;
+      const nextThreat = state.mainScheme.threat + amount;
 
       const threatLimitReached =
-        nextThreat >= state.villain.threatLimit;
+        nextThreat >= state.mainScheme.threatLimit;
 
       return {
-        villain: {
-          ...state.villain,
+        mainScheme: {
+          ...state.mainScheme,
           threat: nextThreat,
         },
 
@@ -461,11 +458,18 @@ export const useGameStore = create<GameStore>((set) => ({
 
   removeThreat: (amount) =>
     set((state) => ({
-      villain: {
-        ...state.villain,
-        threat: Math.max(0, state.villain.threat - amount),
+      mainScheme: {
+        ...state.mainScheme,
+        threat: Math.max(
+          0,
+          state.mainScheme.threat - amount
+        ),
       },
-      log: [...state.log, `Removed ${amount} threat.`],
+
+      log: [
+        ...state.log,
+        `Removed ${amount} threat.`,
+      ],
     })),
 
   toggleExhausted: (instanceId) =>

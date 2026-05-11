@@ -1141,7 +1141,7 @@ export const useGameStore = create<GameStore>((set) => ({
       selectedAttackTarget: instanceId,
     })),
 
-  newGame: (scenarioId = "rhino") => {
+  newGame: (scenarioId: ScenarioId = "rhino") => {
     const scenario = scenarios[scenarioId];
 
     set(

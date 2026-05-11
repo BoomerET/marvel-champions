@@ -9,6 +9,7 @@ import { createNewGame } from "../game/createGame";
 import { dispatchGameEvent } from "../game/dispatch";
 import { fetchMarvelCdbDeck } from "../api/marvelCdb";
 import { spiderManHero } from "../data/heroes/spiderMan";
+import { checkVillainDefeat } from "../game/rules/checkVillainDefeat";
 import { resolveVillainActivation } from "../game/rules/villainActivation";
 import { buildPlayerDeckFromMarvelCdb } from "../game/buildDeckFromMarvelCdb";
 import { checkMainSchemeAdvance } from "../game/rules/checkMainSchemeAdvance";
@@ -408,25 +409,31 @@ export const useGameStore = create<GameStore>((set) => ({
         state.villain.hitPoints - amount
       );
 
-      const defeated = nextHitPoints <= 0;
+      const damagedVillain = {
+        ...state.villain,
+        hitPoints: nextHitPoints,
+      };
+
+      const nextLog = [
+        ...state.log,
+        `Villain took ${amount} damage.`,
+      ];
+
+      const checked = checkVillainDefeat({
+        state,
+        villain: damagedVillain,
+        log: nextLog,
+      });
 
       return {
-        villain: {
-          ...state.villain,
-          hitPoints: nextHitPoints,
-        },
+        villain: checked.villain,
+        gameStatus: checked.gameStatus,
 
         eventHistory: appendEvents(state.eventHistory, [
           damageEvent,
         ]),
 
-        gameStatus: defeated ? "won" : state.gameStatus,
-
-        log: [
-          ...state.log,
-          `Villain took ${amount} damage.`,
-          ...(defeated ? ["Villain defeated. You win!"] : []),
-        ],
+        log: checked.log,
       };
     }),
 

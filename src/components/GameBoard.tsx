@@ -14,6 +14,7 @@ import { SideSchemeArea } from "./SideSchemeArea";
 import { useGameStore } from "../store/gameStore";
 import { MainSchemePanel } from "./MainSchemePanel";
 import { GameStatusBanner } from "./GameStatusBanner";
+import { ScenarioSelector } from "./ScenarioSelector";
 import { EncounterDeckPanel } from "./EncounterDeckPanel";
 import { EncounterDiscardPanel } from "./EncounterDiscardPanel";
 
@@ -27,6 +28,8 @@ export function GameBoard() {
       <GameStatusBanner />
 
       <DeckLoader />
+
+      <ScenarioSelector />
 
       <section>
         <div>Round: {round}</div>

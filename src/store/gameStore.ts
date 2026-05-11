@@ -426,6 +426,10 @@ export const useGameStore = create<GameStore>((set) => ({
           hitPoints: nextHitPoints,
         },
 
+        eventHistory: appendEvents(state.eventHistory, [
+          damageEvent,
+        ]),
+
         gameStatus: defeated ? "won" : state.gameStatus,
 
         log: [

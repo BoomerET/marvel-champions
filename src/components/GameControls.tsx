@@ -2,7 +2,7 @@ import { useGameStore } from "../store/gameStore";
 
 export function GameControls() {
     const endTurn = useGameStore((s) => s.endTurn);
-    const gameStatus = useGameStore((s) => s.gameStatus);
+    //const gameStatus = useGameStore((s) => s.gameStatus);
     const dealEncounterCard = useGameStore((s) => s.dealEncounterCard);
     const readyAllHeroCards = useGameStore(
         (s) => s.readyAllHeroCards

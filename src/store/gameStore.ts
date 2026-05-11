@@ -371,22 +371,29 @@ export const useGameStore = create<GameStore>((set) => ({
         amount,
       };
 
+      const nextHitPoints = Math.max(
+        0,
+        state.hero.hitPoints - amount
+      );
+
+      const defeated = nextHitPoints <= 0;
+
       return {
         hero: {
           ...state.hero,
-          hitPoints: Math.max(
-            0,
-            state.hero.hitPoints - amount
-          ),
+          hitPoints: nextHitPoints,
         },
 
         eventHistory: appendEvents(state.eventHistory, [
           damageEvent,
         ]),
 
+        gameStatus: defeated ? "lost" : state.gameStatus,
+
         log: [
           ...state.log,
           `Hero took ${amount} damage.`,
+          ...(defeated ? ["Hero defeated. You lose!"] : []),
         ],
       };
     }),

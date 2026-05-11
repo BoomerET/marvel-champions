@@ -57,9 +57,6 @@ export function resolveMinionActivation({
         const scheme = minion.scheme ?? 0;
         const nextThreat = nextMainScheme.threat + scheme;
 
-        const threatLimitReached =
-            nextThreat >= nextMainScheme.threatLimit;
-
         nextMainScheme = {
             ...nextMainScheme,
             threat: nextThreat,
@@ -68,17 +65,13 @@ export function resolveMinionActivation({
         nextLog.push(
             `${minion.name} schemed for ${scheme} threat.`
         );
-
-        if (threatLimitReached) {
-            nextGameStatus = "lost";
-            nextLog.push(
-                "Main scheme threat limit reached. You lose!"
-            );
-        }
     });
 
     const checked = checkMainSchemeAdvance({
-        state,
+        state: {
+            ...state,
+            gameStatus: nextGameStatus,
+        },
         mainScheme: nextMainScheme,
         log: nextLog,
     });
@@ -87,6 +80,9 @@ export function resolveMinionActivation({
         hero: nextHero,
         mainScheme: checked.mainScheme,
         log: checked.log,
-        gameStatus: checked.gameStatus,
+        gameStatus:
+            nextGameStatus === "lost"
+                ? "lost"
+                : checked.gameStatus,
     };
 }

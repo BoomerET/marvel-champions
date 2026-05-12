@@ -276,12 +276,15 @@ export const useGameStore = create<GameStore>((set) => ({
       let nextHero = state.hero;
       let nextVillain = state.villain;
       let nextEventHistory = state.eventHistory;
+      let nextGameStatus = state.gameStatus;
       const nextLog = [...state.log];
 
       if (state.phase === "player") {
         nextPhase = "villain";
 
         const villainActivation = resolveVillainActivation(state);
+        nextGameStatus =
+          villainActivation.gameStatus ?? nextGameStatus;
         nextEncounterDeck =
           villainActivation.encounterDeck ?? nextEncounterDeck;
 
@@ -311,6 +314,7 @@ export const useGameStore = create<GameStore>((set) => ({
         phase: nextPhase,
         round: nextRound,
         hero: nextHero,
+        gameStatus: nextGameStatus,
         villain: nextVillain,
         eventHistory: nextEventHistory,
         log: nextLog,

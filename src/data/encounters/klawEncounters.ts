@@ -55,7 +55,7 @@ export const klawEncounterCards: Card[] = [
     },
     {
         code: "01122",
-        name: "Solid-Sound Body",
+        name: "Klaw's Vengeance",
         type: "treachery",
         image: "01122",
         boostIcons: 1,

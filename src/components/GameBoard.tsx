@@ -55,7 +55,6 @@ export function GameBoard() {
 
       <section className="encounter-row">
         <EncounterArea />
-        <MinionArea />
       </section>
 
       <section className="encounter-row">

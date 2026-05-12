@@ -1250,7 +1250,7 @@ export const useGameStore = create<GameStore>((set) => ({
   },
 
   selectAttackTarget: (instanceId) =>
-    set(() => {
+    set((state) => {
       if (gameIsOver(state)) {
         return {
           log: [

@@ -50,9 +50,16 @@ export function GameBoard() {
 
       <section className="encounter-row">
         <EncounterDeckPanel />
+        <EncounterDiscardPanel />
+      </section>
+
+      <section className="encounter-row">
         <EncounterArea />
         <MinionArea />
-        <EncounterDiscardPanel />
+      </section>
+
+      <section className="encounter-row">
+        <MinionArea />
       </section>
 
       <section className="player-row">

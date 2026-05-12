@@ -68,13 +68,17 @@ button {
 .villain-row > *,
 .encounter-row > *,
 .player-row > *,
-.player-deck-row > *,
 .log-row > * {
   flex: 1;
 }
 
+.player-deck-row > * {
+  flex: 0 0 auto;
+}
+
 .player-deck-row .player-hand {
-  flex: 3;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .log-row > * {

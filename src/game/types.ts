@@ -38,6 +38,7 @@ export interface Card {
   threatLimit?: number;
   whenRevealed?: WhenRevealedEffect[];
   surge?: boolean;
+  boost?: BoostEffect;
 }
 
 export interface CardInstance extends Card {
@@ -114,5 +115,11 @@ export type WhenRevealedEffect =
   }
   | {
     type: "discardRandomCard";
+    amount: number;
+  };
+
+export type BoostEffect =
+  | {
+    type: "addBoostIcons";
     amount: number;
   };

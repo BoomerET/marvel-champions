@@ -10,17 +10,27 @@ export function resolveVillainActivation(
     const remainingEncounterDeck = state.encounterDeck.slice(1);
     const boostAmount = boostCard?.boostIcons ?? 0;
 
-    const attackAmount =
-        (state.villain.identity.attack ?? 0) + boostAmount;
-
-    const schemeAmount =
-        (state.villain.identity.scheme ?? 0) + boostAmount;
-
     const nextLog = [...state.log];
     let nextGameStatus: GameStatus = state.gameStatus;
 
+    let finalBoostAmount = boostAmount;
+
+    const attackAmount =
+        (state.villain.identity.attack ?? 0) + finalBoostAmount;
+
+    const schemeAmount =
+        (state.villain.identity.scheme ?? 0) + finalBoostAmount;
+
+    if (boostCard?.boost?.type === "addBoostIcons") {
+        finalBoostAmount += boostCard.boost.amount;
+
+        nextLog.push(
+            `BOOST: ${boostCard.name} gains +${boostCard.boost.amount} boost icon(s).`
+        );
+    }
+
     if (boostCard) {
-        nextLog.push(`Boost card: ${boostCard.name} (+${boostAmount}).`);
+        nextLog.push(`Boost card: ${boostCard.name} (+${finalBoostAmount}).`);
 
         boostCard.boostText?.forEach((text) => {
             nextLog.push(`BOOST: ${text}`);

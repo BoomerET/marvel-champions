@@ -268,6 +268,14 @@ export const useGameStore = create<GameStore>((set) => ({
 
   endTurn: () =>
     set((state) => {
+      if (state.gameStatus !== "playing") {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
       let nextEncounterDeck = state.encounterDeck;
       let nextEncounterDiscard = state.encounterDiscard;
       let nextPhase: typeof state.phase;

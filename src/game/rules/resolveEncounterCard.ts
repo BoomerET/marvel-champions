@@ -34,13 +34,20 @@ export function resolveEncounterCardEffect(
     }
 
     if (card.type === "treachery") {
+        const nextLog = [...state.log];
+
+        if (card.whenRevealed === "dealDamage") {
+            nextLog.push(`${card.name} deals 2 damage.`);
+        }
+
+        if (card.whenRevealed === "addThreat") {
+            nextLog.push(`${card.name} adds 2 threat.`);
+        }
+
         return {
-            encounterDiscard: [
-                ...state.encounterDiscard,
-                card,
-            ],
+            encounterDiscard: [...state.encounterDiscard, card],
             log: [
-                ...state.log,
+                ...nextLog,
                 `Resolved treachery: ${card.name}.`,
             ],
         };

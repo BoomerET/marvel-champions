@@ -41,4 +41,13 @@ export const rhinoEncounterCards: Card[] = [
         attack: 1,
         scheme: 0,
     },
+
+    {
+        code: "01187",
+        name: "Assault",
+        type: "treachery",
+        image: "01187",
+        boostIcons: 1,
+        whenRevealed: "dealDamage",
+    },
 ];

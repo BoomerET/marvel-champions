@@ -21,6 +21,13 @@ export function PlayArea() {
             />
           ))
         )}
+        <button onClick={() => allyAttack(card.instanceId)}>
+          Attack
+        </button>
+
+        <button onClick={() => allyThwart(card.instanceId)}>
+          Thwart
+        </button>
       </div>
     </section>
   );

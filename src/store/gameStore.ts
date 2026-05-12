@@ -70,6 +70,8 @@ interface GameStore extends GameState {
     instanceId?: string
   ) => void;
   newGame: (scenarioId?: ScenarioId) => void;
+  allyAttack: (instanceId: string) => void;
+  allyThwart: (instanceId: string) => void;
 }
 
 const defaultHero = spiderManHero;

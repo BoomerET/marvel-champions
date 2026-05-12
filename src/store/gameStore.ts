@@ -236,6 +236,14 @@ export const useGameStore = create<GameStore>((set) => ({
 
   playCard: (instanceId) =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
       const card = state.hero.hand.find((c) => c.instanceId === instanceId);
 
       if (!card) {
@@ -337,22 +345,32 @@ export const useGameStore = create<GameStore>((set) => ({
     })),
 
   flipIdentity: () =>
-    set((state) => ({
-      hero: {
-        ...state.hero,
-        form:
-          state.hero.form === "hero"
-            ? "alterEgo"
-            : "hero",
-      },
-      log: [
-        ...state.log,
-        `Flipped to ${state.hero.form === "hero"
-          ? "Alter-Ego"
-          : "Hero"
-        }.`,
-      ],
-    })),
+    set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
+      return {
+        hero: {
+          ...state.hero,
+          form:
+            state.hero.form === "hero"
+              ? "alterEgo"
+              : "hero",
+        },
+        log: [
+          ...state.log,
+          `Flipped to ${state.hero.form === "hero"
+            ? "Alter-Ego"
+            : "Hero"
+          }.`,
+        ],
+      };
+    }),
 
   damageHero: (amount) =>
     set((state) => {
@@ -950,20 +968,30 @@ export const useGameStore = create<GameStore>((set) => ({
     })),
 
   toggleHeroTough: () =>
-    set((state) => ({
-      hero: {
-        ...state.hero,
-        identity: {
-          ...state.hero.identity,
-          tough: !state.hero.identity.tough,
+    set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
+      return {
+        hero: {
+          ...state.hero,
+          identity: {
+            ...state.hero.identity,
+            tough: !state.hero.identity.tough,
+          },
         },
-      },
 
-      log: [
-        ...state.log,
-        `Hero tough set to ${!state.hero.identity.tough}.`,
-      ],
-    })),
+        log: [
+          ...state.log,
+          `Hero tough set to ${!state.hero.identity.tough}.`,
+        ],
+      };
+    }),
 
   defend: () =>
     set((state) => {
@@ -1020,6 +1048,14 @@ export const useGameStore = create<GameStore>((set) => ({
 
   togglePaymentCard: (instanceId) =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
       if (!state.hero.pendingPayment) {
         return state;
       }
@@ -1084,6 +1120,14 @@ export const useGameStore = create<GameStore>((set) => ({
 
   confirmPlayCard: () =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
       if (gameIsOver(state)) {
         return {
           log: [...state.log, "The game is over. Start a new game to continue."],
@@ -1155,6 +1199,14 @@ export const useGameStore = create<GameStore>((set) => ({
 
   cancelPayment: () =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
       const pendingPayment = state.hero.pendingPayment;
 
       if (!pendingPayment) {
@@ -1198,9 +1250,19 @@ export const useGameStore = create<GameStore>((set) => ({
   },
 
   selectAttackTarget: (instanceId) =>
-    set(() => ({
-      selectedAttackTarget: instanceId,
-    })),
+    set(() => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
+      return {
+        selectedAttackTarget: instanceId,
+      };
+    }),
 
   newGame: (scenarioId: ScenarioId = "rhino") => {
     const scenario = scenarios[scenarioId];

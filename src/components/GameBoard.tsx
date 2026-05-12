@@ -60,10 +60,12 @@ export function GameBoard() {
         <PlayArea />
       </section>
 
+      <DeckPanel />
+      <DiscardPanel />
+
       <section className="player-deck-row">
-        <DeckPanel />
+
         <PlayerHand />
-        <DiscardPanel />
       </section>
 
       <section className="log-row">

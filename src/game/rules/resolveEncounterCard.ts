@@ -34,18 +34,44 @@ export function resolveEncounterCardEffect(
     }
 
     if (card.type === "treachery") {
+        let nextHero = state.hero;
+        let nextMainScheme = state.mainScheme;
         const nextLog = [...state.log];
 
         if (card.whenRevealed === "dealDamage") {
-            nextLog.push(`${card.name} deals 2 damage.`);
+            nextHero = {
+                ...nextHero,
+                hitPoints: Math.max(
+                    0,
+                    nextHero.hitPoints - 2
+                ),
+            };
+
+            nextLog.push(
+                `${card.name} dealt 2 damage.`
+            );
         }
 
         if (card.whenRevealed === "addThreat") {
-            nextLog.push(`${card.name} adds 2 threat.`);
+            nextMainScheme = {
+                ...nextMainScheme,
+                threat: nextMainScheme.threat + 2,
+            };
+
+            nextLog.push(
+                `${card.name} added 2 threat.`
+            );
         }
 
         return {
-            encounterDiscard: [...state.encounterDiscard, card],
+            hero: nextHero,
+            mainScheme: nextMainScheme,
+
+            encounterDiscard: [
+                ...state.encounterDiscard,
+                card,
+            ],
+
             log: [
                 ...nextLog,
                 `Resolved treachery: ${card.name}.`,

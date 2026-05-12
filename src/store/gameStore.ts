@@ -23,6 +23,9 @@ import { rhinoEncounterCards } from "../data/encounters/rhinoEncounter";
 //import { klawEncounterCards } from "../data/encounters/klawEncounters";
 import { scenarios, type ScenarioId } from "../data/scenarios/index";
 
+function gameIsOver(state: GameState) {
+  return state.gameStatus !== "playing";
+}
 
 export function appendEvents(
   existingEvents: GameState["eventHistory"],
@@ -268,12 +271,9 @@ export const useGameStore = create<GameStore>((set) => ({
 
   endTurn: () =>
     set((state) => {
-      if (state.gameStatus !== "playing") {
+      if (gameIsOver(state)) {
         return {
-          log: [
-            ...state.log,
-            "The game is over. Start a new game to continue.",
-          ],
+          log: [...state.log, "The game is over. Start a new game to continue."],
         };
       }
       let nextEncounterDeck = state.encounterDeck;
@@ -356,6 +356,11 @@ export const useGameStore = create<GameStore>((set) => ({
 
   damageHero: (amount) =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [...state.log, "The game is over. Start a new game to continue."],
+        };
+      }
       if (state.hero.identity.tough) {
         return {
           hero: {
@@ -422,6 +427,11 @@ export const useGameStore = create<GameStore>((set) => ({
 
   damageVillain: (amount) =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [...state.log, "The game is over. Start a new game to continue."],
+        };
+      }
       const damageEvent = {
         type: "DAMAGE_DEALT" as const,
         target: "villain" as const,
@@ -463,6 +473,11 @@ export const useGameStore = create<GameStore>((set) => ({
 
   addThreat: (amount) =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [...state.log, "The game is over. Start a new game to continue."],
+        };
+      }
       const nextLog = [
         ...state.log,
         `Added ${amount} threat.`,
@@ -539,6 +554,11 @@ export const useGameStore = create<GameStore>((set) => ({
 
   basicAttack: () =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [...state.log, "The game is over. Start a new game to continue."],
+        };
+      }
       if (state.hero.identity.stunned) {
         return {
           hero: {
@@ -676,6 +696,11 @@ export const useGameStore = create<GameStore>((set) => ({
 
   basicThwart: () =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [...state.log, "The game is over. Start a new game to continue."],
+        };
+      }
       if (state.hero.identity.confused) {
         return {
           hero: {
@@ -754,7 +779,11 @@ export const useGameStore = create<GameStore>((set) => ({
 
   basicRecover: () =>
     set((state) => {
-
+      if (gameIsOver(state)) {
+        return {
+          log: [...state.log, "The game is over. Start a new game to continue."],
+        };
+      }
       if (state.hero.identity.exhausted) {
         return {
           log: [
@@ -814,6 +843,11 @@ export const useGameStore = create<GameStore>((set) => ({
 
   dealEncounterCard: () =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [...state.log, "The game is over. Start a new game to continue."],
+        };
+      }
       let encounterDeck = [...state.encounterDeck];
       let encounterDiscard = [...state.encounterDiscard];
       const nextLog = [...state.log];
@@ -848,6 +882,11 @@ export const useGameStore = create<GameStore>((set) => ({
 
   resolveEncounterCard: (instanceId) =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [...state.log, "The game is over. Start a new game to continue."],
+        };
+      }
       const card = state.encounterArea.find(
         (c) => c.instanceId === instanceId
       );
@@ -1045,6 +1084,11 @@ export const useGameStore = create<GameStore>((set) => ({
 
   confirmPlayCard: () =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [...state.log, "The game is over. Start a new game to continue."],
+        };
+      }
       const pendingPayment = state.hero.pendingPayment;
 
       if (!pendingPayment) {

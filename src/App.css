@@ -1,4 +1,206 @@
-/* ========================================================================== 
+/* ==========================================================================
+   Starter / template styles
+   --------------------------------------------------------------------------
+   These look like Vite starter styles. Keep them if your app still uses these
+   elements; otherwise they can probably be removed later.
+   ========================================================================== */
+
+.counter {
+  margin-bottom: 24px;
+  padding: 5px 10px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+
+  color: var(--accent);
+  background: var(--accent-bg);
+
+  font-size: 16px;
+  transition: border-color 0.3s;
+
+  &:hover {
+    border-color: var(--accent-border);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.hero {
+  position: relative;
+
+  .base,
+  .framework,
+  .vite {
+    inset-inline: 0;
+    margin: 0 auto;
+  }
+
+  .base {
+    position: relative;
+    z-index: 0;
+    width: 170px;
+  }
+
+  .framework,
+  .vite {
+    position: absolute;
+  }
+
+  .framework {
+    top: 34px;
+    z-index: 1;
+    height: 28px;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
+      scale(1.4);
+  }
+
+  .vite {
+    top: 107px;
+    z-index: 0;
+    width: auto;
+    height: 26px;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
+      scale(0.8);
+  }
+}
+
+#center {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 25px;
+  place-content: center;
+  place-items: center;
+
+  @media (max-width: 1024px) {
+    gap: 18px;
+    padding: 32px 20px 24px;
+  }
+}
+
+#next-steps {
+  display: flex;
+  border-top: 1px solid var(--border);
+  text-align: left;
+
+  & > div {
+    flex: 1 1 0;
+    padding: 32px;
+
+    @media (max-width: 1024px) {
+      padding: 24px 20px;
+    }
+  }
+
+  .icon {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+#docs {
+  border-right: 1px solid var(--border);
+
+  @media (max-width: 1024px) {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+#next-steps ul {
+  display: flex;
+  gap: 8px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+
+  .logo {
+    height: 18px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 6px 12px;
+    border-radius: 6px;
+
+    color: var(--text-h);
+    background: var(--social-bg);
+
+    font-size: 16px;
+    text-decoration: none;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      box-shadow: var(--shadow);
+    }
+
+    .button-icon {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+
+    li {
+      flex: 1 1 calc(50% - 8px);
+    }
+
+    a {
+      box-sizing: border-box;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+#spacer {
+  height: 88px;
+  border-top: 1px solid var(--border);
+
+  @media (max-width: 1024px) {
+    height: 48px;
+  }
+}
+
+.ticks {
+  position: relative;
+  width: 100%;
+
+  &::before,
+  &::after {
+    position: absolute;
+    top: -4.5px;
+    content: "";
+    border: 5px solid transparent;
+  }
+
+  &::before {
+    left: 0;
+    border-left-color: var(--border);
+  }
+
+  &::after {
+    right: 0;
+    border-right-color: var(--border);
+  }
+}
+
+/* ==========================================================================
    Base layout
    ========================================================================== */
 
@@ -12,78 +214,29 @@ button {
   margin-bottom: 16px;
 }
 
-/* ========================================================================== 
-   Game board layout
+/* ==========================================================================
+   Game controls
    ========================================================================== */
 
-.game-board {
+.game-controls {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 16px;
-}
-
-.game-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.round-phase {
-  display: flex;
-  gap: 16px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.game-controls,
-.setup-row,
-.villain-row,
-.encounter-row,
-.player-row,
-.player-deck-row,
-.log-row,
-.table-top,
-.table-zones {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
-
-.game-controls,
-.table-top,
-.table-zones {
+  gap: 12px;
   margin-bottom: 24px;
 }
 
-.game-controls {
-  gap: 12px;
-}
+/* ==========================================================================
+   Table layout and zones
+   ========================================================================== */
 
 .table-top,
 .table-zones {
+  display: flex;
   gap: 24px;
+  margin-bottom: 24px;
 }
 
-.villain-row > *,
-.encounter-row > *,
-.player-row > *,
-.log-row > * {
-  flex: 1;
-}
-
-.player-deck-row > * {
-  flex: 0 0 auto;
-}
-
-.player-deck-row .player-hand {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.log-row > * {
-  max-height: 360px;
-  overflow-y: auto;
+.table-zones {
+  align-items: flex-start;
 }
 
 .table-top section,
@@ -97,147 +250,33 @@ button {
   min-width: 200px;
 }
 
-/* ========================================================================== 
-   Game status
-   ========================================================================== */
-
-.game-status-banner {
-  position: sticky;
-  top: 12px;
-  z-index: 100;
-
-  margin-bottom: 24px;
-  padding: 18px 24px;
-
-  color: white;
-  text-align: center;
-  font-size: 32px;
-  font-weight: 800;
-
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-}
-
-.game-status-banner--won {
-  background: #1f8f3a;
-}
-
-.game-status-banner--lost {
-  background: #b42318;
-}
-
-.game-status-banner button {
-  padding: 8px 16px;
-  margin-top: 12px;
-  font-size: 16px;
-}
-
-/* ========================================================================== 
-   Scenario selector
-   ========================================================================== */
-
-.scenario-selector {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  padding: 12px 16px;
-  margin-bottom: 16px;
-
-  background: rgba(20, 20, 30, 0.9);
-  border: 2px solid #444;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.scenario-selector label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.scenario-selector select {
-  padding: 6px 10px;
-
-  color: white;
-  background: #222;
-  border: 1px solid #666;
-  border-radius: 8px;
-
-  font-size: 16px;
-}
-
-.scenario-selector button {
-  padding: 8px 16px;
-
-  color: white;
-  background: #c62828;
-  border: none;
-  border-radius: 10px;
-
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-
-  transition:
-    transform 0.1s ease,
-    background 0.2s ease;
-}
-
-.scenario-selector button:hover {
-  background: #e53935;
-  transform: translateY(-1px);
-}
-
-.scenario-selector button:active {
-  transform: translateY(1px);
-}
-
-/* ========================================================================== 
-   Zones
-   ========================================================================== */
-
-.play-area,
-.encounter-area,
-.minion-area,
-.side-scheme-area {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 12px;
-}
-
 .player-hand {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  align-items: flex-start;
   gap: 12px;
 }
 
 .play-area,
-.encounter-area,
-.minion-area,
-.side-scheme-area {
-  min-height: 220px;
+.encounter-area {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+
   padding: 12px;
   margin-bottom: 24px;
 
   background: transparent;
-  border: 1px dashed #666;
 }
 
 .play-area {
   min-height: 260px;
-  border-color: #aaa;
+  border: 1px dashed #aaa;
 }
 
 .encounter-area {
-  border-color: #b44;
+  min-height: 220px;
+  border: 1px dashed #b44;
 }
 
 .empty-zone {
@@ -246,7 +285,7 @@ button {
   font-style: italic;
 }
 
-/* ========================================================================== 
+/* ==========================================================================
    Cards
    ========================================================================== */
 
@@ -266,14 +305,6 @@ button {
   width: 180px;
 }
 
-.card--landscape {
-  width: 250px;
-}
-
-.card--small.card--landscape {
-  width: 220px;
-}
-
 .card-image {
   display: block;
   width: 100%;
@@ -288,10 +319,13 @@ body:has(:focus-visible) .card {
   outline: none;
 }
 
+/* Keep the page from getting a horizontal scrollbar when preview zoom is active. */
 body:has(.card:hover) {
   overflow-x: hidden;
 }
 
+/* Hold Shift while hovering to zoom card preview.
+   This requires the React helper that toggles body.shift-down. */
 .card:hover .card-image {
   transform-origin: top left;
   transition: transform 120ms ease;
@@ -302,6 +336,7 @@ body.shift-down .card:hover .card-image {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
+/* Exhausted cards rotate sideways. */
 .card.card--exhausted .card-image {
   transform: rotate(90deg) !important;
   transform-origin: center center;
@@ -321,7 +356,7 @@ body.shift-down .card:hover .card-image {
   outline-offset: 2px;
 }
 
-/* ========================================================================== 
+/* ==========================================================================
    Card overlays
    ========================================================================== */
 
@@ -362,7 +397,7 @@ body.shift-down .card:hover .card-image {
   font-size: 10px;
 }
 
-/* ========================================================================== 
+/* ==========================================================================
    Identity card slot
    ========================================================================== */
 
@@ -384,7 +419,7 @@ body.shift-down .card:hover .card-image {
   transform: rotate(90deg);
 }
 
-/* ========================================================================== 
+/* ==========================================================================
    Deck piles
    ========================================================================== */
 
@@ -402,22 +437,21 @@ body.shift-down .card:hover .card-image {
 
   width: 120px;
   height: 168px;
-
-  color: white;
   border-radius: 12px;
 
+  color: white;
   font-size: 32px;
   font-weight: bold;
 }
 
 .deck-card-back {
-  background: #222;
   border: 2px solid #333;
+  background: #222;
 }
 
 .encounter-deck-card-back {
-  background: #3a1111;
   border: 2px solid #633;
+  background: #3a1111;
 }
 
 .deck-back-image {
@@ -437,16 +471,16 @@ body.shift-down .card:hover .card-image {
 
   width: 36px;
   height: 36px;
+  border-radius: 50%;
 
   color: white;
   background: rgba(0, 0, 0, 0.8);
-  border-radius: 50%;
 
   font-size: 18px;
   font-weight: bold;
 }
 
-/* ========================================================================== 
+/* ==========================================================================
    Game log
    ========================================================================== */
 
@@ -465,27 +499,187 @@ body.shift-down .card:hover .card-image {
   font-size: 12px;
 }
 
-
-.player-deck-row {
+.side-scheme-area,
+.minion-area {
   display: flex;
+  gap: 12px;
   flex-wrap: wrap;
+  min-height: 220px;
+  padding: 12px;
+  border: 1px dashed #666;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}
+
+.card--landscape {
+  width: 250px;
+}
+
+.card--small.card--landscape {
+  width: 220px;
+}
+
+.game-status-banner {
+  position: sticky;
+  top: 12px;
+  z-index: 100;
+
+  margin-bottom: 24px;
+  padding: 18px 24px;
+
+  border-radius: 12px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 800;
+
+  color: white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.game-status-banner--won {
+  background: #1f8f3a;
+}
+
+.game-status-banner--lost {
+  background: #b42318;
+}
+
+.game-status-banner button {
+  margin-top: 12px;
+  font-size: 16px;
+  padding: 8px 16px;
+}
+
+.scenario-selector {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+
+.scenario-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px 16px;
+  margin-bottom: 16px;
+
+  background: rgba(20, 20, 30, 0.9);
+  border: 2px solid #444;
+  border-radius: 12px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.scenario-selector label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.scenario-selector select {
+  padding: 6px 10px;
+
+  font-size: 16px;
+
+  border-radius: 8px;
+  border: 1px solid #666;
+
+  background: #222;
+  color: white;
+}
+
+.scenario-selector button {
+  padding: 8px 16px;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #c62828;
+  color: white;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.1s ease,
+    background 0.2s ease;
+}
+
+.scenario-selector button:hover {
+  background: #e53935;
+  transform: translateY(-1px);
+}
+
+.scenario-selector button:active {
+  transform: translateY(1px);
+}
+
+
+.game-board {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.round-phase {
+  display: flex;
+  gap: 16px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.setup-row,
+.villain-row,
+.encounter-row,
+.player-row,
+.player-deck-row,
+.log-row {
+  display: flex;
   gap: 20px;
   align-items: flex-start;
 }
 
-.player-deck-row > * {
-  flex: 0 0 auto;
+.villain-row > *,
+.encounter-row > *,
+.player-row > *,
+.player-deck-row > *,
+.log-row > * {
+  flex: 1;
+}
+
+.player-hand,
+.play-area,
+.encounter-area,
+.minion-area,
+.side-scheme-area {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .player-deck-row .player-hand {
-  flex: 0 0 100%;
-  width: 100%;
+  flex: 3;
+}
 
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 12px;
+.log-row > * {
+  max-height: 360px;
+  overflow-y: auto;
 }
 
 .player-hand,
@@ -498,4 +692,25 @@ body.shift-down .card:hover .card-image {
   flex-wrap: wrap;
   gap: 12px;
   align-items: flex-start;
+}
+
+/* Fix for landscape cards */
+.card--landscape {
+  width: 260px !important;
+}
+
+.player-hand,
+.play-area,
+.encounter-area,
+.minion-area,
+.side-scheme-area {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.card--landscape {
+  width: 260px !important;
 }

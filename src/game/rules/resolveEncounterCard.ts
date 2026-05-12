@@ -83,7 +83,7 @@ export function resolveEncounterCardEffect(
             ],
 
             log: [
-                ...nextLog,
+                ...checked.log,
                 `Resolved treachery: ${card.name}.`,
             ],
         };

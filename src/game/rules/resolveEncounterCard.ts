@@ -38,30 +38,32 @@ export function resolveEncounterCardEffect(
         let nextMainScheme = state.mainScheme;
         const nextLog = [...state.log];
 
-        if (card.whenRevealed === "dealDamage") {
-            nextHero = {
-                ...nextHero,
-                hitPoints: Math.max(
-                    0,
-                    nextHero.hitPoints - 2
-                ),
-            };
+        card.whenRevealed?.forEach((effect) => {
+            if (effect.type === "damageHero") {
+                nextHero = {
+                    ...nextHero,
+                    hitPoints: Math.max(
+                        0,
+                        nextHero.hitPoints - effect.amount
+                    ),
+                };
 
-            nextLog.push(
-                `${card.name} dealt 2 damage.`
-            );
-        }
+                nextLog.push(
+                    `${card.name} dealt ${effect.amount} damage.`
+                );
+            }
 
-        if (card.whenRevealed === "addThreat") {
-            nextMainScheme = {
-                ...nextMainScheme,
-                threat: nextMainScheme.threat + 2,
-            };
+            if (effect.type === "addThreat") {
+                nextMainScheme = {
+                    ...nextMainScheme,
+                    threat: nextMainScheme.threat + effect.amount,
+                };
 
-            nextLog.push(
-                `${card.name} added 2 threat.`
-            );
-        }
+                nextLog.push(
+                    `${card.name} added ${effect.amount} threat.`
+                );
+            }
+        });
 
         return {
             hero: nextHero,

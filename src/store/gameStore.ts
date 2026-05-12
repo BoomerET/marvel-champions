@@ -844,15 +844,20 @@ export const useGameStore = create<GameStore>((set) => ({
         return state;
       }
 
-      const remainingEncounterArea = state.encounterArea.filter(
-        (c) => c.instanceId !== instanceId
-      );
+      //const remainingEncounterArea = state.encounterArea.filter(
+      //  (c) => c.instanceId !== instanceId
+      //);
 
       const resolved = resolveEncounterCardEffect(state, card);
 
+      const resolvedEncounterArea =
+        resolved.encounterArea ?? state.encounterArea;
+
       return {
         ...resolved,
-        encounterArea: remainingEncounterArea,
+        encounterArea: resolvedEncounterArea.filter(
+          (c) => c.instanceId !== instanceId
+        ),
       };
     }),
 

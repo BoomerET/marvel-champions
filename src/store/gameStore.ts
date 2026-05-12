@@ -555,20 +555,30 @@ export const useGameStore = create<GameStore>((set) => ({
     })),
 
   readyAllHeroCards: () =>
-    set((state) => ({
-      hero: {
-        ...state.hero,
-        identity: {
-          ...state.hero.identity,
-          exhausted: false,
+    set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
+      return {
+        hero: {
+          ...state.hero,
+          identity: {
+            ...state.hero.identity,
+            exhausted: false,
+          },
+          playArea: state.hero.playArea.map((card) => ({
+            ...card,
+            exhausted: false,
+          })),
         },
-        playArea: state.hero.playArea.map((card) => ({
-          ...card,
-          exhausted: false,
-        })),
-      },
-      log: [...state.log, "Readied all hero cards."],
-    })),
+        log: [...state.log, "Readied all hero cards."],
+      };
+    }),
 
   basicAttack: () =>
     set((state) => {

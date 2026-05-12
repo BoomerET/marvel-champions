@@ -430,18 +430,26 @@ export const useGameStore = create<GameStore>((set) => ({
     }),
 
   healHero: (amount) =>
-
-    set((state) => ({
-
-      hero: {
-        ...state.hero,
-        hitPoints: Math.min(
-          state.hero.maxHitPoints,
-          state.hero.hitPoints + amount
-        ),
-      },
-      log: [...state.log, `Hero healed ${amount} damage.`],
-    })),
+    set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
+      return {
+        hero: {
+          ...state.hero,
+          hitPoints: Math.min(
+            state.hero.maxHitPoints,
+            state.hero.hitPoints + amount
+          ),
+        },
+        log: [...state.log, `Hero healed ${amount} damage.`],
+      };
+    }),
 
   damageVillain: (amount) =>
     set((state) => {
@@ -520,20 +528,30 @@ export const useGameStore = create<GameStore>((set) => ({
     }),
 
   removeThreat: (amount) =>
-    set((state) => ({
-      mainScheme: {
-        ...state.mainScheme,
-        threat: Math.max(
-          0,
-          state.mainScheme.threat - amount
-        ),
-      },
+    set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
+      return {
+        mainScheme: {
+          ...state.mainScheme,
+          threat: Math.max(
+            0,
+            state.mainScheme.threat - amount
+          ),
+        },
 
-      log: [
-        ...state.log,
-        `Removed ${amount} threat.`,
-      ],
-    })),
+        log: [
+          ...state.log,
+          `Removed ${amount} threat.`,
+        ],
+      }
+    }),
 
   toggleExhausted: (instanceId) =>
     set((state) => ({
@@ -946,36 +964,56 @@ export const useGameStore = create<GameStore>((set) => ({
     })),
 
   toggleHeroStunned: () =>
-    set((state) => ({
-      hero: {
-        ...state.hero,
-        identity: {
-          ...state.hero.identity,
-          stunned: !state.hero.identity.stunned,
+    set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
+      return {
+        hero: {
+          ...state.hero,
+          identity: {
+            ...state.hero.identity,
+            stunned: !state.hero.identity.stunned,
+          },
         },
-      },
 
-      log: [
-        ...state.log,
-        `Hero stunned set to ${!state.hero.identity.stunned}.`,
-      ],
-    })),
+        log: [
+          ...state.log,
+          `Hero stunned set to ${!state.hero.identity.stunned}.`,
+        ],
+      };
+    }),
 
   toggleHeroConfused: () =>
-    set((state) => ({
-      hero: {
-        ...state.hero,
-        identity: {
-          ...state.hero.identity,
-          confused: !state.hero.identity.confused,
+    set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
+      return {
+        hero: {
+          ...state.hero,
+          identity: {
+            ...state.hero.identity,
+            confused: !state.hero.identity.confused,
+          },
         },
-      },
 
-      log: [
-        ...state.log,
-        `Hero confused set to ${!state.hero.identity.confused}.`,
-      ],
-    })),
+        log: [
+          ...state.log,
+          `Hero confused set to ${!state.hero.identity.confused}.`,
+        ],
+      };
+    }),
 
   toggleHeroTough: () =>
     set((state) => {
@@ -1005,6 +1043,14 @@ export const useGameStore = create<GameStore>((set) => ({
 
   defend: () =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
       if (state.hero.form !== "hero") {
         return {
           log: [...state.log, "Cannot defend while in alter-ego form."],
@@ -1032,6 +1078,15 @@ export const useGameStore = create<GameStore>((set) => ({
 
   beginPlayCard: (instanceId) =>
     set((state) => {
+      if (gameIsOver(state)) {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
+
       const card = state.hero.hand.find(
         (c) => c.instanceId === instanceId
       );

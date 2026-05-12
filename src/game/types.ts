@@ -36,7 +36,7 @@ export interface Card {
   orientation?: "portrait" | "landscape";
   currentHitPoints?: number;
   threatLimit?: number;
-  whenRevealed?: "dealDamage" | "addThreat" | "discardCard";
+  whenRevealed?: WhenRevealedEffect[];
 }
 
 export interface CardInstance extends Card {
@@ -101,3 +101,17 @@ export interface MainSchemeState {
   threat: number;
   threatLimit: number;
 }
+
+export type WhenRevealedEffect =
+  | {
+    type: "damageHero";
+    amount: number;
+  }
+  | {
+    type: "addThreat";
+    amount: number;
+  }
+  | {
+    type: "discardRandomCard";
+    amount: number;
+  };

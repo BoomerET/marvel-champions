@@ -1,4 +1,5 @@
 import type { CardInstance, GameState } from "../types";
+import { checkMainSchemeAdvance } from "./checkMainSchemeAdvance";
 
 export function resolveEncounterCardEffect(
     state: GameState,
@@ -65,9 +66,16 @@ export function resolveEncounterCardEffect(
             }
         });
 
+        const checked = checkMainSchemeAdvance({
+            state,
+            mainScheme: nextMainScheme,
+            log: nextLog,
+        });
+
         return {
             hero: nextHero,
-            mainScheme: nextMainScheme,
+            mainScheme: checked.mainScheme,
+            gameStatus: checked.gameStatus,
 
             encounterDiscard: [
                 ...state.encounterDiscard,

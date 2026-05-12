@@ -66,5 +66,8 @@ export const klawEncounterCards: Card[] = [
         text: [
             "Klaw stuns attacking hero."
         ],
+        whenRevealed: [
+            { type: "addThreat", amount: 99 },
+        ],
     },
 ];

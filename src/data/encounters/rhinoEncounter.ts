@@ -57,8 +57,11 @@ export const rhinoEncounterCards: Card[] = [
         type: "treachery",
         image: "01186",
         boostIcons: 1,
+        //whenRevealed: [
+        //    { type: "addThreat", amount: 2 },
+        //],
         whenRevealed: [
-            { type: "addThreat", amount: 2 },
+            { type: "addThreat", amount: 99 },
         ],
     },
 ];

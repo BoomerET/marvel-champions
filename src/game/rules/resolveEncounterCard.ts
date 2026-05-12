@@ -39,6 +39,9 @@ export function resolveEncounterCardEffect(
         let nextMainScheme = state.mainScheme;
         const nextLog = [...state.log];
 
+        let nextEncounterDeck = state.encounterDeck;
+        let nextEncounterArea = state.encounterArea;
+
         card.whenRevealed?.forEach((effect) => {
             if (effect.type === "damageHero") {
                 nextHero = {
@@ -57,7 +60,8 @@ export function resolveEncounterCardEffect(
             if (effect.type === "addThreat") {
                 nextMainScheme = {
                     ...nextMainScheme,
-                    threat: nextMainScheme.threat + effect.amount,
+                    threat:
+                        nextMainScheme.threat + effect.amount,
                 };
 
                 nextLog.push(
@@ -67,9 +71,25 @@ export function resolveEncounterCardEffect(
         });
 
         if (card.surge) {
-            nextLog.push(
-                `${card.name} gains Surge. Dealing another encounter card.`
-            );
+            const surgeCard = state.encounterDeck[0];
+
+            if (surgeCard) {
+                nextEncounterDeck =
+                    state.encounterDeck.slice(1);
+
+                nextEncounterArea = [
+                    ...state.encounterArea,
+                    surgeCard,
+                ];
+
+                nextLog.push(
+                    `${card.name} gains Surge. Dealt ${surgeCard.name}.`
+                );
+            } else {
+                nextLog.push(
+                    `${card.name} gains Surge, but the encounter deck is empty.`
+                );
+            }
         }
 
         const checked = checkMainSchemeAdvance({
@@ -82,6 +102,9 @@ export function resolveEncounterCardEffect(
             hero: nextHero,
             mainScheme: checked.mainScheme,
             gameStatus: checked.gameStatus,
+
+            encounterDeck: nextEncounterDeck,
+            encounterArea: nextEncounterArea,
 
             encounterDiscard: [
                 ...state.encounterDiscard,

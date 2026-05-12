@@ -64,4 +64,12 @@ export const rhinoEncounterCards: Card[] = [
             { type: "addThreat", amount: 99 },
         ],
     },
+    {
+        code: "11111",
+        name: "Dave's Treachery",
+        type: "treachery",
+        image: "11111",
+        boostIcons: 1,
+        surge: true,
+    },
 ];

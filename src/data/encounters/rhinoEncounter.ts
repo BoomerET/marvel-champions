@@ -41,7 +41,6 @@ export const rhinoEncounterCards: Card[] = [
         attack: 1,
         scheme: 0,
     },
-
     {
         code: "01187",
         name: "Assault",
@@ -49,5 +48,13 @@ export const rhinoEncounterCards: Card[] = [
         image: "01187",
         boostIcons: 1,
         whenRevealed: "dealDamage",
+    },
+    {
+        code: "01186",
+        name: "Advance",
+        type: "treachery",
+        image: "01186",
+        boostIcons: 1,
+        whenRevealed: "addThreat",
     },
 ];

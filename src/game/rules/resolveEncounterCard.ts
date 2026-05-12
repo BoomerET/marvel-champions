@@ -66,6 +66,12 @@ export function resolveEncounterCardEffect(
             }
         });
 
+        if (card.surge) {
+            nextLog.push(
+                `${card.name} gains Surge. Dealing another encounter card.`
+            );
+        }
+
         const checked = checkMainSchemeAdvance({
             state,
             mainScheme: nextMainScheme,

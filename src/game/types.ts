@@ -37,6 +37,7 @@ export interface Card {
   currentHitPoints?: number;
   threatLimit?: number;
   whenRevealed?: WhenRevealedEffect[];
+  surge?: boolean;
 }
 
 export interface CardInstance extends Card {

@@ -53,7 +53,6 @@ export const klawEncounterCards: Card[] = [
             "Klaw stuns attacking hero."
         ],
     },
-
     {
         code: "01122",
         name: "Solid-Sound Body",

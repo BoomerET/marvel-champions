@@ -8,9 +8,19 @@ export function resolveVillainActivation(
 ): Partial<GameState> {
     const boostCard = state.encounterDeck[0];
     const remainingEncounterDeck = state.encounterDeck.slice(1);
-    const boostAmount = boostCard?.boostIcons ?? 0;
-
     const nextLog = [...state.log];
+    let boostAmount = boostCard?.boostIcons ?? 0;
+
+    if (
+        boostCard?.boost?.type === "addBoostIcons"
+    ) {
+        boostAmount += boostCard.boost.amount;
+
+        nextLog.push(
+            `BOOST: ${boostCard.name} gains +${boostCard.boost.amount} boost icon(s).`
+        );
+    }
+
     let nextGameStatus: GameStatus = state.gameStatus;
 
     let finalBoostAmount = boostAmount;

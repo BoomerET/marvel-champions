@@ -69,10 +69,10 @@ export const rhinoEncounterCards: Card[] = [
         name: "Dave's Treachery",
         type: "treachery",
         image: "11111",
-        boostIcons: 2,
+        boostIcons: 1,
         boost: {
             type: "addBoostIcons",
-            amount: 1,
+            amount: 2,
         }
     },
 ];

@@ -1344,5 +1344,154 @@ export const useGameStore = create<GameStore>((set) => ({
       })
     );
   },
+
+  allyAttack: (instanceId) =>
+    set((state) => {
+      if (state.gameStatus !== "playing") {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
+
+      const ally = state.hero.playArea.find(
+        (card) => card.instanceId === instanceId
+      );
+
+      if (!ally || ally.type !== "ally") {
+        return state;
+      }
+
+      if (ally.exhausted) {
+        return {
+          log: [...state.log, `${ally.name} is already exhausted.`],
+        };
+      }
+
+      const amount = ally.attack ?? 0;
+      const nextVillainHp = Math.max(
+        0,
+        state.villain.hitPoints - amount
+      );
+
+      const nextAllyHp = Math.max(
+        0,
+        (ally.currentHitPoints ?? ally.hp ?? 0) - 1
+      );
+
+      const allyDefeated = nextAllyHp <= 0;
+
+      const updatedAlly = {
+        ...ally,
+        exhausted: true,
+        currentHitPoints: nextAllyHp,
+      };
+
+      return {
+        villain: {
+          ...state.villain,
+          hitPoints: nextVillainHp,
+        },
+
+        hero: {
+          ...state.hero,
+          playArea: allyDefeated
+            ? state.hero.playArea.filter(
+              (card) => card.instanceId !== instanceId
+            )
+            : state.hero.playArea.map((card) =>
+              card.instanceId === instanceId ? updatedAlly : card
+            ),
+
+          discard: allyDefeated
+            ? [...state.hero.discard, updatedAlly]
+            : state.hero.discard,
+        },
+
+        log: [
+          ...state.log,
+          `${ally.name} attacked for ${amount}.`,
+          `${ally.name} took 1 consequential damage.`,
+          ...(allyDefeated ? [`${ally.name} was defeated.`] : []),
+        ],
+      };
+    }),
+
+  allyThwart: (instanceId) =>
+    set((state) => {
+      if (state.gameStatus !== "playing") {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
+
+      const ally = state.hero.playArea.find(
+        (card) => card.instanceId === instanceId
+      );
+
+      if (!ally || ally.type !== "ally") {
+        return state;
+      }
+
+      if (ally.exhausted) {
+        return {
+          log: [...state.log, `${ally.name} is already exhausted.`],
+        };
+      }
+
+      const amount = ally.thwart ?? 0;
+      const nextThreat = Math.max(
+        0,
+        state.mainScheme.threat - amount
+      );
+
+      const nextAllyHp = Math.max(
+        0,
+        (ally.currentHitPoints ?? ally.hp ?? 0) - 1
+      );
+
+      const allyDefeated = nextAllyHp <= 0;
+
+      const updatedAlly = {
+        ...ally,
+        exhausted: true,
+        currentHitPoints: nextAllyHp,
+      };
+
+      return {
+        mainScheme: {
+          ...state.mainScheme,
+          threat: nextThreat,
+        },
+
+        hero: {
+          ...state.hero,
+          playArea: allyDefeated
+            ? state.hero.playArea.filter(
+              (card) => card.instanceId !== instanceId
+            )
+            : state.hero.playArea.map((card) =>
+              card.instanceId === instanceId ? updatedAlly : card
+            ),
+
+          discard: allyDefeated
+            ? [...state.hero.discard, updatedAlly]
+            : state.hero.discard,
+        },
+
+        log: [
+          ...state.log,
+          `${ally.name} thwarted for ${amount}.`,
+          `${ally.name} took 1 consequential damage.`,
+          ...(allyDefeated ? [`${ally.name} was defeated.`] : []),
+        ],
+      };
+    }),
+
 }));
 

@@ -4,6 +4,13 @@ import { CardView } from "./CardView";
 export function PlayArea() {
   const playArea = useGameStore((s) => s.hero.playArea);
   const toggleExhausted = useGameStore((s) => s.toggleExhausted);
+  const allyAttack = useGameStore(
+    (s) => s.allyAttack
+  );
+
+  const allyThwart = useGameStore(
+    (s) => s.allyThwart
+  );
 
   return (
     <section>
@@ -14,20 +21,39 @@ export function PlayArea() {
           <div className="empty-zone">No cards in play.</div>
         ) : (
           playArea.map((card) => (
-            <CardView
+            <div
               key={card.instanceId}
-              card={card}
-              onClick={() => toggleExhausted(card.instanceId)}
-            />
+              className="play-area-card"
+            >
+              <CardView
+                card={card}
+                onClick={() =>
+                  toggleExhausted(card.instanceId)
+                }
+              />
+
+              {card.type === "ally" && (
+                <div className="ally-actions">
+                  <button
+                    onClick={() =>
+                      allyAttack(card.instanceId)
+                    }
+                  >
+                    Attack
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      allyThwart(card.instanceId)
+                    }
+                  >
+                    Thwart
+                  </button>
+                </div>
+              )}
+            </div>
           ))
         )}
-        <button onClick={() => allyAttack(card.instanceId)}>
-          Attack
-        </button>
-
-        <button onClick={() => allyThwart(card.instanceId)}>
-          Thwart
-        </button>
       </div>
     </section>
   );

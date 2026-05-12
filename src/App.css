@@ -487,3 +487,15 @@ body.shift-down .card:hover .card-image {
   align-items: flex-start;
   gap: 12px;
 }
+
+.player-hand,
+.play-area,
+.encounter-area,
+.minion-area,
+.side-scheme-area {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+}

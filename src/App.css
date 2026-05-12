@@ -200,11 +200,18 @@ button {
    Zones
    ========================================================================== */
 
-.player-hand,
 .play-area,
 .encounter-area,
 .minion-area,
 .side-scheme-area {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.player-hand {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

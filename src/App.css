@@ -659,7 +659,7 @@ body.shift-down .card:hover .card-image {
 .player-row > *,
 .player-deck-row > *,
 .log-row > * {
-  flex: 1;
+  flex: 0 0 auto;
 }
 
 .player-hand,
@@ -713,4 +713,22 @@ body.shift-down .card:hover .card-image {
 
 .card--landscape {
   width: 260px !important;
+}
+
+.encounter-row .encounter-area,
+.encounter-row section:has(.encounter-area) {
+  flex: 1 1 600px;
+}
+
+.encounter-row .minion-area,
+.encounter-row section:has(.minion-area) {
+  flex: 1 1 500px;
+}
+
+.player-deck-row section:has(.player-hand) {
+  flex: 1 1 900px;
+}
+
+.player-row section:has(.play-area) {
+  flex: 1 1 800px;
 }

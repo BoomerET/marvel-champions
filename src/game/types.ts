@@ -71,7 +71,7 @@ export interface GameState {
   eventHistory: GameEvent[];
   sideSchemes: CardInstance[];
   minions: CardInstance[];
-  selectedEnemyTarget?: string;
+  selectedTarget?: string;
   gameStatus: GameStatus;
   mainScheme: MainSchemeState;
   villainCards: Card[];

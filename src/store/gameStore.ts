@@ -642,7 +642,7 @@ export const useGameStore = create<GameStore>((set) => ({
       const amount = state.hero.identity.attack ?? 0;
 
       const targetedMinion = state.minions.find(
-        (minion) => minion.instanceId === state.selectedEnemyTarget
+        (minion) => minion.instanceId === state.selectedTarget
       );
 
       const basicAttackEvent = {
@@ -688,7 +688,7 @@ export const useGameStore = create<GameStore>((set) => ({
           },
 
           minions: updatedMinions,
-          selectedEnemyTarget: undefined,
+          selectedTarget: undefined,
 
           eventHistory: appendEvents(state.eventHistory, [
             basicAttackEvent,
@@ -1354,7 +1354,7 @@ export const useGameStore = create<GameStore>((set) => ({
         const damageAmount = cardToPlay.playEffect.amount;
 
         const targetedMinion = state.minions.find(
-          (minion) => minion.instanceId === state.selectedEnemyTarget
+          (minion) => minion.instanceId === state.selectedTarget
         );
 
         if (targetedMinion) {
@@ -1513,7 +1513,7 @@ export const useGameStore = create<GameStore>((set) => ({
         };
       }
       return {
-        selectedEnemyTarget: instanceId,
+        selectedTarget: instanceId,
       };
     }),
 

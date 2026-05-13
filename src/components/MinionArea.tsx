@@ -6,7 +6,7 @@ export function MinionArea() {
         (s) => s.minions
     );
 
-    const selectedEnemyTarget = useGameStore((s) => s.selectedEnemyTarget);
+    const selectedTarget = useGameStore((s) => s.selectedTarget);
     const selectEnemyTarget = useGameStore((s) => s.selectEnemyTarget);
 
     return (
@@ -26,11 +26,11 @@ export function MinionArea() {
                             key={card.instanceId}
                             card={card}
                             isSelected={
-                                selectedEnemyTarget === card.instanceId
+                                selectedTarget === card.instanceId
                             }
                             onClick={() =>
                                 selectEnemyTarget(
-                                    selectedEnemyTarget === card.instanceId
+                                    selectedTarget === card.instanceId
                                         ? undefined
                                         : card.instanceId
                                 )

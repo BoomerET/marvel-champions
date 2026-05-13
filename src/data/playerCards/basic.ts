@@ -18,6 +18,10 @@ export const basicPlayerCards: Card[] = [
     "name": "Nick Fury",
     "type": "ally",
     "image": "01084",
+    "cost": 4,
+    "hp": 3,
+    "thwart": 2,
+    "attack": 2,
     "text": [
       "Forced Response: After Nick Fury enters play, choose one: remove 2 threat from a scheme, draw 3 cards, or deal 4 damage to an enemy. At the end of the round, if Nick Fury is still in play, discard him."
     ],

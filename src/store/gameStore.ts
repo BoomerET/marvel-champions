@@ -1692,10 +1692,68 @@ export const useGameStore = create<GameStore>((set) => ({
       }
 
       const amount = ally.thwart ?? 0;
-      const nextThreat = Math.max(
-        0,
-        state.mainScheme.threat - amount
+
+      const targetedSideScheme = state.sideSchemes.find(
+        (scheme) => scheme.instanceId === state.selectedTarget
       );
+
+      let nextMainScheme = state.mainScheme;
+      let nextSideSchemes = state.sideSchemes;
+      let nextEncounterDiscard = state.encounterDiscard;
+      let nextLog = [...state.log];
+
+      if (targetedSideScheme) {
+        const remainingThreat = Math.max(
+          0,
+          (targetedSideScheme.currentThreat ??
+            targetedSideScheme.threat ??
+            0) - amount
+        );
+
+        const sideSchemeDefeated = remainingThreat <= 0;
+
+        nextSideSchemes = sideSchemeDefeated
+          ? state.sideSchemes.filter(
+            (scheme) =>
+              scheme.instanceId !== targetedSideScheme.instanceId
+          )
+          : state.sideSchemes.map((scheme) =>
+            scheme.instanceId === targetedSideScheme.instanceId
+              ? {
+                ...scheme,
+                currentThreat: remainingThreat,
+              }
+              : scheme
+          );
+
+        nextEncounterDiscard = sideSchemeDefeated
+          ? [
+            ...state.encounterDiscard,
+            {
+              ...targetedSideScheme,
+              currentThreat: 0,
+            },
+          ]
+          : state.encounterDiscard;
+
+        nextLog = [
+          ...nextLog,
+          `${ally.name} thwarted ${targetedSideScheme.name} for ${amount}.`,
+          ...(sideSchemeDefeated
+            ? [`${targetedSideScheme.name} was defeated.`]
+            : []),
+        ];
+      } else {
+        nextMainScheme = {
+          ...state.mainScheme,
+          threat: Math.max(0, state.mainScheme.threat - amount),
+        };
+
+        nextLog = [
+          ...nextLog,
+          `${ally.name} thwarted the main scheme for ${amount}.`,
+        ];
+      }
 
       const nextAllyHp = Math.max(
         0,
@@ -1711,10 +1769,10 @@ export const useGameStore = create<GameStore>((set) => ({
       };
 
       return {
-        mainScheme: {
-          ...state.mainScheme,
-          threat: nextThreat,
-        },
+        mainScheme: nextMainScheme,
+        sideSchemes: nextSideSchemes,
+        encounterDiscard: nextEncounterDiscard,
+        selectedTarget: undefined,
 
         hero: {
           ...state.hero,
@@ -1732,8 +1790,7 @@ export const useGameStore = create<GameStore>((set) => ({
         },
 
         log: [
-          ...state.log,
-          `${ally.name} thwarted for ${amount}.`,
+          ...nextLog,
           `${ally.name} took 1 consequential damage.`,
           ...(allyDefeated ? [`${ally.name} was defeated.`] : []),
         ],

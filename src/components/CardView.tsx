@@ -106,7 +106,9 @@ export function CardView({
             )}
 
             {card.hp !== undefined && (
-              <span>HP {card.hp}</span>
+              <span>
+                HP {card.currentHitPoints ?? card.hp}
+              </span>
             )}
           </div>
 

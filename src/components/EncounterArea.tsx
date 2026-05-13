@@ -21,6 +21,7 @@ export function EncounterArea() {
                         <CardView
                             key={card.instanceId}
                             card={card}
+                            size="small"
                             onClick={() => resolveEncounterCard(card.instanceId)}
                         />
                     ))

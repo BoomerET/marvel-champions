@@ -1241,6 +1241,7 @@ export const useGameStore = create<GameStore>((set) => ({
       let nextMainScheme = state.mainScheme;
       let nextHero = state.hero;
       let nextMinions = state.minions;
+      let nextEncounterDiscard = state.encounterDiscard;
 
       let nextLog = [
         ...state.log,
@@ -1354,6 +1355,16 @@ export const useGameStore = create<GameStore>((set) => ({
 
           const defeated = remainingHp <= 0;
 
+          if (defeated) {
+            nextEncounterDiscard = [
+              ...nextEncounterDiscard,
+              {
+                ...targetedMinion,
+                currentHitPoints: 0,
+              },
+            ];
+          }
+
           nextMinions = defeated
             ? state.minions.filter(
               (minion) => minion.instanceId !== targetedMinion.instanceId
@@ -1417,6 +1428,7 @@ export const useGameStore = create<GameStore>((set) => ({
         gameStatus: nextGameStatus,
         mainScheme: nextMainScheme,
         minions: nextMinions,
+        encounterDiscard: nextEncounterDiscard,
 
         log: [
           ...nextLog,

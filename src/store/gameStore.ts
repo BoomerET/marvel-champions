@@ -651,12 +651,22 @@ export const useGameStore = create<GameStore>((set) => ({
       };
 
       if (targetedMinion) {
+        let nextEncounterDiscard = state.encounterDiscard;
         const remainingHp = Math.max(
           0,
           (targetedMinion.currentHitPoints ?? targetedMinion.hp ?? 0) - amount
         );
 
         const defeated = remainingHp <= 0;
+        if (defeated) {
+          nextEncounterDiscard = [
+            ...state.encounterDiscard,
+            {
+              ...targetedMinion,
+              currentHitPoints: 0,
+            },
+          ];
+        }
 
         const updatedMinions = defeated
           ? state.minions.filter(
@@ -694,6 +704,7 @@ export const useGameStore = create<GameStore>((set) => ({
             `Hero attacked ${targetedMinion.name} for ${amount}.`,
             ...(defeated ? [`${targetedMinion.name} was defeated.`] : []),
           ],
+          encounterDiscard: nextEncounterDiscard,
         };
       }
 

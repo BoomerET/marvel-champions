@@ -10,6 +10,7 @@ import { createNewGame } from "../game/createGame";
 import { dispatchGameEvent } from "../game/dispatch";
 import { fetchMarvelCdbDeck } from "../api/marvelCdb";
 import { spiderManHero } from "../data/heroes/spiderMan";
+import { checkHeroDefeat } from "../game/rules/checkHeroDefeat";
 import { checkVillainDefeat } from "../game/rules/checkVillainDefeat";
 import { resolveVillainActivation } from "../game/rules/villainActivation";
 import { buildPlayerDeckFromMarvelCdb } from "../game/buildDeckFromMarvelCdb";
@@ -1314,16 +1315,26 @@ export const useGameStore = create<GameStore>((set) => ({
 
         nextHero = {
           ...nextHero,
-          hitPoints: Math.min(
-            nextHero.maxHitPoints,
+          hitPoints: Math.max(
+            0,
             nextHero.hitPoints - damageAmount
           ),
         };
 
         nextLog = [
           ...nextLog,
-          `${cardToPlay.name} dealt ${damageAmount} damage.`,
+          `${cardToPlay.name} dealt ${damageAmount} damage to hero.`,
         ];
+
+        const checked = checkHeroDefeat({
+          state,
+          hero: nextHero,
+          log: nextLog,
+        });
+
+        nextHero = checked.hero;
+        nextGameStatus = checked.gameStatus;
+        nextLog = checked.log;
       }
 
       return {

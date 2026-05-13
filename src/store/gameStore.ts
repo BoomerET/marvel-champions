@@ -1195,11 +1195,7 @@ export const useGameStore = create<GameStore>((set) => ({
           ],
         };
       }
-      if (gameIsOver(state)) {
-        return {
-          log: [...state.log, "The game is over. Start a new game to continue."],
-        };
-      }
+
       const pendingPayment = state.hero.pendingPayment;
 
       if (!pendingPayment) {
@@ -1215,26 +1211,6 @@ export const useGameStore = create<GameStore>((set) => ({
       );
 
       const totalResources = paidResources.length;
-
-      let nextVillain = state.villain;
-      let nextLog = [
-        ...state.log,
-        `Paid ${totalResources} resource(s) for ${cardToPlay.name}.`,
-      ];
-
-      if (cardToPlay.playEffect?.type === "damageVillain") {
-        nextVillain = {
-          ...nextVillain,
-          hitPoints: Math.max(
-            0,
-            nextVillain.hitPoints - cardToPlay.playEffect.amount
-          ),
-        };
-
-        nextLog.push(
-          `${cardToPlay.name} dealt ${cardToPlay.playEffect.amount} damage.`
-        );
-      }
 
       if (totalResources < totalCost) {
         return {
@@ -1259,7 +1235,42 @@ export const useGameStore = create<GameStore>((set) => ({
         cardToPlay.type === "event" ||
         cardToPlay.type === "resource";
 
+      let nextVillain = state.villain;
+
+      let nextLog = [
+        ...state.log,
+        `Paid ${totalResources} resource(s) for ${cardToPlay.name}.`,
+      ];
+
+      if (cardToPlay.playEffect?.type === "damageVillain") {
+        const damageAmount = cardToPlay.playEffect.amount;
+
+        nextVillain = {
+          ...nextVillain,
+          hitPoints: Math.max(
+            0,
+            nextVillain.hitPoints - damageAmount
+          ),
+        };
+
+        nextLog = [
+          ...nextLog,
+          `${cardToPlay.name} dealt ${damageAmount} damage.`,
+        ];
+
+        const checked = checkVillainDefeat({
+          state,
+          villain: nextVillain,
+          log: nextLog,
+        });
+
+        nextVillain = checked.villain;
+        nextLog = checked.log;
+      }
+
       return {
+        villain: nextVillain,
+
         hero: {
           ...state.hero,
           hand: newHand,
@@ -1271,12 +1282,17 @@ export const useGameStore = create<GameStore>((set) => ({
 
           playArea: goesToDiscard
             ? state.hero.playArea
-            : [...state.hero.playArea, cardToPlay],
+            : [
+              ...state.hero.playArea,
+              {
+                ...cardToPlay,
+                currentHitPoints: cardToPlay.hp,
+              },
+            ],
         },
 
         log: [
-          ...state.log,
-          `Paid ${paidResources} resource(s) for ${cardToPlay.name}.`,
+          ...nextLog,
           goesToDiscard
             ? `Played ${cardToPlay.name} and discarded it.`
             : `Played ${cardToPlay.name}.`,

@@ -27,6 +27,7 @@ export function PlayArea() {
             >
               <CardView
                 card={card}
+                size="small"
                 onClick={() =>
                   toggleExhausted(card.instanceId)
                 }

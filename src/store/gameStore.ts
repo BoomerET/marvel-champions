@@ -73,6 +73,7 @@ interface GameStore extends GameState {
   newGame: (scenarioId?: ScenarioId) => void;
   allyAttack: (instanceId: string) => void;
   allyThwart: (instanceId: string) => void;
+  useActivatedAbility: (instanceId: string) => void;
 }
 
 const defaultHero = spiderManHero;
@@ -1794,6 +1795,77 @@ export const useGameStore = create<GameStore>((set) => ({
           `${ally.name} took 1 consequential damage.`,
           ...(allyDefeated ? [`${ally.name} was defeated.`] : []),
         ],
+      };
+    }),
+
+  useActivatedAbility: (instanceId) =>
+    set((state) => {
+      if (state.gameStatus !== "playing") {
+        return {
+          log: [
+            ...state.log,
+            "The game is over. Start a new game to continue.",
+          ],
+        };
+      }
+
+      const card = state.hero.playArea.find(
+        (c) => c.instanceId === instanceId
+      );
+
+      if (!card?.activatedAbility) {
+        return state;
+      }
+
+      if (card.exhausted) {
+        return {
+          log: [
+            ...state.log,
+            `${card.name} is already exhausted.`,
+          ],
+        };
+      }
+
+      let nextHero = state.hero;
+      let nextMainScheme = state.mainScheme;
+      let nextLog = [...state.log];
+
+      if (
+        card.activatedAbility.type ===
+        "removeThreat"
+      ) {
+        const amount =
+          card.activatedAbility.amount ?? 1;
+
+        nextMainScheme = {
+          ...state.mainScheme,
+          threat: Math.max(
+            0,
+            state.mainScheme.threat - amount
+          ),
+        };
+
+        nextLog.push(
+          `${card.name} removed ${amount} threat.`
+        );
+      }
+
+      nextHero = {
+        ...nextHero,
+        playArea: state.hero.playArea.map((playCard) =>
+          playCard.instanceId === instanceId
+            ? {
+              ...playCard,
+              exhausted: true,
+            }
+            : playCard
+        ),
+      };
+
+      return {
+        hero: nextHero,
+        mainScheme: nextMainScheme,
+        log: nextLog,
       };
     }),
 

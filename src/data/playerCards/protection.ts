@@ -4,14 +4,19 @@ export const protectionPlayerCards: Card[] = [
   {
     "code": "01075",
     "name": "Black Widow",
-    "type": "ally",
+    "type": "support",
     "image": "01075",
     "text": [
-      "Interrupt: When a card is revealed from the encounter deck, exhaust Black Widow and spend a [mental] resource → cancel the effects of that card and discard it. Then, reveal another card from the encounter deck."
+      "Max 1 per player. Response: After you defeat a minion, exhaust Interrogation Room → remove 1 threat from a scheme."
     ],
     "resources": [
-      "physical"
-    ]
+      "energy"
+    ],
+    "activatedAbility": {
+      type: "removeThreat",
+      amount: 1,
+    },
+    "cost": 1,
   },
   {
     "code": "01076",

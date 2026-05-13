@@ -1,6 +1,7 @@
 import { useGameStore } from "../store/gameStore";
 import { CardView } from "./CardView";
 
+
 export function PlayArea() {
   const playArea = useGameStore((s) => s.hero.playArea);
   const toggleExhausted = useGameStore((s) => s.toggleExhausted);
@@ -10,6 +11,10 @@ export function PlayArea() {
 
   const allyThwart = useGameStore(
     (s) => s.allyThwart
+  );
+
+  const useActivatedAbility = useGameStore(
+    (s) => s.useActivatedAbility
   );
 
   return (
@@ -55,7 +60,7 @@ export function PlayArea() {
               {card.activatedAbility && (
                 <button
                   onClick={() =>
-                    console.log("Activating ability:", card)
+                    useActivatedAbility(card.instanceId)
                   }
                 >
                   Use Ability

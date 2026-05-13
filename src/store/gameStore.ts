@@ -109,6 +109,7 @@ const defaultDeck = buildPlayerDeckFromMarvelCdb({
     "01091": 1,
     "01092": 1,
     "01093": 1,
+    "01075": 1,
   },
 });
 

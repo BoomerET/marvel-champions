@@ -7,7 +7,7 @@ export function MinionArea() {
     );
 
     const selectedTarget = useGameStore((s) => s.selectedTarget);
-    const selectEnemyTarget = useGameStore((s) => s.selectEnemyTarget);
+    const selectTarget = useGameStore((s) => s.selectTarget);
 
     return (
         <section>
@@ -29,7 +29,7 @@ export function MinionArea() {
                                 selectedTarget === card.instanceId
                             }
                             onClick={() =>
-                                selectEnemyTarget(
+                                selectTarget(
                                     selectedTarget === card.instanceId
                                         ? undefined
                                         : card.instanceId

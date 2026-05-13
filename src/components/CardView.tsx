@@ -110,6 +110,12 @@ export function CardView({
                 HP {card.currentHitPoints ?? card.hp}
               </span>
             )}
+
+            {card.threat !== undefined && (
+              <span>
+                THR {card.currentThreat ?? card.threat}
+              </span>
+            )}
           </div>
 
           <div className="card-status-overlay">

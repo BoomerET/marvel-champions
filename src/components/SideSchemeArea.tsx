@@ -6,6 +6,9 @@ export function SideSchemeArea() {
         (s) => s.sideSchemes
     );
 
+    const selectedTarget = useGameStore((s) => s.selectedTarget);
+    const selectTarget = useGameStore((s) => s.selectTarget);
+
     return (
         <section>
             <h2>
@@ -22,6 +25,14 @@ export function SideSchemeArea() {
                         <CardView
                             key={card.instanceId}
                             card={card}
+                            isSelected={selectedTarget === card.instanceId}
+                            onClick={() =>
+                                selectTarget(
+                                    selectedTarget === card.instanceId
+                                        ? undefined
+                                        : card.instanceId
+                                )
+                            }
                         />
                     ))
                 )}

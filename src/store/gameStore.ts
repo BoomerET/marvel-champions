@@ -67,7 +67,7 @@ interface GameStore extends GameState {
   confirmPlayCard: () => void;
   cancelPayment: () => void;
   loadMarvelCdbDeck: (deckId: string) => Promise<void>;
-  selectEnemyTarget: (
+  selectTarget: (
     instanceId?: string
   ) => void;
   newGame: (scenarioId?: ScenarioId) => void;
@@ -1563,7 +1563,7 @@ export const useGameStore = create<GameStore>((set) => ({
     );
   },
 
-  selectEnemyTarget: (instanceId) =>
+  selectTarget: (instanceId) =>
     set((state) => {
       if (gameIsOver(state)) {
         return {

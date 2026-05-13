@@ -1240,6 +1240,7 @@ export const useGameStore = create<GameStore>((set) => ({
       let nextGameStatus = state.gameStatus;
       let nextMainScheme = state.mainScheme;
       let nextHero = state.hero;
+      let nextMinions = state.minions;
 
       let nextLog = [
         ...state.log,
@@ -1337,6 +1338,60 @@ export const useGameStore = create<GameStore>((set) => ({
         nextLog = checked.log;
       }
 
+      if (cardToPlay.playEffect?.type === "damageEnemy") {
+        const damageAmount = cardToPlay.playEffect.amount;
+
+        const targetedMinion = state.minions.find(
+          (minion) => minion.instanceId === state.selectedEnemyTarget
+        );
+
+        if (targetedMinion) {
+          const remainingHp = Math.max(
+            0,
+            (targetedMinion.currentHitPoints ?? targetedMinion.hp ?? 0) -
+            damageAmount
+          );
+
+          const defeated = remainingHp <= 0;
+
+          nextMinions = defeated
+            ? state.minions.filter(
+              (minion) => minion.instanceId !== targetedMinion.instanceId
+            )
+            : state.minions.map((minion) =>
+              minion.instanceId === targetedMinion.instanceId
+                ? { ...minion, currentHitPoints: remainingHp }
+                : minion
+            );
+
+          nextLog = [
+            ...nextLog,
+            `${cardToPlay.name} dealt ${damageAmount} damage to ${targetedMinion.name}.`,
+            ...(defeated ? [`${targetedMinion.name} was defeated.`] : []),
+          ];
+        } else {
+          nextVillain = {
+            ...nextVillain,
+            hitPoints: Math.max(0, nextVillain.hitPoints - damageAmount),
+          };
+
+          nextLog = [
+            ...nextLog,
+            `${cardToPlay.name} dealt ${damageAmount} damage to villain.`,
+          ];
+
+          const checked = checkVillainDefeat({
+            state,
+            villain: nextVillain,
+            log: nextLog,
+          });
+
+          nextVillain = checked.villain;
+          nextGameStatus = checked.gameStatus;
+          nextLog = checked.log;
+        }
+      }
+
       return {
         villain: nextVillain,
 
@@ -1361,6 +1416,7 @@ export const useGameStore = create<GameStore>((set) => ({
         },
         gameStatus: nextGameStatus,
         mainScheme: nextMainScheme,
+        minions: nextMinions,
 
         log: [
           ...nextLog,

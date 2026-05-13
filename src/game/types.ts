@@ -44,6 +44,9 @@ export interface Card {
   | { type: "damageHero"; amount: number; }
   | { type: "healHero"; amount: number; }
   | { type: "removeThreat"; amount: number; }
+  | { type: "damageEnemy"; amount: number; }
+  | { type: "damageMinion"; amount: number; }
+  requiresTarget?: boolean;
 }
 
 
@@ -68,7 +71,7 @@ export interface GameState {
   eventHistory: GameEvent[];
   sideSchemes: CardInstance[];
   minions: CardInstance[];
-  selectedAttackTarget?: string;
+  selectedEnemyTarget?: string;
   gameStatus: GameStatus;
   mainScheme: MainSchemeState;
   villainCards: Card[];

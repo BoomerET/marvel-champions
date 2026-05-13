@@ -39,11 +39,13 @@ export interface Card {
   whenRevealed?: WhenRevealedEffect[];
   surge?: boolean;
   boost?: BoostEffect;
-  playEffect?: {
-    type: "damageVillain";
-    amount: number;
-  }
+  playEffect?:
+  | { type: "damageVillain"; amount: number; }
+  | { type: "damageHero"; amount: number; }
+  | { type: "healHero"; amount: number; }
+  | { type: "removeThreat"; amount: number; }
 }
+
 
 export interface CardInstance extends Card {
   instanceId: string;

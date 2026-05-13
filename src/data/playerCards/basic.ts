@@ -47,7 +47,12 @@ export const basicPlayerCards: Card[] = [
     ],
     "resources": [
       "mental"
-    ]
+    ],
+    "playEffect": {
+      "type": "healHero",
+      "amount": 2,
+    },
+    "cost": 1,
   },
   {
     "code": "01087",

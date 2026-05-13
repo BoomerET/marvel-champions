@@ -35,7 +35,12 @@ export const justicePlayerCards: Card[] = [
     ],
     "resources": [
       "energy"
-    ]
+    ],
+    "playEffect": {
+      "type": "removeThreat",
+      "amount": 3,
+    },
+    "cost": 2,
   },
   {
     "code": "01061",

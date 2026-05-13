@@ -798,6 +798,38 @@ export const useGameStore = create<GameStore>((set) => ({
       const amount =
         state.hero.identity.thwart ?? 0;
 
+      const targetedSideScheme =
+        state.sideSchemes.find(
+          (scheme) =>
+            scheme.instanceId === state.selectedTarget
+        );
+
+      if (targetedSideScheme) {
+        const remainingThreat = Math.max(
+          0,
+          (targetedSideScheme.currentThreat ??
+            targetedSideScheme.threat ?? 0) - amount
+        );
+
+        const defeated = remainingThreat <= 0;
+
+        const updatedSideSchemes = defeated
+          ? state.sideSchemes.filter(
+            (scheme) =>
+              scheme.instanceId !==
+              targetedSideScheme.instanceId
+          )
+          : state.sideSchemes.map((scheme) =>
+            scheme.instanceId ===
+              targetedSideScheme.instanceId
+              ? {
+                ...scheme,
+                currentThreat: remainingThreat,
+              }
+              : scheme
+          );
+      }
+
       const basicThwartEvent = {
         type: "BASIC_THWART" as const,
         amount,

@@ -25,7 +25,10 @@ export function resolveEncounterCardEffect(
         return {
             sideSchemes: [
                 ...state.sideSchemes,
-                card,
+                {
+                    ...card,
+                    currentThreat: card.threat ?? 0,
+                },
             ],
             log: [
                 ...state.log,

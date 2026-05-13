@@ -57,6 +57,8 @@ export interface CardInstance extends Card {
   stunned?: boolean;
   confused?: boolean;
   tough?: boolean;
+  currentThreat?: number;
+  currentHitPoints?: number;
 }
 
 export interface GameState {

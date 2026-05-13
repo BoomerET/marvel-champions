@@ -1237,6 +1237,7 @@ export const useGameStore = create<GameStore>((set) => ({
 
       let nextVillain = state.villain;
       let nextGameStatus = state.gameStatus;
+      let nextMainScheme = state.mainScheme;
 
       let nextLog = [
         ...state.log,
@@ -1270,6 +1271,26 @@ export const useGameStore = create<GameStore>((set) => ({
         nextLog = checked.log;
       }
 
+      if (cardToPlay.playEffect?.type === "removeThreat") {
+        const removeAmount = cardToPlay.playEffect.amount;
+
+        const nextThreat = Math.max(
+          0,
+          state.mainScheme.threat - removeAmount
+        );
+
+        nextMainScheme = {
+          ...state.mainScheme,
+          threat: nextThreat,
+        };
+
+        nextLog = [
+          ...nextLog,
+          `${cardToPlay.name} removed ${removeAmount} threat.`,
+        ];
+
+      }
+
       return {
         villain: nextVillain,
 
@@ -1293,6 +1314,7 @@ export const useGameStore = create<GameStore>((set) => ({
             ],
         },
         gameStatus: nextGameStatus,
+        mainScheme: nextMainScheme,
 
         log: [
           ...nextLog,

@@ -1828,7 +1828,7 @@ export const useGameStore = create<GameStore>((set) => ({
 
       let nextHero = state.hero;
       let nextMainScheme = state.mainScheme;
-      let nextLog = [...state.log];
+      const nextLog = [...state.log];
 
       if (
         card.activatedAbility.type ===

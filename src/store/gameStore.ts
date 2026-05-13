@@ -1236,6 +1236,7 @@ export const useGameStore = create<GameStore>((set) => ({
         cardToPlay.type === "resource";
 
       let nextVillain = state.villain;
+      let nextGameStatus = state.gameStatus;
 
       let nextLog = [
         ...state.log,
@@ -1265,6 +1266,7 @@ export const useGameStore = create<GameStore>((set) => ({
         });
 
         nextVillain = checked.villain;
+        nextGameStatus = checked.gameStatus;
         nextLog = checked.log;
       }
 
@@ -1290,6 +1292,7 @@ export const useGameStore = create<GameStore>((set) => ({
               },
             ],
         },
+        gameStatus: nextGameStatus,
 
         log: [
           ...nextLog,

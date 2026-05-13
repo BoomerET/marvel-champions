@@ -1,5 +1,4 @@
 import type { GameState, VillainState } from "../types";
-//import { rhinoCards } from "../../data/villains/rhino";
 import { createCardInstance } from "../../utils/createCardInstance";
 
 export function checkVillainDefeat({
@@ -24,14 +23,17 @@ export function checkVillainDefeat({
     }
 
     const nextStage = villain.stage + 1;
-    const nextVillainCard =
-        state.villainCards.find(
-            (card) => card.stage === nextStage
-        );
+
+    const nextVillainCard = state.villainCards.find(
+        (card) => card.stage === nextStage
+    );
 
     if (!nextVillainCard) {
         return {
-            villain,
+            villain: {
+                ...villain,
+                hitPoints: 0,
+            },
             gameStatus: "won",
             log: [
                 ...log,

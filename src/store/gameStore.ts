@@ -1216,6 +1216,26 @@ export const useGameStore = create<GameStore>((set) => ({
 
       const totalResources = paidResources.length;
 
+      let nextVillain = state.villain;
+      let nextLog = [
+        ...state.log,
+        `Paid ${totalResources} resource(s) for ${cardToPlay.name}.`,
+      ];
+
+      if (cardToPlay.playEffect?.type === "damageVillain") {
+        nextVillain = {
+          ...nextVillain,
+          hitPoints: Math.max(
+            0,
+            nextVillain.hitPoints - cardToPlay.playEffect.amount
+          ),
+        };
+
+        nextLog.push(
+          `${cardToPlay.name} dealt ${cardToPlay.playEffect.amount} damage.`
+        );
+      }
+
       if (totalResources < totalCost) {
         return {
           log: [

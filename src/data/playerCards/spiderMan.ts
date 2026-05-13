@@ -47,7 +47,11 @@ export const spiderManPlayerCards: Card[] = [
     ],
     "resources": [
       "mental"
-    ]
+    ],
+    playEffect: {
+      type: "damageVillain",
+      amount: 8
+    },
   },
   {
     "code": "01006",

@@ -13,7 +13,7 @@ export function PlayArea() {
     (s) => s.allyThwart
   );
 
-  const useActivatedAbility = useGameStore(
+  const activateAbility = useGameStore(
     (s) => s.useActivatedAbility
   );
 
@@ -60,7 +60,7 @@ export function PlayArea() {
               {card.activatedAbility && (
                 <button
                   onClick={() =>
-                    useActivatedAbility(card.instanceId)
+                    activateAbility(card.instanceId)
                   }
                 >
                   Use Ability

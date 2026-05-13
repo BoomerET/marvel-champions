@@ -97,6 +97,7 @@ export const basicPlayerCards: Card[] = [
       "Max 1 per deck."
     ],
     "resources": [
+      "mental",
       "mental"
     ]
   },

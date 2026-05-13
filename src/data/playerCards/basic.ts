@@ -49,7 +49,7 @@ export const basicPlayerCards: Card[] = [
       "mental"
     ],
     "playEffect": {
-      "type": "healHero",
+      "type": "damageHero",
       "amount": 2,
     },
     "cost": 1,

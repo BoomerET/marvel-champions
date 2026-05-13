@@ -1309,6 +1309,23 @@ export const useGameStore = create<GameStore>((set) => ({
         ];
       }
 
+      if (cardToPlay.playEffect?.type === "damageHero") {
+        const damageAmount = cardToPlay.playEffect.amount;
+
+        nextHero = {
+          ...nextHero,
+          hitPoints: Math.min(
+            nextHero.maxHitPoints,
+            nextHero.hitPoints - damageAmount
+          ),
+        };
+
+        nextLog = [
+          ...nextLog,
+          `${cardToPlay.name} dealt ${damageAmount} damage.`,
+        ];
+      }
+
       return {
         villain: nextVillain,
 

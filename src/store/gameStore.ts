@@ -1238,6 +1238,7 @@ export const useGameStore = create<GameStore>((set) => ({
       let nextVillain = state.villain;
       let nextGameStatus = state.gameStatus;
       let nextMainScheme = state.mainScheme;
+      let nextHero = state.hero;
 
       let nextLog = [
         ...state.log,
@@ -1291,11 +1292,28 @@ export const useGameStore = create<GameStore>((set) => ({
 
       }
 
+      if (cardToPlay.playEffect?.type === "healHero") {
+        const healAmount = cardToPlay.playEffect.amount;
+
+        nextHero = {
+          ...nextHero,
+          hitPoints: Math.min(
+            nextHero.maxHitPoints,
+            nextHero.hitPoints + healAmount
+          ),
+        };
+
+        nextLog = [
+          ...nextLog,
+          `${cardToPlay.name} healed ${healAmount} damage.`,
+        ];
+      }
+
       return {
         villain: nextVillain,
 
         hero: {
-          ...state.hero,
+          ...nextHero,
           hand: newHand,
           pendingPayment: undefined,
 

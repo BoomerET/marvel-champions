@@ -33,41 +33,45 @@ export function HeroPanel() {
 
             <div>Form: {hero.form}</div>
             <div>HP: {hero.hitPoints}</div>
-            <button onClick={() => damageHero(1)}>Damage 1</button>
-            <button onClick={() => healHero(1)}>Heal 1</button>
-            <button onClick={flipIdentity}>
-                Flip Identity
-            </button>
-            <button onClick={() => toggleExhausted(hero.identity.instanceId)}>
-                Exhaust / Ready
-            </button>
-            <button onClick={basicAttack}>
-                Attack
-            </button>
+            <div className="hero-first-row-buttons">
+                <button onClick={() => damageHero(1)}>Damage 1</button>
+                <button onClick={() => healHero(1)}>Heal 1</button>
+                <button onClick={flipIdentity}>
+                    Flip Identity
+                </button>
+                <button onClick={() => toggleExhausted(hero.identity.instanceId)}>
+                    Exhaust / Ready
+                </button>
+                <button onClick={basicAttack}>
+                    Attack
+                </button>
 
-            <button onClick={basicThwart}>
-                Thwart
-            </button>
+                <button onClick={basicThwart}>
+                    Thwart
+                </button>
+            </div>
 
-            <button onClick={basicRecover}>
-                Recover
-            </button>
+            <div className="hero-second-row-buttons">
+                <button onClick={basicRecover}>
+                    Recover
+                </button>
 
-            <button onClick={toggleHeroStunned}>
-                Toggle Stunned
-            </button>
+                <button onClick={toggleHeroStunned}>
+                    Toggle Stunned
+                </button>
 
-            <button onClick={toggleHeroConfused}>
-                Toggle Confused
-            </button>
+                <button onClick={toggleHeroConfused}>
+                    Toggle Confused
+                </button>
 
-            <button onClick={toggleHeroTough}>
-                Toggle Tough
-            </button>
+                <button onClick={toggleHeroTough}>
+                    Toggle Tough
+                </button>
 
-            <button onClick={defend}>
-                Defend
-            </button>
+                <button onClick={defend}>
+                    Defend
+                </button>
+            </div>
         </section>
     );
 }

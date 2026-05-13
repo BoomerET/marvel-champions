@@ -25,6 +25,7 @@ export function PlayerHand() {
             <CardView
               key={card.instanceId}
               card={card}
+              size="small"
               isSelected={isPaymentCard}
               isPendingPlay={isCardBeingPlayed}
               onClick={() =>

@@ -91,7 +91,13 @@ export const justicePlayerCards: Card[] = [
     ],
     "resources": [
       "mental"
-    ]
+    ],
+    "cost": 2,
+    "uses": 3,
+    "activatedAbility": {
+      type: "removeThreat",
+      amount: 1,
+    },
   },
   {
     "code": "01065",

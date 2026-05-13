@@ -52,6 +52,15 @@ export function PlayArea() {
                   </button>
                 </div>
               )}
+              {card.activatedAbility && (
+                <button
+                  onClick={() =>
+                    console.log("Activating ability:", card)
+                  }
+                >
+                  Use Ability
+                </button>
+              )}
             </div>
           ))
         )}

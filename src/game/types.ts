@@ -47,6 +47,15 @@ export interface Card {
   | { type: "damageEnemy"; amount: number; }
   | { type: "damageMinion"; amount: number; }
   requiresTarget?: boolean;
+  activatedAbility?: {
+    type:
+    | "generateResource"
+    | "drawCards"
+    | "removeThreat";
+
+    amount?: number;
+  };
+  uses?: number;
 }
 
 

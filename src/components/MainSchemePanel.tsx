@@ -12,6 +12,7 @@ export function MainSchemePanel() {
                 card={mainScheme.card}
                 size="small"
                 face="b"
+                hideThreat
             />
 
             <div>

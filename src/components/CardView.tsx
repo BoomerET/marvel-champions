@@ -11,6 +11,7 @@ interface Props {
   isSelected?: boolean;
   isPendingPlay?: boolean;
   orientation?: "portrait" | "landscape";
+  hideThreat?: boolean;
 }
 
 export function CardView({
@@ -21,6 +22,7 @@ export function CardView({
   identityForm,
   isSelected = false,
   isPendingPlay = false,
+  hideThreat = false,
 }: Props) {
   const [isHovered, setIsHovered] = useState(false);
   const [flippedPreview, setFlippedPreview] = useState(false);
@@ -111,7 +113,7 @@ export function CardView({
               </span>
             )}
 
-            {card.threat !== undefined && (
+            {!hideThreat && card.threat !== undefined && (
               <span>
                 THR {card.currentThreat ?? card.threat}
               </span>

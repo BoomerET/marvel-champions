@@ -828,6 +828,35 @@ export const useGameStore = create<GameStore>((set) => ({
               }
               : scheme
           );
+        return {
+          hero: {
+            ...state.hero,
+            identity: {
+              ...state.hero.identity,
+              exhausted: true,
+            },
+          },
+
+          sideSchemes: updatedSideSchemes,
+
+          encounterDiscard: defeated
+            ? [
+              ...state.encounterDiscard,
+              {
+                ...targetedSideScheme,
+                currentThreat: 0,
+              },
+            ]
+            : state.encounterDiscard,
+
+          selectedTarget: undefined,
+
+          log: [
+            ...state.log,
+            `${state.hero.identity.name} thwarted ${targetedSideScheme.name} for ${amount}.`,
+            ...(defeated ? [`${targetedSideScheme.name} was defeated.`] : []),
+          ],
+        };
       }
 
       const basicThwartEvent = {

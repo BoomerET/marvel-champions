@@ -25,6 +25,7 @@ export function SideSchemeArea() {
                         <CardView
                             key={card.instanceId}
                             card={card}
+                            size="small"
                             isSelected={selectedTarget === card.instanceId}
                             onClick={() =>
                                 selectTarget(

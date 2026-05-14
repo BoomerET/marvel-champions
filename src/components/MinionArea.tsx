@@ -25,6 +25,7 @@ export function MinionArea() {
                         <CardView
                             key={card.instanceId}
                             card={card}
+                            size="small"
                             isSelected={
                                 selectedTarget === card.instanceId
                             }

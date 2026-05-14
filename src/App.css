@@ -799,3 +799,45 @@ body.shift-down .card:hover .card-image {
 .zone-panel .card--small {
   width: 100px;
 }
+
+.identity-card-slot {
+  width: 140px;
+  height: 140px;
+}
+
+.identity-card-slot .card--small {
+  width: 95px;
+}
+
+.zone-panel .card--small,
+.villain-panel .card--small,
+.main-scheme-panel .card--small {
+  width: 95px;
+}
+
+section {
+  padding: 6px;
+}
+
+h2 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+button {
+  margin-bottom: 4px;
+  padding: 4px 8px;
+}
+
+.game-board {
+  gap: 8px;
+  padding: 8px;
+}
+
+.villain-row,
+.encounter-row,
+.player-row,
+.player-deck-row {
+  gap: 8px;
+}
+

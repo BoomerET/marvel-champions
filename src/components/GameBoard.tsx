@@ -1,4 +1,3 @@
-import { GameLog } from "./GameLog";
 import { PlayArea } from "./PlayArea";
 import { HeroPanel } from "./HeroPanel";
 import { DeckPanel } from "./DeckPanel";
@@ -7,7 +6,7 @@ import { DeckLoader } from "./DeckLoader";
 import { MinionArea } from "./MinionArea";
 import { VillainPanel } from "./VillainPanel";
 import { DiscardPanel } from "./DiscardPanel";
-import { EventHistory } from "./EventHistory";
+import { DebugPanel } from "./DebugPanel";
 import { GameControls } from "./GameControls";
 import { EncounterArea } from "./EncounterArea";
 import { SideSchemeArea } from "./SideSchemeArea";
@@ -77,8 +76,7 @@ export function GameBoard() {
       </section>
 
       <section className="log-row">
-        <GameLog />
-        <EventHistory />
+        <DebugPanel />
       </section>
     </main>
   );

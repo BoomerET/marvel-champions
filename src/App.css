@@ -760,3 +760,14 @@ body.shift-down .card:hover .card-image {
 .play-area .card--exhausted {
   margin: 48px 72px;
 }
+
+.debug-panel {
+  margin-top: 12px;
+}
+
+.debug-content {
+  display: flex;
+  gap: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+}
